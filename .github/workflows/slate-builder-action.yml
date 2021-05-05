@@ -12,11 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build documentation
-        uses: docker://decathlon/slate-builder-action:2.0.0
+        uses: Decathlon/slate-builder-action@v2.0.0
         env:
           DOC_BASE_FOLDER: docs/
           ZIP_BUILD: false
       - name: Deploy to GitHub Pages
-        uses: docker://maxheld83/ghpages@v0.2.1
+        uses: maxheld83/ghpages@v0.3.0
         env:
           BUILD_DIR: docs/build/
