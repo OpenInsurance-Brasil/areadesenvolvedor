@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build documentation
-        uses: Decathlon/slate-builder-action@v2.0.0
+        uses: Decathlon/slate-builder-action@latest
         env:
           DOC_BASE_FOLDER: docs/
           ZIP_BUILD: false
