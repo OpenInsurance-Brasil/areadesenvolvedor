@@ -7,17 +7,41 @@ on:
 name: Create Slate Documentation on Push
 
 jobs:
-  action-filter:
-    runs-on: ubuntu-18.04
+  docs-build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: docs
+
+    strategy:
+      matrix:
+        ruby-version: [2.5, 2.6, 2.7, 3.0]
+
     steps:
       - uses: actions/checkout@v2
-      - name: Build documentation
-        uses: docker://decathlon/slate-builder-action:latest
-        env:
-          DOC_BASE_FOLDER: docs/
-          ZIP_BUILD: false
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: gems-${{ runner.os }}-${{ matrix.ruby-version }}-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            gems-${{ runner.os }}-${{ matrix.ruby-version }}-
+            gems-${{ runner.os }}-
+
+      - name: bundle install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - run: bundle exec middleman build
+
       - name: Deploy to GitHub Pages
-        uses: maxheld83/ghpages@v0.3.0
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-          BUILD_DIR: docs/build/
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_PAT }}
+          publish_dir: ./docs/build
