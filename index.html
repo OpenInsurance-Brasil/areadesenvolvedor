@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>Open Insurance Brasil</title>
 
-    <style>
+    <style media="screen">
       .highlight table td { padding: 5px; }
 .highlight table pre { margin: 0; }
 .highlight .gh {
@@ -42,7 +42,7 @@
 .highlight .cs {
   color: #75715e;
 }
-.highlight .c, .highlight .cd {
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cpf {
   color: #75715e;
 }
 .highlight .err {
@@ -126,7 +126,7 @@
 .highlight .s1 {
   color: #e6db74;
 }
-.highlight .s {
+.highlight .s, .highlight .sa, .highlight .dl {
   color: #e6db74;
 }
 .highlight .na {
@@ -141,16 +141,13 @@
 .highlight .ne {
   color: #a6e22e;
 }
-.highlight .nf {
+.highlight .nf, .highlight .fm {
   color: #a6e22e;
 }
 .highlight .vc {
   color: #ffffff;
 }
 .highlight .nn {
-  color: #ffffff;
-}
-.highlight .nl {
   color: #ffffff;
 }
 .highlight .ni {
@@ -165,7 +162,7 @@
 .highlight .vi {
   color: #ffffff;
 }
-.highlight .nv {
+.highlight .nv, .highlight .vm {
   color: #ffffff;
 }
 .highlight .w {
@@ -176,6 +173,9 @@
 }
 .highlight .n, .highlight .py, .highlight .nx {
   color: #ffffff;
+}
+.highlight .nl {
+  color: #f92672;
 }
 .highlight .ow {
   color: #f92672;
@@ -196,459 +196,398 @@
   color: #f92672;
 }
     </style>
-    <link href="stylesheets/screen-a1ce949a.css" rel="stylesheet" media="screen" />
-    <link href="stylesheets/print-bccf8c07.css" rel="stylesheet" media="print" />
-      <script src="javascripts/all-c5541673.js"></script>
+    <style media="print">
+      * {
+        -webkit-transition:none!important;
+        transition:none!important;
+      }
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight, .highlight .w {
+  color: #586e75;
+}
+.highlight .err {
+  color: #002b36;
+  background-color: #dc322f;
+}
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cpf, .highlight .c1, .highlight .cs {
+  color: #657b83;
+}
+.highlight .cp {
+  color: #b58900;
+}
+.highlight .nt {
+  color: #b58900;
+}
+.highlight .o, .highlight .ow {
+  color: #93a1a1;
+}
+.highlight .p, .highlight .pi {
+  color: #93a1a1;
+}
+.highlight .gi {
+  color: #859900;
+}
+.highlight .gd {
+  color: #dc322f;
+}
+.highlight .gh {
+  color: #268bd2;
+  background-color: #002b36;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #6c71c4;
+}
+.highlight .kc {
+  color: #cb4b16;
+}
+.highlight .kt {
+  color: #cb4b16;
+}
+.highlight .kd {
+  color: #cb4b16;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #859900;
+}
+.highlight .sa {
+  color: #6c71c4;
+}
+.highlight .sr {
+  color: #2aa198;
+}
+.highlight .si {
+  color: #d33682;
+}
+.highlight .se {
+  color: #d33682;
+}
+.highlight .nn {
+  color: #b58900;
+}
+.highlight .nc {
+  color: #b58900;
+}
+.highlight .no {
+  color: #b58900;
+}
+.highlight .na {
+  color: #268bd2;
+}
+.highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx {
+  color: #859900;
+}
+.highlight .ss {
+  color: #859900;
+}
+    </style>
+    <link href="stylesheets/screen-c9d8fa83.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print-953e3353.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all-a9fde460.js"></script>
+
+    <script>
+      $(function() { setupCodeCopy(); });
+    </script>
   </head>
 
-  <body class="index" data-languages="[]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
-        <img src="images/navbar-cad8cdcb.png" alt="Navbar" />
+        <img src="images/navbar-cad8cdcb.png" alt="" />
       </span>
     </a>
     <div class="toc-wrapper">
-      <img src="images/logo-1e815a84.png" class="logo" alt="Logo" />
+      <img src="images/logo-1e815a84.png" class="logo" alt="" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
+              <a href="#" data-language-name="ruby">ruby</a>
+              <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="javascript">javascript</a>
+        </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
         </div>
         <ul class="search-results"></ul>
       <ul id="toc" class="toc-list-h1">
           <li>
-            <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+          </li>
+          <li>
+            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#version-2-10-0" class="toc-h2 toc-link" data-title="Version 2.10.0">Version 2.10.0</a>
+                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
                   </li>
                   <li>
-                    <a href="#version-2-9-2" class="toc-h2 toc-link" data-title="Version 2.9.2">Version 2.9.2</a>
+                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
                   </li>
                   <li>
-                    <a href="#version-2-9-1" class="toc-h2 toc-link" data-title="Version 2.9.1">Version 2.9.1</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-9-0" class="toc-h2 toc-link" data-title="Version 2.9.0">Version 2.9.0</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-8-0" class="toc-h2 toc-link" data-title="Version 2.8.0">Version 2.8.0</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-7-1" class="toc-h2 toc-link" data-title="Version 2.7.1">Version 2.7.1</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-7-0" class="toc-h2 toc-link" data-title="Version 2.7.0">Version 2.7.0</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-6-1" class="toc-h2 toc-link" data-title="Version 2.6.1">Version 2.6.1</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-6-0" class="toc-h2 toc-link" data-title="Version 2.6.0">Version 2.6.0</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-5-0" class="toc-h2 toc-link" data-title="Version 2.5.0">Version 2.5.0</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-4-0" class="toc-h2 toc-link" data-title="Version 2.4.0">Version 2.4.0</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-3-1" class="toc-h2 toc-link" data-title="Version 2.3.1">Version 2.3.1</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-3" class="toc-h2 toc-link" data-title="Version 2.3">Version 2.3</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-2" class="toc-h2 toc-link" data-title="Version 2.2">Version 2.2</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-1" class="toc-h2 toc-link" data-title="Version 2.1">Version 2.1</a>
-                  </li>
-                  <li>
-                    <a href="#version-2-0" class="toc-h2 toc-link" data-title="Version 2.0">Version 2.0</a>
-                  </li>
-                  <li>
-                    <a href="#version-1-5" class="toc-h2 toc-link" data-title="Version 1.5">Version 1.5</a>
-                  </li>
-                  <li>
-                    <a href="#version-1-4" class="toc-h2 toc-link" data-title="Version 1.4">Version 1.4</a>
-                  </li>
-                  <li>
-                    <a href="#version-1-3-3" class="toc-h2 toc-link" data-title="Version 1.3.3">Version 1.3.3</a>
-                  </li>
-                  <li>
-                    <a href="#version-1-3-2" class="toc-h2 toc-link" data-title="Version 1.3.2">Version 1.3.2</a>
-                  </li>
-                  <li>
-                    <a href="#version-1-3-1" class="toc-h2 toc-link" data-title="Version 1.3.1">Version 1.3.1</a>
-                  </li>
-                  <li>
-                    <a href="#version-1-3" class="toc-h2 toc-link" data-title="Version 1.3">Version 1.3</a>
-                  </li>
-                  <li>
-                    <a href="#version-1-2" class="toc-h2 toc-link" data-title="Version 1.2">Version 1.2</a>
-                  </li>
-                  <li>
-                    <a href="#version-1-1" class="toc-h2 toc-link" data-title="Version 1.1">Version 1.1</a>
-                  </li>
-                  <li>
-                    <a href="#version-1-0" class="toc-h2 toc-link" data-title="Version 1.0">Version 1.0</a>
+                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
                   </li>
               </ul>
           </li>
           <li>
-            <a href="#contributor-covenant-code-of-conduct" class="toc-h1 toc-link" data-title="Contributor Covenant Code of Conduct">Contributor Covenant Code of Conduct</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#our-pledge" class="toc-h2 toc-link" data-title="Our Pledge">Our Pledge</a>
-                  </li>
-                  <li>
-                    <a href="#our-standards" class="toc-h2 toc-link" data-title="Our Standards">Our Standards</a>
-                  </li>
-                  <li>
-                    <a href="#our-responsibilities" class="toc-h2 toc-link" data-title="Our Responsibilities">Our Responsibilities</a>
-                  </li>
-                  <li>
-                    <a href="#scope" class="toc-h2 toc-link" data-title="Scope">Scope</a>
-                  </li>
-                  <li>
-                    <a href="#enforcement" class="toc-h2 toc-link" data-title="Enforcement">Enforcement</a>
-                  </li>
-                  <li>
-                    <a href="#attribution" class="toc-h2 toc-link" data-title="Attribution">Attribution</a>
-                  </li>
-              </ul>
+            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='#'>Documentation provided by Decathlon</a></li>
-            <li><a href='https://github.com/lord/slate'>Template Powered by Slate</a></li>
+            <li><a href='https://www.susep.gov.br'>Superintendência de <br/>Seguros Privados - Susep</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='changelog'>Changelog</h1><h2 id='version-2-10-0'>Version 2.10.0</h2>
-<p><em>April 13, 2021</em></p>
+        <h1 id='introduction'>Introduction</h1>
+<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
 
-<ul>
-<li>Add support for Ruby 3.0 (thanks @shaun-scale)</li>
-<li>Add requirement for Git on installing dependencies</li>
-<li>Bump nokogiri from 1.11.2 to 1.11.3</li>
-<li>Bump middleman from 4.3.11 to <a href="https://github.com/middleman/middleman/commit/d180ca337202873f2601310c74ba2b6b4cf063ec"><code>d180ca3</code></a></li>
-</ul>
-<h2 id='version-2-9-2'>Version 2.9.2</h2>
-<p><em>March 30, 2021</em></p>
+<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
 
-<ul>
-<li><strong>[Security]</strong> Bump kramdown from 2.3.0 to 2.3.1</li>
-<li>Bump nokogiri from 1.11.1 to 1.11.2</li>
-</ul>
-<h2 id='version-2-9-1'>Version 2.9.1</h2>
-<p><em>February 27, 2021</em></p>
+<p>This example API documentation page was created with <a href="https://github.com/slatedocs/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
+<h1 id='authentication'>Authentication</h1>
+<blockquote>
+<p>To authorize, use this code:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
 
-<ul>
-<li>Fix Slate language tabs not working if localStorage is disabled</li>
-</ul>
-<h2 id='version-2-9-0'>Version 2.9.0</h2>
-<p><em>January 19, 2021</em></p>
+<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
 
-<ul>
-<li><strong>Drop support for Ruby 2.3 and 2.4</strong></li>
-<li><strong>[Security]</strong> Bump nokogiri from 1.10.10 to 1.11.1</li>
-<li><strong>[Security]</strong> Bump redcarpet from 3.5.0 to 3.5.1</li>
-<li>Specify slate is not supported on Ruby 3.x</li>
-<li>Bump rouge from 3.24.0 to 3.26.0</li>
-</ul>
-<h2 id='version-2-8-0'>Version 2.8.0</h2>
-<p><em>October 27, 2020</em></p>
+<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
+curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
 
-<ul>
-<li>Remove last trailing newline when using the copy code button</li>
-<li>Rework docker image and make available at slatedocs/slate</li>
-<li>Improve Dockerfile layout to improve caching (thanks @micvbang)</li>
-<li>Bump rouge from 3.20 to 3.24</li>
-<li>Bump nokogiri from 1.10.9 to 1.10.10</li>
-<li>Bump middleman from 4.3.8 to 4.3.11</li>
-<li>Bump lunr.js from 2.3.8 to 2.3.9</li>
-</ul>
-<h2 id='version-2-7-1'>Version 2.7.1</h2>
-<p><em>August 13, 2020</em></p>
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
+</blockquote>
 
-<ul>
-<li><strong>[security]</strong> Bumped middleman from 4.3.7 to 4.3.8</li>
-</ul>
+<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
 
-<p><em>Note</em>: Slate uses redcarpet, not kramdown, for rendering markdown to HTML, and so was unaffected by the security vulnerability in middleman.
-If you have changed slate to use kramdown, and with GFM, you may need to install the <code>kramdown-parser-gfm</code> gem.</p>
-<h2 id='version-2-7-0'>Version 2.7.0</h2>
-<p><em>June 21, 2020</em></p>
+<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
 
-<ul>
-<li><strong>[security]</strong> Bumped rack in Gemfile.lock from 2.2.2 to 2.2.3</li>
-<li>Bumped bundled jQuery from 3.2.1 to 3.5.1</li>
-<li>Bumped bundled lunr from 0.5.7 to 2.3.8</li>
-<li>Bumped imagesloaded from 3.1.8 to 4.1.4</li>
-<li>Bumped rouge from 3.17.0 to 3.20.0</li>
-<li>Bumped redcarpet from 3.4.0 to 3.5.0</li>
-<li>Fix color of highlighted code being unreadable when printing page</li>
-<li>Add clipboard icon for &quot;Copy to Clipboard&quot; functionality to code boxes (see note below)</li>
-<li>Fix handling of ToC selectors that contain punctutation (thanks @gruis)</li>
-<li>Fix language bar truncating languages that overflow screen width</li>
-<li>Strip HTML tags from ToC title before displaying it in title bar in JS (backup to stripping done in Ruby code) (thanks @atic)</li>
-</ul>
+<p><code>Authorization: meowmeowmeow</code></p>
 
-<p>To enable the new clipboard icon, you need to add <code>code_clipboard: true</code> to the frontmatter of source/index.html.md.
-See <a href="https://github.com/slatedocs/slate/blame/main/source/index.html.md#L19">this line</a> for an example of usage.</p>
-<h2 id='version-2-6-1'>Version 2.6.1</h2>
-<p><em>May 30, 2020</em></p>
+<aside class="notice">
+You must replace <code>meowmeowmeow</code> with your personal API key.
+</aside>
+<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
 
-<ul>
-<li><strong>[security]</strong> update child dependency activesupport in Gemfile.lock to 5.4.2.3</li>
-<li>Update Middleman in Gemfile.lock to 4.3.7</li>
-<li>Replace Travis-CI with GitHub actions for continuous integration</li>
-<li>Replace Spectrum with GitHub discussions</li>
-</ul>
-<h2 id='version-2-6-0'>Version 2.6.0</h2>
-<p><em>May 18, 2020</em></p>
+<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
 
-<p><strong>Note</strong>: 2.5.0 was &quot;pulled&quot; due to a breaking bug discovered after release. It is recommended to skip it, and move straight to 2.6.0.</p>
+<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="n">get</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
 
-<ul>
-<li>Fix large whitespace gap in middle column for sections with codeblocks</li>
-<li>Fix highlighted code elements having a different background than rest of code block</li>
-<li>Change JSON keys to have a different font color than their values</li>
-<li>Disable asset hashing for woff and woff2 elements due to middleman bug breaking woff2 asset hashing in general</li>
-<li>Move Dockerfile to Debian from Alpine</li>
-<li>Converted repo to a <a href="https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-template-repository">GitHub template</a></li>
-<li>Update sassc to 2.3.0 in Gemfile.lock</li>
-</ul>
-<h2 id='version-2-5-0'>Version 2.5.0</h2>
-<p><em>May 8, 2020</em></p>
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="kd">get</span><span class="p">();</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint retrieves all kittens.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>GET http://example.com/api/kittens</code></p>
+<h3 id='query-parameters'>Query Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>include_cats</td>
+<td>false</td>
+<td>If set to true, the result will also include cats.</td>
+</tr>
+<tr>
+<td>available</td>
+<td>true</td>
+<td>If set to false, the result will include kittens that have already been adopted.</td>
+</tr>
+</tbody></table>
 
-<ul>
-<li><strong>[security]</strong> update nokogiri to ~&gt; 1.10.8</li>
-<li>Update links in example docs to https://github.com/slatedocs/slate from https://github.com/lord/slate</li>
-<li>Update LICENSE to include full Apache 2.0 text</li>
-<li>Test slate against Ruby 2.5 and 2.6 on Travis-CI</li>
-<li>Update Vagrantfile to use Ubuntu 18.04 (thanks @bradthurber)</li>
-<li>Parse arguments and flags for deploy.sh on script start, instead of potentially after building source files</li>
-<li>Install nodejs inside Vagrantfile (thanks @fernandoaguilar)</li>
-<li>Add Dockerfile for running slate (thanks @redhatxl)</li>
-<li>update middleman-syntax and rouge to ~&gt;3.2</li>
-<li>update middleman to 4.3.6</li>
-</ul>
-<h2 id='version-2-4-0'>Version 2.4.0</h2>
-<p><em>October 19, 2019</em></p>
+<aside class="success">
+Remember — a happy kitten is an authenticated kitten!
+</aside>
+<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
 
-<ul>
-<li>Move repository from lord/slate to slatedocs/slate</li>
-<li>Fix documentation to point at new repo link, thanks to <a href="https://github.com/slash-arun">Arun</a>, <a href="https://github.com/gawry">Gustavo Gawryszewski</a>, and <a href="https://github.com/danielkorbit">Daniel Korbit</a></li>
-<li>Update <code>nokogiri</code> to 1.10.4</li>
-<li>Update <code>ffi</code> in <code>Gemfile.lock</code> to fix security warnings, thanks to <a href="https://github.com/greysteil">Grey Baker</a> and <a href="https://github.com/jakemack">jakemack</a></li>
-<li>Update <code>rack</code> to 2.0.7 in <code>Gemfile.lock</code> to fix security warnings, thanks to <a href="https://github.com/greysteil">Grey Baker</a> and <a href="https://github.com/jakemack">jakemack</a></li>
-<li>Update middleman to <code>4.3</code> and relax constraints on middleman related gems, thanks to <a href="https://github.com/jakemack">jakemack</a></li>
-<li>Add sass gem, thanks to <a href="https://github.com/jakemack">jakemack</a></li>
-<li>Activate <code>asset_cache</code> in middleman to improve cacheability of static files, thanks to <a href="https://github.com/thenengah">Sam Gilman</a></li>
-<li>Update to using bundler 2 for <code>Gemfile.lock</code>, thanks to <a href="https://github.com/jakemack">jakemack</a></li>
-</ul>
-<h2 id='version-2-3-1'>Version 2.3.1</h2>
-<p><em>July 5, 2018</em></p>
+<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
 
-<ul>
-<li>Update <code>sprockets</code> in <code>Gemfile.lock</code> to fix security warnings</li>
-</ul>
-<h2 id='version-2-3'>Version 2.3</h2>
-<p><em>July 5, 2018</em></p>
+<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
 
-<ul>
-<li>Allows strikethrough in markdown by default.</li>
-<li>Upgrades jQuery to 3.2.1, thanks to <a href="https://github.com/TomiTakussaari">Tomi Takussaari</a></li>
-<li>Fixes invalid HTML in <code>layout.erb</code>, thanks to <a href="https://github.com/scouten">Eric Scouten</a> for pointing out</li>
-<li>Hopefully fixes Vagrant memory issues, thanks to <a href="https://github.com/p-blomberg">Petter Blomberg</a> for the suggestion</li>
-<li>Cleans HTML in headers before setting <code>document.title</code>, thanks to <a href="https://github.com/justsml">Dan Levy</a></li>
-<li>Allows trailing whitespace in markdown files, thanks to <a href="https://github.com/kuzyn">Samuel Cousin</a></li>
-<li>Fixes pushState/replaceState problems with scrolling not changing the document hash, thanks to <a href="https://github.com/anfedorov">Andrey Fedorov</a></li>
-<li>Removes some outdated examples, thanks <a href="https://github.com/al-tr">@al-tr</a>, <a href="https://github.com/jdahdah">Jerome Dahdah</a>, and <a href="https://github.com/mccricardo">Ricardo Castro</a></li>
-<li>Fixes <code>nav-padding</code> bug, thanks <a href="https://github.com/jdahdah">Jerome Dahdah</a></li>
-<li>Code style fixes thanks to <a href="https://github.com/vassyz">Sebastian Zaremba</a></li>
-<li>Nokogiri version bump thanks to <a href="https://github.com/greysteil">Grey Baker</a></li>
-<li>Fix to default <code>index.md</code> text thanks to <a href="https://github.com/NickBusey">Nick Busey</a></li>
-</ul>
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint retrieves a specific kitten.</p>
 
-<p>Thanks to everyone who contributed to this release!</p>
-<h2 id='version-2-2'>Version 2.2</h2>
-<p><em>January 19, 2018</em></p>
+<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>The ID of the kitten to retrieve</td>
+</tr>
+</tbody></table>
+<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
 
-<ul>
-<li>Fixes bugs with some non-roman languages not generating unique headers</li>
-<li>Adds editorconfig, thanks to <a href="https://github.com/jaythomas">Jay Thomas</a></li>
-<li>Adds optional <code>NestingUniqueHeadCounter</code>, thanks to <a href="https://github.com/greenhost87">Vladimir Morozov</a></li>
-<li>Small fixes to typos and language, thx <a href="https://github.com/ribice">Emir Ribić</a>, <a href="https://github.com/gr2m">Gregor Martynus</a>, and <a href="https://github.com/martiuslim">Martius</a>!</li>
-<li>Adds links to Spectrum chat for questions in README and ISSUE_TEMPLATE</li>
-</ul>
-<h2 id='version-2-1'>Version 2.1</h2>
-<p><em>October 30, 2017</em></p>
+<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
 
-<ul>
-<li>Right-to-left text stylesheet option, thanks to <a href="https://github.com/mhrabiee">Mohammad Hossein Rabiee</a></li>
-<li>Fix for HTML5 history state bug, thanks to <a href="https://github.com/ztoolson">Zach Toolson</a></li>
-<li>Small styling changes, typo fixes, small bug fixes from <a href="https://github.com/rnarian">Marian Friedmann</a>, <a href="https://github.com/benwilhelm">Ben Wilhelm</a>, <a href="https://github.com/fouad">Fouad Matin</a>, <a href="https://github.com/NicolasBonduel">Nicolas Bonduel</a>, <a href="https://github.com/coliff">Christian Oliff</a></li>
-</ul>
+<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
+<span class="n">api</span><span class="p">.</span><span class="n">kittens</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span> <span class="se">\</span>
+  <span class="nt">-X</span> DELETE <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: meowmeowmeow"</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">kittn</span><span class="dl">'</span><span class="p">);</span>
 
-<p>Thanks to everyone who submitted PRs for this version!</p>
-<h2 id='version-2-0'>Version 2.0</h2>
-<p><em>July 17, 2017</em></p>
+<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="dl">'</span><span class="s1">meowmeowmeow</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>This endpoint deletes a specific kitten.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
+<h3 id='url-parameters-2'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ID</td>
+<td>The ID of the kitten to delete</td>
+</tr>
+</tbody></table>
+<h1 id='errors'>Errors</h1>
+<aside class="notice">
+This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
+</aside>
 
-<ul>
-<li>All-new statically generated table of contents
+<p>The Kittn API uses the following error codes:</p>
 
-<ul>
-<li>Should be much faster loading and scrolling for large pages</li>
-<li>Smaller Javascript file sizes</li>
-<li>Avoids the problem with the last link in the ToC not ever highlighting if the section was shorter than the page</li>
-<li>Fixes control-click not opening in a new page</li>
-<li>Automatically updates the HTML title as you scroll</li>
-</ul></li>
-<li>Updated design
-
-<ul>
-<li>New default colors!</li>
-<li>New spacings and sizes!</li>
-<li>System-default typefaces, just like GitHub</li>
-</ul></li>
-<li>Added search input delay on large corpuses to reduce lag</li>
-<li>We even bumped the major version cause hey, why not?</li>
-<li>Various small bug fixes</li>
-</ul>
-
-<p>Thanks to everyone who helped debug or wrote code for this version! It was a serious community effort, and I couldn&#39;t have done it alone.</p>
-<h2 id='version-1-5'>Version 1.5</h2>
-<p><em>February 23, 2017</em></p>
-
-<ul>
-<li>Add <a href="https://github.com/lord/slate/wiki/Multiple-language-tabs-per-programming-language">multiple tabs per programming language</a> feature</li>
-<li>Upgrade Middleman to add Ruby 1.4.0 compatibility</li>
-<li>Switch default code highlighting color scheme to better highlight JSON</li>
-<li>Various small typo and bug fixes</li>
-</ul>
-<h2 id='version-1-4'>Version 1.4</h2>
-<p><em>November 24, 2016</em></p>
-
-<ul>
-<li>Upgrade Middleman and Rouge gems, should hopefully solve a number of bugs</li>
-<li>Update some links in README</li>
-<li>Fix broken Vagrant startup script</li>
-<li>Fix some problems with deploy.sh help message</li>
-<li>Fix bug with language tabs not hiding properly if no error</li>
-<li>Add <code>!default</code> to SASS variables</li>
-<li>Fix bug with logo margin</li>
-<li>Bump tested Ruby versions in .travis.yml</li>
-</ul>
-<h2 id='version-1-3-3'>Version 1.3.3</h2>
-<p><em>June 11, 2016</em></p>
-
-<p>Documentation and example changes.</p>
-<h2 id='version-1-3-2'>Version 1.3.2</h2>
-<p><em>February 3, 2016</em></p>
-
-<p>A small bugfix for slightly incorrect background colors on code samples in some cases.</p>
-<h2 id='version-1-3-1'>Version 1.3.1</h2>
-<p><em>January 31, 2016</em></p>
-
-<p>A small bugfix for incorrect whitespace in code blocks.</p>
-<h2 id='version-1-3'>Version 1.3</h2>
-<p><em>January 27, 2016</em></p>
-
-<p>We&#39;ve upgraded Middleman and a number of other dependencies, which should fix quite a few bugs.</p>
-
-<p>Instead of <code>rake build</code> and <code>rake deploy</code>, you should now run <code>bundle exec middleman build --clean</code> to build your server, and <code>./deploy.sh</code> to deploy it to Github Pages.</p>
-<h2 id='version-1-2'>Version 1.2</h2>
-<p><em>June 20, 2015</em></p>
-
-<p><strong>Fixes:</strong></p>
-
-<ul>
-<li>Remove crash on invalid languages</li>
-<li>Update Tocify to scroll to the highlighted header in the Table of Contents</li>
-<li>Fix variable leak and update search algorithms</li>
-<li>Update Python examples to be valid Python</li>
-<li>Update gems</li>
-<li>More misc. bugfixes of Javascript errors</li>
-<li>Add Dockerfile</li>
-<li>Remove unused gems</li>
-<li>Optimize images, fonts, and generated asset files</li>
-<li>Add chinese font support</li>
-<li>Remove RedCarpet header ID patch</li>
-<li>Update language tabs to not disturb existing query strings</li>
-</ul>
-<h2 id='version-1-1'>Version 1.1</h2>
-<p><em>July 27, 2014</em></p>
-
-<p><strong>Fixes:</strong></p>
-
-<ul>
-<li>Finally, a fix for the redcarpet upgrade bug</li>
-</ul>
-<h2 id='version-1-0'>Version 1.0</h2>
-<p><em>July 2, 2014</em></p>
-
-<p><a href="https://github.com/tripit/slate/issues?milestone=1&amp;state=closed">View Issues</a></p>
-
-<p><strong>Features:</strong></p>
-
-<ul>
-<li>Responsive designs for phones and tablets</li>
-<li>Started tagging versions</li>
-</ul>
-
-<p><strong>Fixes:</strong></p>
-
-<ul>
-<li>Fixed &#39;unrecognized expression&#39; error</li>
-<li>Fixed #undefined hash bug</li>
-<li>Fixed bug where the current language tab would be unselected</li>
-<li>Fixed bug where tocify wouldn&#39;t highlight the current section while searching</li>
-<li>Fixed bug where ids of header tags would have special characters that caused problems</li>
-<li>Updated layout so that pages with disabled search wouldn&#39;t load search.js</li>
-<li>Cleaned up Javascript</li>
-</ul>
-<h1 id='contributor-covenant-code-of-conduct'>Contributor Covenant Code of Conduct</h1><h2 id='our-pledge'>Our Pledge</h2>
-<p>In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.</p>
-<h2 id='our-standards'>Our Standards</h2>
-<p>Examples of behavior that contributes to creating a positive environment include:</p>
-
-<ul>
-<li>Using welcoming and inclusive language</li>
-<li>Being respectful of differing viewpoints and experiences</li>
-<li>Gracefully accepting constructive criticism</li>
-<li>Focusing on what is best for the community</li>
-<li>Showing empathy towards other community members</li>
-</ul>
-
-<p>Examples of unacceptable behavior by participants include:</p>
-
-<ul>
-<li>The use of sexualized language or imagery and unwelcome sexual attention or advances</li>
-<li>Trolling, insulting/derogatory comments, and personal or political attacks</li>
-<li>Public or private harassment</li>
-<li>Publishing others&#39; private information, such as a physical or electronic address, without explicit permission</li>
-<li>Other conduct which could reasonably be considered inappropriate in a professional setting</li>
-</ul>
-<h2 id='our-responsibilities'>Our Responsibilities</h2>
-<p>Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.</p>
-
-<p>Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.</p>
-<h2 id='scope'>Scope</h2>
-<p>This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community. Examples of representing a project or community include using an official project e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event. Representation of a project may be further defined and clarified by project maintainers.</p>
-<h2 id='enforcement'>Enforcement</h2>
-<p>Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at hello@lord.io. The project team will review and investigate all complaints, and will respond in a way that it deems appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.</p>
-
-<p>Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project&#39;s leadership.</p>
-<h2 id='attribution'>Attribution</h2>
-<p>This Code of Conduct is adapted from the <a href="http://contributor-covenant.org">Contributor Covenant</a>, version 1.4, available at <a href="http://contributor-covenant.org/version/1/4/">http://contributor-covenant.org/version/1/4</a></p>
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request -- Your request is invalid.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized -- Your API key is wrong.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found -- The specified kitten could not be found.</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
+</tr>
+<tr>
+<td>410</td>
+<td>Gone -- The kitten requested has been removed from our servers.</td>
+</tr>
+<tr>
+<td>418</td>
+<td>I&#39;m a teapot.</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+</tr>
+</tbody></table>
 
       </div>
       <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="ruby">ruby</a>
+                <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="javascript">javascript</a>
+          </div>
       </div>
     </div>
   </body>
