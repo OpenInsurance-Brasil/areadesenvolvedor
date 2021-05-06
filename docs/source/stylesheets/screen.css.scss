@@ -94,6 +94,10 @@ html, body {
       border-radius: 0; /* ios has a default border radius */
     }
 
+    ::placeholder {
+          color: $search-box-placeholder-color;
+    }
+
     &:before {
       position: absolute;
       top: 17px;
