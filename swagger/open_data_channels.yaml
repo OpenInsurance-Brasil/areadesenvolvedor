@@ -800,8 +800,8 @@ components:
                           closingTime: '16:00:57Z'
                       exception: 'Exceto feriados municipais, estaduais e nacionais'
                     services:
-                      - name: 'RECLAMACOES'
-                        code: 'RECLAMACOES'
+                      - name: 'RECLAMACAO'
+                        code: 'RECLAMACAO'
                       - name: 'INFORMACOES_GERAIS_DUVIDAS'
                         code: 'INFORMACOES_GERAIS_DUVIDAS'
                   - identification:
@@ -835,8 +835,8 @@ components:
                           closingTime: '16:00:57Z'
                       exception: 'Exceto feriados municipais, estaduais e nacionais'
                     services:
-                      - name: 'OUTROS_PRODUTOS_SERVICOS'
-                        code: 'OUTROS_PRODUTOS_SERVICOS'
+                      - name: 'ENVIO_DE_DOCUMENTOS'
+                        code: 'ENVIO_DE_DOCUMENTOS'
                         additionalInfo: 'Previdência Privada'
         links:
           self: 'https://api.sociedade.com.br/open-insurance/channels/v1/phone-channels'
