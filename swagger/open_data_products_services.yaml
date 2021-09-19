@@ -1,0 +1,914 @@
+openapi: 3.0.0
+info:
+  title: API's OpenData do Open Insurance Brasil
+  description: As API's descritas neste documento são referentes as API's da fase OpenData do Open Insurance Brasil.
+  version: 0.0.1
+  contact:
+    url: 'https://openinsurance.susep.gov.br'
+servers:
+  - url: 'http://api.sociedade.com.br/open-insurance/products-services/v1'
+tags:
+  - name: Autos
+  - name: Personals
+  - name: Pension Plans
+  - name: Residentials
+  - name: Prize-linked Bonds
+paths:
+  /autos:
+    get:
+      tags:
+        - Autos
+      summary: Obtém dados dos seguros do grupo automóvel
+      description: Obtém dados dos seguros do grupo automóvel
+      operationId: getAutos
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+      responses:
+        '200':
+          description: Dados sobre seguros do grupo automóvel obtidos com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseAutos'
+  /residentials:
+    get:
+      tags:
+        - Residentials
+      summary: Obtém dados dos seguros residenciais
+      description: Obtém dados dos seguros residenciais, incluem-se neste escopo os produtos classificados no ramo “Compreensivo Residencial” (Ramo 0114), conforme regulamentação específica sobre contabilização em ramos.
+      operationId: getResidentials
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+      responses:
+        '200':
+          description: Dados sobre seguros residenciais obtidos com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseResidentials'
+
+#  /personals:
+#    get:
+#      tags:
+#        - Personals
+#      summary: Obtém dados dos seguros de pessoas com cobertura por sobrevivência
+#      description: Obtém dados dos seguros de pessoas com cobertura por sobrevivência (excluindo Seguros Dotais)
+#      operationId: getPersonals
+#      parameters:
+#        - $ref: "#/components/parameters/page"
+#        - $ref: "#/components/parameters/pageSize"
+#      responses:
+#        '200':
+#          description: Dados sobre seguros de pessoas obtidos com sucesso.
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/ResponseAutos'
+#  /pension-plans:
+#    get:
+#      tags:
+#        - Pension Plans
+#      summary: Obtém dados dos planos de previência com cobertura por sobrevivência
+#      description: Obtém dados dos planos de previência com cobertura por sobrevivência (excluindo Seguros Dotais)
+#      operationId: getAutos
+#      parameters:
+#        - $ref: "#/components/parameters/page"
+#        - $ref: "#/components/parameters/pageSize"
+#      responses:
+#        '200':
+#          description: Dados sobre planos de previência obtidos com sucesso.
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/ResponseAutos'
+
+components:
+  schemas:
+    ResponseAutos:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          required:
+            - brand
+          properties:
+            brand:
+              $ref: '#/components/schemas/AutoBrand'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    AutoBrand:
+      type: object
+      required:
+        - name
+        - companies
+      allOf:
+        - $ref: '#/components/schemas/Brand'
+      properties:
+        name:
+          type: string
+          maxLength: 80
+          pattern: \w*\W*
+          description: 'Nome da Marca reportada pelo participante do Open Insurance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes'
+          example: Organização A
+        companies:
+          type: array
+          description: 'Companies traz uma lista de todas as instituições da Marca'
+          items:
+            $ref: '#/components/schemas/AutoCompany'
+          minItems: 1
+    AutoCompany:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Company'
+      properties:
+        autos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Auto'
+          description: Lista de produtos de automóvel
+          minItems: 1
+          maxItems: 3
+    Auto:
+      type: object
+      required:
+        - name
+        - code
+        - lifetimeType
+        - serviceNetwork
+        - additionals
+        - assistances
+        - coverages
+        - premiumPayments
+        - repairParts
+        - minimumRequirements
+        - termsConditions
+      properties:
+        name:
+          type: string
+          maxLength: 250
+          pattern: \w*\W*
+          description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade (Campo Livre)'
+          example: Auto Perfil
+        code:
+          type: string
+          maxLength: 100
+          description: 'Código único a ser definido pela sociedade (Campo Livre)'
+          example: AUTO_PERFIL
+        lifetimeType:
+          type: string
+          enum:
+            - ANUAL
+            - ANUAL_INTERMITENTE
+            - PLURIANUAL
+            - PLURIANUAL_INTERMITENTE
+            - MENSAL
+            - MENSAL_INTERMITENTE
+            - DIARIO
+            - DIARIO_INTERMITENTE
+          description: 'Prazo da vigência'
+          example: ANUAL
+        serviceNetwork:
+          type: string
+          enum:
+            - REDE_REFERENCIADA
+            - LIVRE_ESCOLHA
+            - REDE_REFERENCIADA_E_LIVRE_ESCOLHA
+          description: 'Rede de atendimento'
+          example: REDE_REFERENCIADA
+        additionals:
+          $ref: '#/components/schemas/AutosAdditionals'
+        assistances:
+          $ref: '#/components/schemas/AutosAssistances'
+        coverages:
+          $ref: '#/components/schemas/AutosCoverages'
+        premiumPayments:
+          $ref: '#/components/schemas/AutosPremiumPayments'
+        repairParts:
+          type: array
+          items:
+            $ref: "#/components/schemas/AutosRepairParts"
+          minItems: 1
+          maxItems: 9
+          description: Lista opções de tipos de peças utilizadas para reparação
+        minimumRequirements:
+          $ref: '#/components/schemas/AutosMinimumRequirements'
+        targetAudience:
+          type: array
+          description: 'Lista de público-alvo'
+          items:
+            $ref: '#/components/schemas/TargetAudience'
+          minItems: 1
+          maxItems: 2
+        termsConditions:
+          $ref: '#/components/schemas/AutosTermsConditions'
+    AutosAdditionals:
+      type: array
+      items:
+        $ref: "#/components/schemas/ProductAdditional"
+      description: Lista de adicionais para seguros do grupo automóvel
+    AutosAssistances:
+      type: array
+      items:
+        $ref: "#/components/schemas/ProductAssistance"
+      description: Lista de serviços assistenciais complementares (Listagem dos serviços de assistências complementares disponíveis vinculado ao produto. Deve ser padronizada na proposta técnica submetida pela Estrutura Inicial de Governança para observância comum por todas as sociedades participantes)
+    AutosCoverages:
+      type: array
+      items:
+        $ref: "#/components/schemas/AutoCoverage"
+      description: Lista de coberturas para seguros do grupo automóvel
+    AutoCoverage:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 250
+          pattern: \w*\W*
+          description: 'Nome comercial da cobertura, pelo qual é identificado nos canais de distribuição e atendimento da sociedade (Campo Livre)'
+          example: Danos causados por terceiros
+        code:
+          type: string
+          maxLength: 100
+          description: 'Código único a ser definido pela sociedade (Campo Livre)'
+          example: DANOS_POR_TERCEIROS
+        description:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Descrição da cobertura. Pode ser informada a URL referente ao endereço onde constam as informações cabíveis.'
+          example: 'https://example.com/mobile-insurance'
+        type:
+          type: string
+          enum:
+            - CASCO_ROUBO
+            - CASCO_FURTO
+            - CASCO_INCENDIO
+            - CASCO_ALAGAMENTO
+            - CASCO_COLISAO_INDENIZACAO_PARCIAL
+            - CASCO_COLISAO_INDENIZACAO_INTEGRAL
+            - RCFV_RESPONSABILIDADE_CIVIL
+            - RCFV_DANOS_CORPORAIS
+            - RCFV_DANOS_MORAIS
+            - RCFV_DANOS_MATERIAIS
+            - RCFV_DANOS_ESTETICOS
+            - RCFC_RESPONSABILIDADE_CIVIL
+            - RCFC_DANOS_CORPORAIS
+            - RCFC_DANOS_MORAIS
+            - RCFC_DANOS_MATERIAIS
+            - RCFC_DANOS_ESTETICOS
+            - ACIDENTE_PESSOAIS_DE_PASSAGEIROS
+            - VIDROS
+            - FAROIS
+            - LANTERNAS
+            - RETROVISORES
+            - CARRO_RESERVA
+            - PEQUENOS_REPAROS
+            - PNEUS
+            - RESPONSABILIDADE_CIVIL_CARTA_VERDE
+          description: 'Tipo de cobertura'
+          example: CASCO_COLISAO_INDENIZACAO_PARCIAL
+        minimumLmi:
+          type: integer
+          description: 'Valor mínimo de Limite Máximo de Indenização (LMI)'
+          example: 50000
+        maximumLmi:
+          type: integer
+          description: 'Valor máximo de Limite Máximo de Indenização (LMI)'
+          example: 50000
+        maximumFullIndemity:
+          type: number
+          description: 'Percentual do Limite Máximo de Indenização para caracterização de indenização integral.'
+          example: 100
+        isFullIndemity:
+          type: boolean
+          description: 'Franquia para Indenização Integral'
+          example: false
+        deductibleType:
+          type: string
+          enum:
+            - NORMAL
+            - REDUZIDA
+            - MAJORADA
+          description: |
+            Tipo de franquia
+            Listagem de tipo de franquia para cada tipo de cobertura do produto.
+        minimumDeductible:
+          type: integer
+          description: 'Valor mínimo de franquia estabelecida pela sociedade para cada cobertura. Será de preenchimento obrigatório caso o campo minimumDeductible esteja preenchido como true'
+          example: 50000
+        maximumDeductible:
+          type: integer
+          description: 'Valor máximo de franquia estabelecida pela sociedade para cada cobertura. Será de preenchimento obrigatório caso o campo minimumDeductible esteja preenchido como true'
+          example: 250000
+        contractBasis:
+          type: string
+          enum:
+            - VALOR_DETERMINADO
+            - VALOR_DE_MERCADO
+          description: |
+            Base de contratação
+            No caso de valor de mercado, as tabelas de referência devem ser padronizadas na proposta técnica submetida pela
+            Estrutura Inicial de Governança para observância comum por todas as sociedades participantes.
+          example: VALOR_DE_MERCADO
+        conjugatedCoverages:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutoCoverageConjugated'
+          description: 'Listagem para indicar para cada cobertura quais serão a(s) cobertura(s) que deverá(rão) ser contratadas de forma conjunta.'
+        geographicScope:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutoCoverageGeographicScope'
+          description: 'Listagem de abrangência geográfica do produto para fins de cada cobertura.'
+        geographicScopeCountries:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeographicScopeCountry'
+          minItems: 1
+          description: 'Listagem de outros países com abrangência geográfica, obrigatírio caso haja `OUTROS_PAISES` informada na lista de abrangência geográfica.'
+      required:
+        - name
+        - code
+        - type
+        - minimumLmi
+        - maximumLmi
+        - contractBasis
+        - geographicScope
+    AutoCoverageConjugated:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          maxLength: 100
+          description: 'Código único a ser definido pela sociedade (Campo Livre), da cobertura que deve ser conjugada.'
+          example: FURTO
+    AutoCoverageGeographicScope:
+      type: string
+      enum:
+        - NACIONAL
+        - REGIONAL
+        - OUTROS_PAISES
+      example: NACIONAL
+    AutosPremiumPayments:
+      type: array
+      items:
+        $ref: "#/components/schemas/Payment"
+      minItems: 1
+      maxItems: 2
+      description: Lista opções de pagamento de prêmios para produtos e serviços
+    AutosRepairParts:
+      type: object
+      description: Objeto que reúne informações relativas a Tipos de peças utilizada para reparação.
+      required:
+        - condition
+        - quality
+        - origin
+      properties:
+        condition:
+          type: string
+          enum:
+            - NOVAS
+            - USADAS
+          description: |
+            Informar o tipo de peça de acordo com as combinações possíveis:
+              * `NOVAS` - peças novas
+              * `USADAS` - peças usadas
+          example: NOVAS
+        quality:
+          type: string
+          enum:
+            - ORIGINAIS
+            - NAO_ORIGINAIS
+          description: |
+            Informar o tipo de peça de acordo com as combinações possíveis:
+              * `ORIGINAIS` - peças originais
+              * `NAO_ORIGINAIS` - peças não originais
+          example: NAO_ORIGINAIS
+        origin:
+          type: string
+          enum:
+            - NACIONAIS
+            - IMPORTADAS
+          description: |
+            Informar o tipo de peça de acordo com as combinações possíveis:
+              * `NACIONAIS` - peças nacionais
+              * `IMPORTADAS` - peças importadas
+          example: IMPORTADAS
+    AutosMinimumRequirements:
+      type: object
+      description: Objeto que reúne informações relativas a Requisitos Mínimos para as contratações
+      required:
+        - contractType
+      properties:
+        contractType:
+          type: string
+          description: |
+            Tipo de contratação disponível.
+          enum:
+            - COLETIVO
+            - INDIVIDUAL
+          example: 'INDIVIDUAL'
+        minimumRequirementsInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Requisitos mínimos. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
+          example: 'https://example.com/mobile-insurance'
+    AutosTermsConditions:
+      type: object
+      description: Objeto que reúne informações relativas a Termos e Condições para as contratações
+      required:
+        - susepNumber
+      properties:
+        susepNumber:
+          pattern: '^(\d{14})$|^NA$'
+          description: 'Processo Susep'
+          maxLength: 14
+          example: "50685362000135"
+          type: string
+        termsAndConditionsInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Termos e condições contratuais. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
+          example: 'https://example.com/mobile-insurance'
+    ResponseResidentials:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          required:
+            - brand
+          properties:
+            brand:
+              $ref: '#/components/schemas/ResidentialBrand'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResidentialBrand:
+      type: object
+      required:
+        - name
+        - companies
+      allOf:
+        - $ref: '#/components/schemas/Brand'
+      properties:
+        name:
+          type: string
+          maxLength: 80
+          pattern: \w*\W*
+          description: 'Nome da Marca reportada pelo participante do Open Insurance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes'
+          example: Organização A
+        companies:
+          type: array
+          description: 'Companies traz uma lista de todas as instituições da Marca'
+          items:
+            $ref: '#/components/schemas/ResidentialCompany'
+          minItems: 1
+    ResidentialCompany:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Company'
+      properties:
+        autos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Residential'
+          description: Lista de produtos de residência
+          minItems: 1
+          maxItems: 3
+    Residential:
+      type: object
+      required:
+        - name
+        - code
+        - propertyType
+        - propertyUse
+        - lifetimeType
+        - serviceNetwork
+        - additionals
+        - assistances
+        - coverages
+        - premiumPayments
+        - minimumRequirements
+        - termsConditions
+      properties:
+        name:
+          type: string
+          maxLength: 250
+          pattern: \w*\W*
+          description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade (Campo Livre)'
+          example: Residential Perfil
+        code:
+          type: string
+          maxLength: 100
+          description: 'Código único a ser definido pela sociedade (Campo Livre)'
+          example: RESIDENCIAL_PERFIL
+        propertyType:
+          type: string
+          enum:
+            - CASA
+            - APARTAMENTO
+          description: 'Tipo de imóvel'
+        propertyUse:
+          type: string
+          enum:
+            - HABITUAL
+            - EVENTUAL
+          description: 'Uso do imóvel'
+        requiresProtectiveItems:
+          type: boolean
+          description: 'Indicativo de exigência de itens protecionais (por exemplo, alarmes)'
+          example: false
+        lifetimeType:
+          type: string
+          enum:
+            - ANUAL
+            - ANUAL_INTERMITENTE
+            - PLURIANUAL
+            - PLURIANUAL_INTERMITENTE
+            - MENSAL
+            - MENSAL_INTERMITENTE
+            - DIARIO
+            - DIARIO_INTERMITENTE
+          description: 'Prazo da vigência'
+          example: ANUAL
+        serviceNetwork:
+          type: string
+          enum:
+            - REDE_REFERENCIADA
+            - LIVRE_ESCOLHA
+            - REDE_REFERENCIADA_E_LIVRE_ESCOLHA
+          description: 'Rede de atendimento'
+          example: REDE_REFERENCIADA
+        additionals:
+          $ref: '#/components/schemas/ResidentialsAdditionals'
+        assistances:
+          $ref: '#/components/schemas/ResidentialsAssistances'
+        coverages:
+          $ref: '#/components/schemas/ResidentialsCoverages'
+        premiumPayments:
+          $ref: '#/components/schemas/ResidentialsPremiumPayments'
+        minimumRequirements:
+          $ref: '#/components/schemas/ResidentialsMinimumRequirements'
+        targetAudience:
+          type: array
+          description: 'Lista de público-alvo'
+          items:
+            $ref: '#/components/schemas/TargetAudience'
+          minItems: 1
+          maxItems: 2
+        termsConditions:
+          $ref: '#/components/schemas/ResidentialsTermsConditions'
+    ResidentialsAdditionals:
+      type: array
+      items:
+        $ref: "#/components/schemas/ProductAdditional"
+      description: Lista de adicionais para seguros residenciais
+    ResidentialsAssistances:
+      type: array
+      items:
+        $ref: "#/components/schemas/ProductAssistance"
+      description: Lista de serviços assistenciais complementares (Listagem dos serviços de assistências complementares disponíveis vinculado ao produto. Deve ser padronizada na proposta técnica submetida pela Estrutura Inicial de Governança para observância comum por todas as sociedades participantes)
+    ResidentialsCoverages:
+      type: array
+      items:
+        $ref: "#/components/schemas/ResidentialCoverage"
+      description: Lista de coberturas para seguros residenciais
+    ResidentialCoverage:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 250
+          pattern: \w*\W*
+          description: 'Nome comercial da cobertura, pelo qual é identificado nos canais de distribuição e atendimento da sociedade (Campo Livre)'
+          example: Incêndios
+        code:
+          type: string
+          maxLength: 100
+          description: 'Código único a ser definido pela sociedade (Campo Livre)'
+          example: INCENDIOS
+        description:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Descrição da cobertura. Pode ser informada a URL referente ao endereço onde constam as informações cabíveis.'
+          example: 'https://example.com/mobile-insurance'
+        type:
+          type: string
+          enum:
+            - INCENDIO
+            - QUEDA_DE_RAIO
+            - EXPLOSAO
+            - QUEDA_DE_AERONAVES
+            - FUMAÇA
+            - DANOS_ELETRICOS
+            - DANOS_POR_ÁGUA
+            - RESPONSABILIDADE_CIVIL_FAMILIAR
+            - VENDAVAL
+            - FURACAO
+            - CICLONE
+            - TORNADO
+            - GRANIZO
+            - PERDA_E_PAGAMENTO_DE_ALUGUEL
+            - ROUBO_DE_BENS
+            - FURTO_QUALIFICADO_DE_BENS
+            - FURTO_NAO_QUALIFICADO_DE_BENS
+            - QUEBRA_DE_VIDROS
+            - QUEBRA_DE_ESPELHOS
+            - QUEBRA_DE_MÁRMORES_E_GRANIZOS
+            - IMPACTO_DE_VEÍCULOS
+            - DESMORONAMENTO
+            - TUMULTOS_GREVES_E_LOCKOUTS
+            - DESPESAS_EXTRAORDINÁRIAS
+            - JOIAS
+            - OBRAS_DE_ARTE
+            - MORADIA_TEMPORÁRIA
+          description: 'Tipo de cobertura'
+          example: INCENDIO
+        minimumLmi:
+          type: integer
+          description: 'Valor mínimo de Limite Máximo de Indenização (LMI)'
+          example: 50000
+        maximumLmi:
+          type: integer
+          description: 'Valor máximo de Limite Máximo de Indenização (LMI)'
+          example: 50000
+        minimumDeductible:
+          type: integer
+          description: 'Valor mínimo da franquia (Reais) e/ou Participação Obrigatória do Segurado (Percentual) estabelecida pela sociedade para cada tipo de cobertura do produto'
+          example: 50000
+        maximumDeductible:
+          type: integer
+          description: 'Valor máximo da franquia (Reais) e/ou Participação Obrigatória do Segurado (Percentual) estabelecida pela sociedade para cada tipo de cobertura do produto.'
+          example: 250000
+        conjugatedCoverages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResidentialCoverageConjugated'
+          description: 'Listagem para indicar para cada cobertura quais serão a(s) cobertura(s) que deverá(rão) ser contratadas de forma conjunta.'
+      required:
+        - name
+        - code
+        - type
+        - minimumLmi
+        - maximumLmi
+        - minimumDeductible
+        - maximumDeductible
+    ResidentialCoverageConjugated:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          maxLength: 100
+          description: 'Código único a ser definido pela sociedade (Campo Livre), da cobertura que deve ser conjugada.'
+          example: ARROMBAMENTO
+    ResidentialsPremiumPayments:
+      type: array
+      items:
+        $ref: "#/components/schemas/Payment"
+      minItems: 1
+      maxItems: 2
+      description: Lista opções de pagamento de prêmios para produtos e serviços
+    ResidentialsMinimumRequirements:
+      type: object
+      description: Objeto que reúne informações relativas a Requisitos Mínimos para as contratações
+      required:
+        - contractType
+      properties:
+        contractType:
+          type: string
+          description: |
+            Tipo de contratação disponível.
+          enum:
+            - COLETIVO
+            - INDIVIDUAL
+          example: 'INDIVIDUAL'
+        minimumRequirementsInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Requisitos mínimos. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
+          example: 'https://example.com/mobile-insurance'
+    ResidentialsTermsConditions:
+      type: object
+      description: Objeto que reúne informações relativas a Termos e Condições para as contratações
+      required:
+        - susepNumber
+      properties:
+        susepNumber:
+          pattern: '^(\d{14})$|^NA$'
+          description: 'Processo Susep'
+          maxLength: 14
+          example: "50685362000135"
+          type: string
+        termsAndConditionsInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Termos e condições contratuais. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
+          example: 'https://example.com/mobile-insurance'
+    Brand:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          maxLength: 80
+          pattern: \w*\W*
+          description: Nome da Marca selecionada pelas Organizações
+          example: Organização A
+    Company:
+      type: object
+      required:
+        - name
+        - cnpjNumber
+      allOf:
+        - $ref: '#/components/schemas/CNPJ'
+      properties:
+        name:
+          type: string
+          description: Nome da Instituição, pertencente à marca. p.ex.'Empresa da Organização A'
+          maxLength: 80
+          pattern: \w*\W*
+          example: 'Empresa A1'
+        urlComplementaryList:
+          type: string
+          pattern: \w*\W*
+          maxLength: 1024
+          description: |
+            URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
+            Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
+          example: 'https://empresadaorganizacaoa.com/complementarylist'
+    ProductAdditional:
+      type: object
+      description: 'Adicionais de produtos'
+      required:
+        - name
+        - code
+      properties:
+        name:
+          type: string
+          maxLength: 250
+          pattern: \w*\W*
+          description: 'Nome comercial do adicional, pelo qual é identificado nos canais de distribuição e atendimento da sociedade (Campo Livre)'
+          example: Sorteio
+        code:
+          type: string
+          maxLength: 100
+          description: 'Código único a ser definido pela sociedade (Campo Livre)'
+          example: SORTEIO
+        description:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Descrição do adicional. Pode ser informada a URL referente ao endereço onde constam as informações cabíveis.'
+          example: 'https://example.com/mobile-insurance'
+    ProductAssistance:
+      type: object
+      description: 'Serviços Assistenciais Complementares'
+      required:
+        - name
+        - code
+      properties:
+        name:
+          type: string
+          maxLength: 250
+          pattern: \w*\W*
+          description: 'Nome comercial da assitência, pelo qual é identificado nos canais de distribuição e atendimento da sociedade (Campo Livre)'
+          example: Chaveiro 24 horas
+        code:
+          type: string
+          maxLength: 100
+          description: 'Código único a ser definido pela sociedade (Campo Livre)'
+          example: CHAVEIRO_24_HORAS
+        description:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Descrição da assitência. Pode ser informada a URL referente ao endereço onde constam as informações cabíveis.'
+          example: 'https://example.com/mobile-insurance'
+    TargetAudience:
+      type: string
+      description: 'Público alvo de determinados produtos e serviços'
+      enum:
+        - PESSOA_NATURAL
+        - PESSOA_JURIDICA
+      example: 'PESSOA_NATURAL'
+    GeographicScopeCountry:
+      type: string
+      description: 'Código de países, segundo modelo ISO-3166'
+      example: 'USA'
+    Payment:
+      type: object
+      required:
+        - type
+        - methods
+      properties:
+        type:
+          $ref: '#/components/schemas/PaymentTypes'
+        methods:
+          type: array
+          description: 'Lista de meios de pagamentos disponíveis para o tipo'
+          items:
+            $ref: '#/components/schemas/PaymentMethods'
+          minItems: 1
+    PaymentMethods:
+      type: string
+      description: |
+        Meios de pagamentos dispíveis.
+      enum:
+        - CARTAO_DE_CREDITO
+        - DEBITO_EM_CONTA
+        - BOLETO_BANCARIO
+        - PIX
+      example: 'PIX'
+    PaymentTypes:
+      type: string
+      description: |
+        Formas de pagamentos dispíveis.
+      enum:
+        - A_VISTA
+        - PARCELADO
+      example: 'A_VISTA'
+    CNPJ:
+      type: object
+      required:
+        - cnpjNumber
+      properties:
+        cnpjNumber:
+          type: string
+          pattern: '^(\d{14})$|^NA$'
+          description: CNPJ
+          maxLength: 14
+          example: "50685362000135"
+    Links:
+      type: object
+      properties:
+        self:
+          type: string
+          description: URL da página atualmente requisitada
+          example: 'https://api.sociedade.com.br/open-insurance/products-services/v1/<resource>'
+        first:
+          type: string
+          description: URL da primeira página de registros
+          example: 'https://api.sociedade.com.br/open-insurance/products-services/v1/<resource>'
+        prev:
+          type: string
+          description: URL da página anterior de registros
+        next:
+          type: string
+          description: URL da próxima página de registros
+        last:
+          type: string
+          description: URL da última página de registros
+          example: 'https://api.sociedade.com.br/open-insurance/products-services/v1/<resource>'
+    Meta:
+      type: object
+      properties:
+        totalRecords:
+          type: integer
+          description: Total de registros encontrados
+          example: 1
+        totalPages:
+          type: integer
+          description: Total de páginas para os registros encontrados
+          example: 1
+      required:
+        - totalRecords
+        - totalPages
+  parameters:
+    page:
+      name: page
+      in: query
+      description: Número da página que está sendo requisitada (o valor da primeira página é 1).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    pageSize:
+      name: page-size
+      in: query
+      description: Quantidade total de registros por páginas.
+      schema:
+        type: integer
+        default: 25
+        minimum: 1

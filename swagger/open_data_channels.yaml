@@ -700,6 +700,24 @@ components:
                           areaCode: '14'
                           number: '997865532'
                           additionalInfo: 'NA'
+                    availability:
+                      standards:
+                        - weekday: SEGUNDA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: TERCA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: QUARTA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: QUINTA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: SEXTA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                      exception: 'Exceto feriados municipais, estaduais e nacionais'
                     services:
                       - name: 'INFORMACOES_SOBRE_SERVICOS_DE_ASSISTENCIAS'
                         code: 'INFORMACOES_SOBRE_SERVICOS_DE_ASSISTENCIAS'
@@ -723,6 +741,24 @@ components:
                           areaCode: '14'
                           number: '40044828'
                           additionalInfo: 'DDI '' '', DDD '' '', 40044828, ''Para demais localidades'''
+                    availability:
+                      standards:
+                        - weekday: SEGUNDA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: TERCA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: QUARTA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: QUINTA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: SEXTA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                      exception: 'Exceto feriados municipais, estaduais e nacionais'
                     services:
                       - name: 'INFORMACOES_GERAIS_DUVIDAS'
                         code: 'INFORMACOES_GERAIS_DUVIDAS'
@@ -745,6 +781,24 @@ components:
                           areaCode: '14'
                           number: '40045555'
                           additionalInfo: 'DDI '' '', DDD '' '', 40045555, ''Para demais localidades'''
+                    availability:
+                      standards:
+                        - weekday: SEGUNDA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: TERCA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: QUARTA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: QUINTA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: SEXTA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                      exception: 'Exceto feriados municipais, estaduais e nacionais'
                     services:
                       - name: 'RECLAMACOES'
                         code: 'RECLAMACOES'
@@ -762,6 +816,24 @@ components:
                           areaCode: 'NA'
                           number: '40043277'
                           additionalInfo: 'DDI '' '', DDD '' '', 40043277, ''Para regiões localidades'''
+                    availability:
+                      standards:
+                        - weekday: SEGUNDA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: TERCA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: QUARTA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: QUINTA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                        - weekday: SEXTA_FEIRA
+                          openingTime: '10:00:57Z'
+                          closingTime: '16:00:57Z'
+                      exception: 'Exceto feriados municipais, estaduais e nacionais'
                     services:
                       - name: 'OUTROS_PRODUTOS_SERVICOS'
                         code: 'OUTROS_PRODUTOS_SERVICOS'
@@ -826,6 +898,8 @@ components:
       properties:
         identification:
           $ref: '#/components/schemas/PhoneChannelIdentification'
+        availability:
+          $ref: '#/components/schemas/PhoneChannelAvailability'
         services:
           type: array
           items:
@@ -835,6 +909,7 @@ components:
           description: Traz a relação de serviços disponbilizados pelo Canal de Atendimento
       required:
         - identification
+        - availability
         - services
     PhoneChannelIdentification:
       type: object
@@ -866,6 +941,49 @@ components:
             $ref: '#/components/schemas/PhoneChannelPhone'
           minItems: 1
           description: "Lista de telefones do Canal de Atendimento"
+    PhoneChannelAvailability:
+      type: object
+      properties:
+        standards:
+          type: array
+          description: Lista disponibilidade padrão do canal telefônico por dias da semana
+          items:
+            properties:
+              weekday:
+                type: string
+                enum:
+                  - DOMINGO
+                  - SEGUNDA_FEIRA
+                  - TERCA_FEIRA
+                  - QUARTA_FEIRA
+                  - QUINTA_FEIRA
+                  - SEXTA_FEIRA
+                  - SABADO
+                description: Dia da semana de abertura do canal telefônico
+              openingTime:
+                type: string
+                description: Horário de abertura do canal telefônico (UTC)
+                maxLength: 13
+                pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$
+              closingTime:
+                type: string
+                description: Horário de fechamento do canal telefônico (UTC)
+                maxLength: 13
+                pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$
+            required:
+              - weekday
+              - openingTime
+              - closingTime
+          minItems: 1
+          maxItems: 7
+        exception:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: Em campo texto devem ser registradas todas as Exceções para o não atendimento.
+      required:
+        - standards
+        - exception
     PhoneChannelPhone:
       type: object
       required:
