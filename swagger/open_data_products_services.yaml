@@ -12,8 +12,25 @@ tags:
   - name: Personals
   - name: Pension Plans
   - name: Residentials
-  - name: Prize-linked Bonds
+  - name: Prize-Linked Bonds
 paths:
+  #  /personals:
+  #    get:
+  #      tags:
+  #        - Personals
+  #      summary: Obtém dados dos seguros de pessoas com cobertura por sobrevivência
+  #      description: Obtém dados dos seguros de pessoas com cobertura por sobrevivência (excluindo Seguros Dotais)
+  #      operationId: getPersonals
+  #      parameters:
+  #        - $ref: "#/components/parameters/page"
+  #        - $ref: "#/components/parameters/pageSize"
+  #      responses:
+  #        '200':
+  #          description: Dados sobre seguros de pessoas obtidos com sucesso.
+  #          content:
+  #            application/json:
+  #              schema:
+  #                $ref: '#/components/schemas/ResponseAutos'
   /autos:
     get:
       tags:
@@ -31,6 +48,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseAutos'
+                #  /pension-plans:
+                #    get:
+                #      tags:
+                #        - Pension Plans
+                #      summary: Obtém dados dos planos de previência com cobertura por sobrevivência
+                #      description: Obtém dados dos planos de previência com cobertura por sobrevivência (excluindo Seguros Dotais)
+                #      operationId: getAutos
+                #      parameters:
+                #        - $ref: "#/components/parameters/page"
+                #        - $ref: "#/components/parameters/pageSize"
+                #      responses:
+                #        '200':
+                #          description: Dados sobre planos de previência obtidos com sucesso.
+                #          content:
+                #            application/json:
+                #              schema:
+                #                $ref: '#/components/schemas/ResponseAutos'
   /residentials:
     get:
       tags:
@@ -48,42 +82,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseResidentials'
-
-#  /personals:
-#    get:
-#      tags:
-#        - Personals
-#      summary: Obtém dados dos seguros de pessoas com cobertura por sobrevivência
-#      description: Obtém dados dos seguros de pessoas com cobertura por sobrevivência (excluindo Seguros Dotais)
-#      operationId: getPersonals
-#      parameters:
-#        - $ref: "#/components/parameters/page"
-#        - $ref: "#/components/parameters/pageSize"
-#      responses:
-#        '200':
-#          description: Dados sobre seguros de pessoas obtidos com sucesso.
-#          content:
-#            application/json:
-#              schema:
-#                $ref: '#/components/schemas/ResponseAutos'
-#  /pension-plans:
-#    get:
-#      tags:
-#        - Pension Plans
-#      summary: Obtém dados dos planos de previência com cobertura por sobrevivência
-#      description: Obtém dados dos planos de previência com cobertura por sobrevivência (excluindo Seguros Dotais)
-#      operationId: getAutos
-#      parameters:
-#        - $ref: "#/components/parameters/page"
-#        - $ref: "#/components/parameters/pageSize"
-#      responses:
-#        '200':
-#          description: Dados sobre planos de previência obtidos com sucesso.
-#          content:
-#            application/json:
-#              schema:
-#                $ref: '#/components/schemas/ResponseAutos'
-
+  /prize-linked-bonds:
+    get:
+      tags:
+        - Prize-Linked Bonds
+      summary: Obtém dados dos títulos de capitalização
+      description: Obtém dados dos títulos de capitalização
+      operationId: getPrizeLinkedBonds
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/pageSize"
+      responses:
+        '200':
+          description: Dados sobre títulos de capitalização obtidos com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePrizeLinkedBonds'
 components:
   schemas:
     ResponseAutos:
@@ -155,7 +170,7 @@ components:
           type: string
           maxLength: 250
           pattern: \w*\W*
-          description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade (Campo Livre)'
+          description: 'Nome fantasia do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade (Campo Livre)'
           example: Auto Perfil
         code:
           type: string
@@ -275,17 +290,24 @@ components:
           description: 'Tipo de cobertura'
           example: CASCO_COLISAO_INDENIZACAO_PARCIAL
         minimumLmi:
-          type: integer
-          description: 'Valor mínimo de Limite Máximo de Indenização (LMI)'
-          example: 50000
+          type: string
+          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          maxLength: 12
+          x-cds-type: AmountString
+          description: Valor mínimo de Limite Máximo de Indenização (LMI)
+          example: '50000.00'
         maximumLmi:
-          type: integer
-          description: 'Valor máximo de Limite Máximo de Indenização (LMI)'
-          example: 50000
+          type: string
+          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          maxLength: 12
+          x-cds-type: AmountString
+          description: Valor máximo de Limite Máximo de Indenização (LMI)
+          example: '150000.00'
         maximumFullIndemity:
-          type: number
+          type: string
+          pattern: '(^[0-9](\.[0-9]{2})$|^NA$)'
           description: 'Percentual do Limite Máximo de Indenização para caracterização de indenização integral.'
-          example: 100
+          example: '100.0'
         isFullIndemity:
           type: boolean
           description: 'Franquia para Indenização Integral'
@@ -300,13 +322,19 @@ components:
             Tipo de franquia
             Listagem de tipo de franquia para cada tipo de cobertura do produto.
         minimumDeductible:
-          type: integer
-          description: 'Valor mínimo de franquia estabelecida pela sociedade para cada cobertura. Será de preenchimento obrigatório caso o campo minimumDeductible esteja preenchido como true'
-          example: 50000
+          type: string
+          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          maxLength: 12
+          x-cds-type: AmountString
+          description: Valor mínimo de franquia estabelecida pela sociedade para cada cobertura. Será de preenchimento obrigatório caso o campo minimumDeductible esteja preenchido como true
+          example: '50000.00'
         maximumDeductible:
-          type: integer
-          description: 'Valor máximo de franquia estabelecida pela sociedade para cada cobertura. Será de preenchimento obrigatório caso o campo minimumDeductible esteja preenchido como true'
-          example: 250000
+          type: string
+          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          maxLength: 12
+          x-cds-type: AmountString
+          description: Valor máximo de franquia estabelecida pela sociedade para cada cobertura. Será de preenchimento obrigatório caso o campo minimumDeductible esteja preenchido como true
+          example: '250000.00'
         contractBasis:
           type: string
           enum:
@@ -484,7 +512,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/Company'
       properties:
-        autos:
+        residentials:
           type: array
           items:
             $ref: '#/components/schemas/Residential'
@@ -511,7 +539,7 @@ components:
           type: string
           maxLength: 250
           pattern: \w*\W*
-          description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade (Campo Livre)'
+          description: 'Nome fantasia do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade (Campo Livre)'
           example: Residential Perfil
         code:
           type: string
@@ -642,21 +670,33 @@ components:
           description: 'Tipo de cobertura'
           example: INCENDIO
         minimumLmi:
-          type: integer
-          description: 'Valor mínimo de Limite Máximo de Indenização (LMI)'
-          example: 50000
+          type: string
+          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          maxLength: 12
+          x-cds-type: AmountString
+          description: Valor mínimo de Limite Máximo de Indenização (LMI)
+          example: '50000.00'
         maximumLmi:
-          type: integer
-          description: 'Valor máximo de Limite Máximo de Indenização (LMI)'
-          example: 50000
+          type: string
+          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          maxLength: 12
+          x-cds-type: AmountString
+          description: Valor máximo de Limite Máximo de Indenização (LMI)
+          example: '150000.00'
         minimumDeductible:
-          type: integer
-          description: 'Valor mínimo da franquia (Reais) e/ou Participação Obrigatória do Segurado (Percentual) estabelecida pela sociedade para cada tipo de cobertura do produto'
-          example: 50000
+          type: string
+          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          maxLength: 12
+          x-cds-type: AmountString
+          description: Valor mínimo da franquia (Reais) e/ou Participação Obrigatória do Segurado (Percentual) estabelecida pela sociedade para cada tipo de cobertura do produto
+          example: '50000.00'
         maximumDeductible:
-          type: integer
-          description: 'Valor máximo da franquia (Reais) e/ou Participação Obrigatória do Segurado (Percentual) estabelecida pela sociedade para cada tipo de cobertura do produto.'
-          example: 250000
+          type: string
+          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          maxLength: 12
+          x-cds-type: AmountString
+          description: Valor máximo da franquia (Reais) e/ou Participação Obrigatória do Segurado (Percentual) estabelecida pela sociedade para cada tipo de cobertura do produto.
+          example: '250000.00'
         conjugatedCoverages:
           type: array
           items:
@@ -725,6 +765,305 @@ components:
           pattern: \w*\W*
           description: 'Termos e condições contratuais. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
           example: 'https://example.com/mobile-insurance'
+    ResponsePrizeLinkedBonds:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          required:
+            - brand
+          properties:
+            brand:
+              $ref: '#/components/schemas/PrizeLinkedBondBrand'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    PrizeLinkedBondBrand:
+      type: object
+      required:
+        - name
+        - companies
+      allOf:
+        - $ref: '#/components/schemas/Brand'
+      properties:
+        name:
+          type: string
+          maxLength: 80
+          pattern: \w*\W*
+          description: 'Nome da Marca reportada pelo participante do Open Insurance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes'
+          example: Organização A
+        companies:
+          type: array
+          description: 'Companies traz uma lista de todas as instituições da Marca'
+          items:
+            $ref: '#/components/schemas/PrizeLinkedBondCompany'
+          minItems: 1
+    PrizeLinkedBondCompany:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Company'
+      properties:
+        prizeLinkedBonds:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrizeLinkedBond'
+          description: Lista de produtos de título de capitalização
+          minItems: 1
+          maxItems: 3
+    PrizeLinkedBond:
+      type: object
+      required:
+        - name
+        - code
+        - modality
+        - defrayal
+        - lifetimeMonths
+        - shares
+        - interestRate
+        - amount
+        - correctionIndex
+        - prizeDraw
+        - prizeWithdraw
+        - latePayment
+        - additionals
+        - premiumPayments
+        - minimumRequirements
+        - termsConditions
+      properties:
+        name:
+          type: string
+          maxLength: 250
+          pattern: \w*\W*
+          description: 'Nome fantasia do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade (Campo Livre)'
+          example: Minha Capitalização
+        code:
+          type: string
+          maxLength: 100
+          description: 'Código único a ser definido pela sociedade (Campo Livre)'
+          example: MINHA_CAPITAZALICAO
+        modality:
+          type: string
+          enum:
+            - TRADICIONAL
+            - INSTRUMENTO_DE_GARANTIA
+            - COMPRA_PROGRAMADA
+            - POPULAR
+            - INCENTIVO
+            - FILANTROPIA_PREMIÁVEL
+          description: 'Modalidade'
+          example: TRADICIONAL
+        defrayal:
+          type: string
+          enum:
+            - PAGAMENTO_UNICO
+            - PAGAMENTO_MENSAL
+            - PAGAMENTO_PERIODICO
+          description: 'Forma de custeio'
+          example: PAGAMENTO_UNICO
+        lifetimeMonths:
+          type: integer
+          description: Prazo em meses de vigência
+          example: 12
+        shares:
+          $ref: '#/components/schemas/PrizeLinkedBondsShares'
+        interestRate:
+          type: string
+          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
+          description: 'Taxa de juros que remunera a provisão matemática para capitalização.'
+          example: '6.82'
+        amount:
+          type: string
+          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          maxLength: 12
+          x-cds-type: AmountString
+          description: 'Valor de contribuição. Na modalidade Tradicional, informar a faixa de valor mínimo e máximo em R$ de contribuição ao plano. Para as demais modalidades, informar a lista com os valores permitidos de contribuição ao plano. Em todas as situações indicar para qual periodicidade de pagamento se aplicam os valores: pagamento mensal, pagamento único ou periódico.'
+          example: '89.90'
+        correctionIndex:
+          type: string
+          enum:
+            - IPCA
+            - IGP_M
+            - INPC
+            - TR
+          description: 'Índice utilizado na correção que remunera a provisão matemática para capitalização'
+          example: IPCA
+        prizeDraw:
+          $ref: '#/components/schemas/PrizeLinkedBondsPrizeDraw'
+        prizeWithdraw:
+          $ref: '#/components/schemas/PrizeLinkedBondsPrizeWithdraw'
+        latePayment:
+          $ref: '#/components/schemas/PrizeLinkedBondsLatePayment'
+        additionals:
+          $ref: '#/components/schemas/PrizeLinkedBondsAdditionals'
+        premiumPayments:
+          $ref: '#/components/schemas/PrizeLinkedBondsPremiumPayments'
+        minimumRequirements:
+          $ref: '#/components/schemas/PrizeLinkedBondsMinimumRequirements'
+        targetAudience:
+          type: array
+          description: 'Lista de público-alvo'
+          items:
+            $ref: '#/components/schemas/TargetAudience'
+          minItems: 1
+          maxItems: 2
+        termsConditions:
+          $ref: '#/components/schemas/PrizeLinkedBondsTermsConditions'
+    PrizeLinkedBondsPrizeDraw:
+      type: object
+      description: Objeto que reúne informações relativas a Sorteios
+      required:
+        - quantityInfo
+        - frequencyInfo
+        - valuesInfo
+        - probabilitiesInfo
+      properties:
+        quantityInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Informação sobre a quantidade de sorteios. Pode ser informada a URL referente ao endereço onde constam informações.'
+          example: 'https://example.com/prize-linked-bond'
+        frequencyInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Informação sobre a periodicidade de sorteios. Pode ser informada a URL referente ao endereço onde constam informações.'
+          example: 'https://example.com/prize-linked-bond'
+        valuesInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Informação sobre os valores dos sorteios. Pode ser informada a URL referente ao endereço onde constam informações.'
+          example: 'https://example.com/prize-linked-bond'
+        probabilitiesInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Informação sobre a probabilidade mínima de contemplação nos sorteios. Pode ser informada a URL referente ao endereço onde constam informações.'
+          example: 'https://example.com/prize-linked-bond'
+        hasEarlySettlement:
+          type: boolean
+          description: 'Liquidação antecipada em Sorteio.'
+          example: true
+        hasMandatoryContemplation:
+          type: boolean
+          description: 'Contemplação obrigatória.'
+          example: false
+    PrizeLinkedBondsPrizeWithdraw:
+      type: object
+      description: Objeto que reúne informações relativas a Resgates
+      required:
+        - percentage
+        - gracePeriod
+        - lifetimeEndPercentage
+      properties:
+        percentage:
+          type: string
+          pattern: '(^[0-9](\.[0-9]{2})$|^NA$)'
+          description: 'Valor percentual de resgate permitido.'
+          example: '25.0'
+        gracePeriod:
+          type: integer
+          description: 'Prazo de carência para resgate em dias.'
+          example: 30
+        lifetimeEndPercentage:
+          type: string
+          pattern: '(^[0-9](\.[0-9]{2})$|^NA$)'
+          description: 'Percentual mínimo da soma das contribuições efetuadas que poderá ser resgatado ao final da vigência'
+          example: '100.0'
+    PrizeLinkedBondsShares:
+      type: object
+      description: Objeto que reúne informações relativas a Quotas da capitalização
+      required:
+        - amount
+        - prizeDraw
+        - taxes
+      properties:
+        amount:
+          type: string
+          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          maxLength: 12
+          x-cds-type: AmountString
+          description: Valor ou percentual do valor arrecadado destinado à entidade beneficente (modalidade Filantropia Premiável) ou destinado a formar o montante capitalizado (demais modalidades).
+          example: '2000.00'
+        prizeDraw:
+          type: string
+          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          maxLength: 12
+          x-cds-type: AmountString
+          description: Valor ou percentual do valor arrecadado destinado a custear os sorteios previstos no plano.
+          example: '40000.00'
+        taxes:
+          type: string
+          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
+          description: 'Percentual do valor arrecadado destinado a cobrir as despesas gerais com a colocação e administração do plano'
+          example: '0.6865'
+    PrizeLinkedBondsLatePayment:
+      type: object
+      description: Objeto que reúne informações relativas a Atrasos de Pagamentos
+      required:
+        - interest
+        - suspentionDays
+        - taxes
+      properties:
+        interest:
+          type: string
+          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
+          description: 'Juros de mora em caso de atraso no pagamento do resgate ou sorteio.'
+          example: '2.30'
+        suspentionDays:
+          type: integer
+          description: 'Prazo máximo em dias que o título fica suspenso por atraso de pagamento, antes de ser cancelado.'
+          example: 90
+        hasLifetimeExtension:
+          type: boolean
+          description: 'Alteração do prazo de vigência original, pela suspensão'
+          example: true
+    PrizeLinkedBondsAdditionals:
+      type: array
+      items:
+        $ref: "#/components/schemas/ProductAdditional"
+      description: Lista de adicionais para título de capitalização
+    PrizeLinkedBondsPremiumPayments:
+      type: array
+      items:
+        $ref: "#/components/schemas/Payment"
+      minItems: 1
+      maxItems: 2
+      description: Lista opções de pagamento de prêmios para produtos e serviços
+    PrizeLinkedBondsMinimumRequirements:
+      type: object
+      description: Objeto que reúne informações relativas a Requisitos Mínimos para as contratações
+      properties:
+        minimumRequirementsInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Requisitos mínimos. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
+          example: 'https://example.com/prize-linked-bond'
+    PrizeLinkedBondsTermsConditions:
+      type: object
+      description: Objeto que reúne informações relativas a Termos e Condições para as contratações
+      required:
+        - susepNumber
+      properties:
+        susepNumber:
+          pattern: '^(\d{14})$|^NA$'
+          description: 'Processo Susep'
+          maxLength: 14
+          example: "50685362000135"
+          type: string
+        termsAndConditionsInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Termos e condições contratuais. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
+          example: 'https://example.com/prize-linked-bond'
     Brand:
       type: object
       required:
