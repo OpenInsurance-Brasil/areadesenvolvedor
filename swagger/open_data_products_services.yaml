@@ -64,7 +64,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponsePersonals'
+                $ref: '#/components/schemas/ResponsePensionPlans'
   /residentials:
     get:
       tags:
@@ -124,8 +124,6 @@ components:
       required:
         - name
         - companies
-      allOf:
-        - $ref: '#/components/schemas/Brand'
       properties:
         name:
           type: string
@@ -141,6 +139,10 @@ components:
           minItems: 1
     AutoCompany:
       type: object
+      required:
+        - name
+        - cnpjNumber
+        - autos
       allOf:
         - $ref: '#/components/schemas/Company'
       properties:
@@ -492,8 +494,6 @@ components:
       required:
         - name
         - companies
-      allOf:
-        - $ref: '#/components/schemas/Brand'
       properties:
         name:
           type: string
@@ -509,6 +509,10 @@ components:
           minItems: 1
     PersonalCompany:
       type: object
+      required:
+        - name
+        - cnpjNumber
+        - personals
       allOf:
         - $ref: '#/components/schemas/Company'
       properties:
@@ -583,6 +587,10 @@ components:
             - BENEFICIO_DEFINIDO
           description: 'Modalidade de plano por sobrevivência gerador de benefícios'
           example: BENEFICIO_DEFINIDO
+        survivorBenefitPlanDeferralPeriod:
+          $ref: '#/components/schemas/PersonalsDeferralPeriod'
+        survivorBenefitPlanGrantPeriod:
+          $ref: '#/components/schemas/PersonalsGrantPeriod'
         portabilityDays:
           type: integer
           description: 'Prazo de carência em dias.'
@@ -823,6 +831,175 @@ components:
       minItems: 1
       maxItems: 2
       description: Lista opções de pagamento de prêmios para produtos e serviços
+    PersonalsDeferralPeriod:
+      type: object
+      required:
+        - interestRate
+        - correctionIndex
+        - withdraw
+        - portability
+        - investmentFunds
+      properties:
+        interestRate:
+          type: number
+          format: double
+          description: 'Taxa de juros garantida que remunera o plano durante a fase de diferimento / acumulação.'
+          example: 6.82
+        correctionIndex:
+          type: string
+          enum:
+            - IPCA
+            - IGP_M
+            - INPC
+            - TR
+          description: 'Índice garantido que remunera o plano durante a fase de diferimento/ acumulação'
+          example: IPCA
+        otherGuaranteedMinimumPerformance:
+          type: number
+          format: double
+          description: 'Para produtos do tipo PDR e VDR, indicação do percentual e do índice de ampla divulgação utilizados como garantia mínima de desempenho.'
+          example: 25.0
+        hasExtraordinaryContributions:
+          type: boolean
+          description: 'Permissão para aportes extraordinários.'
+          example: false
+        hasScheduledPayments:
+          type: boolean
+          description: 'Permissão para pagamentos financeiros programados.'
+          example: true
+        withdraw:
+          $ref: '#/components/schemas/PersonalsDeferralPeriodWithdraw'
+        portability:
+          $ref: '#/components/schemas/PersonalsDeferralPeriodPortability'
+        investmentFunds:
+          $ref: '#/components/schemas/PersonalsInvestmentFunds'
+    PersonalsDeferralPeriodWithdraw:
+      type: object
+      description: Objeto que reúne informações relativas a Resgates nos planos de previdência
+      required:
+        - gracePeriod
+      properties:
+        gracePeriod:
+          type: integer
+          description: 'Prazo de carência para resgate em dias.'
+          example: 60
+        gracePeriodBetweenRequests:
+          type: integer
+          description: 'Prazo de carência entre pedidos de resgate em dias.'
+          example: 90
+        gracePeriodForPayments:
+          type: integer
+          description: 'Prazo para pagamento do resgate em dias.'
+          example: 5
+    PersonalsDeferralPeriodPortability:
+      type: object
+      description: Objeto que reúne informações relativas a Porabilidades nos planos de previdência
+      required:
+        - gracePeriod
+      properties:
+        gracePeriod:
+          type: integer
+          description: 'Prazo de carência para pedidos de portabilidade em dias.'
+          example: 60
+        gracePeriodBetweenRequests:
+          type: integer
+          description: 'Prazo de carência entre pedidos de portabilidade em dias.'
+          example: 90
+        gracePeriodForPayments:
+          type: integer
+          description: 'Prazo para pagamento do portabilidade em dias.'
+          example: 5
+    PersonalsGrantPeriod:
+      type: object
+      required:
+        - incomeModality
+        - interestRate
+        - correctionIndex
+        - biometricBoard
+        - investmentFunds
+      properties:
+        incomeModality:
+          type: string
+          description: |
+            Modalidades de renda.
+          enum:
+            - CERTA
+            - TEMPORARIA
+            - TEMPORARIA_REVERSIVEL
+            - TEMPORARIO_COM_MINIMO_GARANTIDO
+            - TEMPORARIA_REVERSIVEL_COM_MINIMO_GARANTIDO
+            - VITALICIA
+            - VITALICIA_REVERSIVEL
+            - VITALICIA_COM_O_MINIMO_GARANTIDO
+            - VITALICIA_REVERSIVEL_COMO_MINIMO_GARANTIDO
+          example: 'TEMPORARIA'
+        interestRate:
+          type: number
+          format: double
+          description: 'Taxa de juros garantida utilizada para conversão em renda.'
+          example: 6.82
+        correctionIndex:
+          type: string
+          enum:
+            - IPCA
+            - IGP_M
+            - INPC
+            - TR
+          description: 'Índice utilizado na atualização da renda na fase de concessão.'
+          example: IPCA
+        biometricBoard:
+          type: string
+          enum:
+            - AT_2000_FEMALE
+            - AT_2000_FEMALE_SUAVIZADA_10%
+            - AT_2000_FEMALE_SUAVIZADA_15%
+            - AT_2000_MALE
+            - AT_2000_MALE_SUAVIZADA_10%
+            - AT_2000_MALE_SUAVIZADA_15%
+            - AT_83_FEMALE
+            - AT_83_MALE
+            - BR_EMSSB_FEMALE
+            - BR_EMSSB_MALE
+          description: 'Tábua biométrica utilizada como parâmetro para conversão em renda atuarial que deve observar a relação discriminada de coberturas.'
+          example: AT_2000_MALE_SUAVIZADA_10%
+        investmentFunds:
+          $ref: '#/components/schemas/PersonalsInvestmentFunds'
+    PersonalsInvestmentFunds:
+      type: array
+      items:
+        $ref: "#/components/schemas/PersonalsInvestmentFund"
+      description: Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação.
+    PersonalsInvestmentFund:
+      type: object
+      description: Objeto que reúne informações relativas a Fundos de Investimentos para os planos de previdência.
+      required:
+        - cnpjNumber
+        - name
+      properties:
+        name:
+          type: string
+          maxLength: 250
+          pattern: \w*\W*
+          description: 'Nome fantasia do fundo de investimento.'
+          example: Fundo Total Mais
+        maximumAdministrationTaxes:
+          type: number
+          format: double
+          description: 'Taxa Máxima de administração do fundo de investimento.'
+          example: 6.0
+        maximumPerformanceTaxes:
+          type: number
+          format: double
+          description: 'Taxa Máxima de performance do fundo de investimento.'
+          example: 6.0
+        eligibilityRule:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Regra de elegibilidade, incluindo minimamente: valor mínimo de contribuição, valor mínimo de provisão matemática, entre outros que poderão ser padronizados. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
+          example: 'https://example.com/fundo-total-mais'
+      allOf:
+        - $ref: '#/components/schemas/CNPJ'
     PersonalsMinimumRequirements:
       type: object
       description: Objeto que reúne informações relativas a Requisitos Mínimos para as contratações
@@ -867,6 +1044,347 @@ components:
           pattern: \w*\W*
           description: 'Termos e condições contratuais. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
           example: 'https://example.com/mobile-insurance'
+    ResponsePensionPlans:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          required:
+            - brand
+          properties:
+            brand:
+              $ref: '#/components/schemas/PensionPlanBrand'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    PensionPlanBrand:
+      type: object
+      required:
+        - name
+        - companies
+      properties:
+        name:
+          type: string
+          maxLength: 80
+          pattern: \w*\W*
+          description: 'Nome da Marca reportada pelo participante do Open Insurance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes'
+          example: Organização A
+        companies:
+          type: array
+          description: 'Companies traz uma lista de todas as instituições da Marca'
+          items:
+            $ref: '#/components/schemas/PensionPlanCompany'
+          minItems: 1
+    PensionPlanCompany:
+      type: object
+      required:
+        - name
+        - cnpjNumber
+        - pensionPlans
+      allOf:
+        - $ref: '#/components/schemas/Company'
+      properties:
+        pensionPlans:
+          type: array
+          items:
+            $ref: '#/components/schemas/PensionPlan'
+          description: Lista dos planos de previdência
+          minItems: 1
+          maxItems: 3
+    PensionPlan:
+      type: object
+      required:
+        - name
+        - code
+        - portabilityDays
+        - currency
+        - indemnityPayments
+        - minimumRequirements
+        - termsConditions
+      properties:
+        name:
+          type: string
+          maxLength: 250
+          pattern: \w*\W*
+          description: 'Nome fantasia do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade (Campo Livre)'
+          example: Prev Mais
+        code:
+          type: string
+          maxLength: 100
+          description: 'Código único a ser definido pela sociedade (Campo Livre)'
+          example: PREV_MAIS
+        survivorBenefitPlan:
+          type: string
+          enum:
+            - PGBL
+            - PRGP
+            - PAGP
+            - PRSA
+            - PRI
+            - PDR
+            - VGBL
+            - VRGP
+            - VRSA
+            - VRI
+            - VDR
+            - OUTROS
+          description: 'Tipo de plano por sobrevivência gerador de benefícios'
+          example: VGBL
+        survivorBenefitPlanModality:
+          type: string
+          enum:
+            - CONTRIBUICAO_VARIAVEL
+            - BENEFICIO_DEFINIDO
+          description: 'Modalidade de plano por sobrevivência gerador de benefícios'
+          example: BENEFICIO_DEFINIDO
+        survivorBenefitPlanDeferralPeriod:
+          $ref: '#/components/schemas/PensionPlansDeferralPeriod'
+        survivorBenefitPlanGrantPeriod:
+          $ref: '#/components/schemas/PensionPlansGrantPeriod'
+        portabilityDays:
+          type: integer
+          description: 'Prazo de carência em dias.'
+          example: 30
+        currency:
+          $ref: "#/components/schemas/Currency"
+        indemnityPayments:
+          $ref: '#/components/schemas/PensionPlansIndemnityPayments'
+        minimumRequirements:
+          $ref: '#/components/schemas/PensionPlansMinimumRequirements'
+        targetAudience:
+          type: array
+          description: 'Lista de público-alvo'
+          items:
+            $ref: '#/components/schemas/TargetAudience'
+          minItems: 1
+          maxItems: 2
+        termsConditions:
+          $ref: '#/components/schemas/PensionPlansTermsConditions'
+    PensionPlansIndemnityPayments:
+      type: array
+      items:
+        $ref: "#/components/schemas/IndemnityPayment"
+      minItems: 1
+      maxItems: 2
+      description: Lista opções de pagamento de indenização para os planos
+    PensionPlansDeferralPeriod:
+      type: object
+      required:
+        - interestRate
+        - correctionIndex
+        - withdraw
+        - portability
+        - investmentFunds
+      properties:
+        interestRate:
+          type: number
+          format: double
+          description: 'Taxa de juros garantida que remunera o plano durante a fase de diferimento / acumulação.'
+          example: 6.82
+        correctionIndex:
+          type: string
+          enum:
+            - IPCA
+            - IGP_M
+            - INPC
+            - TR
+          description: 'Índice garantido que remunera o plano durante a fase de diferimento/ acumulação'
+          example: IPCA
+        otherGuaranteedMinimumPerformance:
+          type: number
+          format: double
+          description: 'Para planos do tipo PDR e VDR, indicação do percentual e do índice de ampla divulgação utilizados como garantia mínima de desempenho.'
+          example: 25.0
+        hasExtraordinaryContributions:
+          type: boolean
+          description: 'Permissão para aportes extraordinários.'
+          example: false
+        hasScheduledPayments:
+          type: boolean
+          description: 'Permissão para pagamentos financeiros programados.'
+          example: true
+        withdraw:
+          $ref: '#/components/schemas/PensionPlansDeferralPeriodWithdraw'
+        portability:
+          $ref: '#/components/schemas/PensionPlansDeferralPeriodPortability'
+        investmentFunds:
+          $ref: '#/components/schemas/PensionPlansInvestmentFunds'
+    PensionPlansDeferralPeriodWithdraw:
+      type: object
+      description: Objeto que reúne informações relativas a Resgates nos planos de previdência
+      required:
+        - gracePeriod
+      properties:
+        gracePeriod:
+          type: integer
+          description: 'Prazo de carência para resgate em dias.'
+          example: 60
+        gracePeriodBetweenRequests:
+          type: integer
+          description: 'Prazo de carência entre pedidos de resgate em dias.'
+          example: 90
+        gracePeriodForPayments:
+          type: integer
+          description: 'Prazo para pagamento do resgate em dias.'
+          example: 5
+    PensionPlansDeferralPeriodPortability:
+      type: object
+      description: Objeto que reúne informações relativas a Porabilidades nos planos de previdência
+      required:
+        - gracePeriod
+      properties:
+        gracePeriod:
+          type: integer
+          description: 'Prazo de carência para pedidos de portabilidade em dias.'
+          example: 60
+        gracePeriodBetweenRequests:
+          type: integer
+          description: 'Prazo de carência entre pedidos de portabilidade em dias.'
+          example: 90
+        gracePeriodForPayments:
+          type: integer
+          description: 'Prazo para pagamento do portabilidade em dias.'
+          example: 5
+    PensionPlansGrantPeriod:
+      type: object
+      required:
+        - incomeModality
+        - interestRate
+        - correctionIndex
+        - biometricBoard
+        - investmentFunds
+      properties:
+        incomeModality:
+          type: string
+          description: |
+            Modalidades de renda.
+          enum:
+            - CERTA
+            - TEMPORARIA
+            - TEMPORARIA_REVERSIVEL
+            - TEMPORARIO_COM_MINIMO_GARANTIDO
+            - TEMPORARIA_REVERSIVEL_COM_MINIMO_GARANTIDO
+            - VITALICIA
+            - VITALICIA_REVERSIVEL
+            - VITALICIA_COM_O_MINIMO_GARANTIDO
+            - VITALICIA_REVERSIVEL_COMO_MINIMO_GARANTIDO
+          example: 'TEMPORARIA'
+        interestRate:
+          type: number
+          format: double
+          description: 'Taxa de juros garantida utilizada para conversão em renda.'
+          example: 6.82
+        correctionIndex:
+          type: string
+          enum:
+            - IPCA
+            - IGP_M
+            - INPC
+            - TR
+          description: 'Índice utilizado na atualização da renda na fase de concessão.'
+          example: IPCA
+        biometricBoard:
+          type: string
+          enum:
+            - AT_2000_FEMALE
+            - AT_2000_FEMALE_SUAVIZADA_10%
+            - AT_2000_FEMALE_SUAVIZADA_15%
+            - AT_2000_MALE
+            - AT_2000_MALE_SUAVIZADA_10%
+            - AT_2000_MALE_SUAVIZADA_15%
+            - AT_83_FEMALE
+            - AT_83_MALE
+            - BR_EMSSB_FEMALE
+            - BR_EMSSB_MALE
+          description: 'Tábua biométrica utilizada como parâmetro para conversão em renda atuarial que deve observar a relação discriminada de coberturas.'
+          example: AT_2000_MALE_SUAVIZADA_10%
+        investmentFunds:
+          $ref: '#/components/schemas/PensionPlansInvestmentFunds'
+    PensionPlansInvestmentFunds:
+      type: array
+      items:
+        $ref: "#/components/schemas/PensionPlansInvestmentFund"
+      description: Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação.
+    PensionPlansInvestmentFund:
+      type: object
+      description: Objeto que reúne informações relativas a Fundos de Investimentos para os planos de previdência.
+      required:
+        - cnpjNumber
+        - name
+      properties:
+        name:
+          type: string
+          maxLength: 250
+          pattern: \w*\W*
+          description: 'Nome fantasia do fundo de investimento.'
+          example: Fundo Total Mais
+        maximumAdministrationTaxes:
+          type: number
+          format: double
+          description: 'Taxa Máxima de administração do fundo de investimento.'
+          example: 6.0
+        maximumPerformanceTaxes:
+          type: number
+          format: double
+          description: 'Taxa Máxima de performance do fundo de investimento.'
+          example: 6.0
+        eligibilityRule:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Regra de elegibilidade, incluindo minimamente: valor mínimo de contribuição, valor mínimo de provisão matemática, entre outros que poderão ser padronizados. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
+          example: 'https://example.com/fundo-total-mais'
+      allOf:
+        - $ref: '#/components/schemas/CNPJ'
+    PensionPlansMinimumRequirements:
+      type: object
+      description: Objeto que reúne informações relativas a Requisitos Mínimos para as contratações
+      required:
+        - contractType
+      properties:
+        contractType:
+          type: string
+          description: |
+            Tipo de contratação disponível.
+          enum:
+            - COLETIVO
+            - COLETIVO_AVERBADO
+            - COLETIVO_INSTITUIDO
+            - INDIVIDUAL
+          example: 'INDIVIDUAL'
+        hasQualifiedParticipant:
+          type: boolean
+          description: 'Indicação se o plano é destinado para participante qualificado (apenas para planos com cobertura de sobrevivência (excluindo Seguros Dotais))'
+          example: false
+        minimumRequirementsInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Requisitos mínimos. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
+          example: 'https://example.com/mobile-insurance'
+    PensionPlansTermsConditions:
+      type: object
+      description: Objeto que reúne informações relativas a Termos e Condições para as contratações
+      required:
+        - susepNumber
+      properties:
+        susepNumber:
+          pattern: '^(\d{14})$|^NA$'
+          description: 'Processo Susep'
+          maxLength: 14
+          example: "50685362000135"
+          type: string
+        termsAndConditionsInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: 'Termos e condições contratuais. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
+          example: 'https://example.com/mobile-insurance'
     ResponseResidentials:
       type: object
       required:
@@ -890,8 +1408,6 @@ components:
       required:
         - name
         - companies
-      allOf:
-        - $ref: '#/components/schemas/Brand'
       properties:
         name:
           type: string
@@ -907,6 +1423,10 @@ components:
           minItems: 1
     ResidentialCompany:
       type: object
+      required:
+        - name
+        - cnpjNumber
+        - residentials
       allOf:
         - $ref: '#/components/schemas/Company'
       properties:
@@ -1186,8 +1706,6 @@ components:
       required:
         - name
         - companies
-      allOf:
-        - $ref: '#/components/schemas/Brand'
       properties:
         name:
           type: string
@@ -1203,6 +1721,10 @@ components:
           minItems: 1
     PrizeLinkedBondCompany:
       type: object
+      required:
+        - name
+        - cnpjNumber
+        - prizeLinkedBonds
       allOf:
         - $ref: '#/components/schemas/Company'
       properties:
@@ -1380,7 +1902,7 @@ components:
       required:
         - amount
         - prizeDraw
-        - taxes
+        - administrationTaxes
       properties:
         amount:
           type: string
@@ -1396,7 +1918,7 @@ components:
           x-cds-type: AmountString
           description: Valor ou percentual do valor arrecadado destinado a custear os sorteios previstos no plano.
           example: '40000.00'
-        taxes:
+        administrationTaxes:
           type: number
           format: double
           description: 'Percentual do valor arrecadado destinado a cobrir as despesas gerais com a colocação e administração do plano'
@@ -1462,17 +1984,6 @@ components:
           pattern: \w*\W*
           description: 'Termos e condições contratuais. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-insurance'' '
           example: 'https://example.com/prize-linked-bond'
-    Brand:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-          maxLength: 80
-          pattern: \w*\W*
-          description: Nome da Marca selecionada pelas Organizações
-          example: Organização A
     Company:
       type: object
       required:

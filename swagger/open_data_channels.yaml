@@ -871,8 +871,8 @@ components:
       type: object
       required:
         - name
-        - phoneChannels
         - cnpjNumber
+        - phoneChannels
       properties:
         name:
           type: string
