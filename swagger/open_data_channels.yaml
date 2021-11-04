@@ -44,8 +44,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/schemas/ResponseBranchesList'        
   /electronic-channels:
     get:
       tags:
@@ -79,8 +77,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/schemas/ResponseElectronicChannelsList'     
   /phone-channels:
     get:
       tags:
@@ -114,8 +110,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/schemas/ResponsePhoneChannelsList'    
 components:
   schemas:
     ResponseBranchesList:
@@ -345,7 +339,7 @@ components:
           maxLength: 3
           example: BRA
         geographicCoordinates:
-          $ref: '#/components/schemas/BranchesGeographicCoordinates'       
+          $ref: '#/components/schemas/BranchesGeographicCoordinates'
     BranchIdentification:
       type: object
       properties:
@@ -371,7 +365,7 @@ components:
           maxLength: 100
           pattern: \w*\W*
           description: Nome da dependência
-          example: Marília      
+          example: Marília
     BranchAvailability:
       type: object
       properties:
@@ -905,7 +899,7 @@ components:
           maxLength: 13
           pattern: ^([0-9]{8,11})$|^NA$
           example: "08007787788"
-          description: "Número de telefone de acesso ao canal."      
+          description: "Número de telefone de acesso ao canal."
     #### PhoneChannelsServices ####
     PhoneChannelsServices:
       type: object
@@ -959,7 +953,7 @@ components:
             - "17"
             - "18"
             - "19"
-          description: "Código dos Serviços efetivamente prestados pelo Canal de Atendimento"    
+          description: "Código dos Serviços efetivamente prestados pelo Canal de Atendimento"
     BranchesGeographicCoordinates:
       type: object
       description: Informação referente a geolocalização informada.
@@ -975,7 +969,7 @@ components:
           type: string
           pattern: ^-?\d{1,3}\.\d{1,8}$
           maxLength: 13
-          example: '-180.836519'  
+          example: '-180.836519'
     LinksPaginated:
       type: object
       properties:
@@ -1047,13 +1041,13 @@ components:
                 description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
                 type: string
                 pattern: '[\w\W\s]*'
-                maxLength: 2048  
+                maxLength: 2048
                 format: date-time
                 example: '2021-08-20T08:30:00Z'
             additionalProperties: false
         meta:
           $ref: '#/components/schemas/MetaPaginated'
-      additionalProperties: false   
+      additionalProperties: false
   parameters:
     page:
       name: page
@@ -1119,4 +1113,4 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError' 
+            $ref: '#/components/schemas/ResponseError'

@@ -102,7 +102,10 @@ components:
               unavailableEndpoints:
                 type: array
                 description: Endpoints com indisponibilidade.
-                example: electronic-channels  
+                items:
+                  type: string
+                example:
+                  - 'https://api.seguradora.com.br/open-insurance/channels/v1/electronic-channels'
         links:
           $ref: '#/components/schemas/Links'
         meta:
