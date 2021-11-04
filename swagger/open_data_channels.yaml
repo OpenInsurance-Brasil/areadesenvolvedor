@@ -4,7 +4,7 @@ info:
   description: As APIs descritas neste documento são referentes as APIs da fase Open Data do Open Insurance Brasil.
   version: 1.0.0
   contact:
-    url: 'https://http://novosite.susep.gov.br'
+    url: 'https://openinsurance.susep.gov.br'
 tags:
   - name: "Channels"
     description: "Operações para listagem de canais de atendimentos"
@@ -251,7 +251,9 @@ components:
           pattern: \w*\W*
         cnpjNumber:
           type: string
+          minLength: 14
           maxLength: 14
+          pattern: '^(\d{14})$|^NA$'
           description: CNPJ da sociedade responsável pelo canal de atendimento - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
         electronicChannels:
           type: array
@@ -321,7 +323,7 @@ components:
           type: string
           description: Código IBGE de Município. A Tabela de Códigos de Municípios do IBGE apresenta a lista dos municípios brasileiros associados a um código composto de 7 dígitos, sendo os dois primeiros referentes ao código da Unidade da Federação.
           maxLength: 7
-          example: 3550308
+          example: "3550308"
         countrySubDivision:
           type: string
           description: Enumeração referente a cada sigla da unidade da federação que identifica o estado ou o distrito federal, no qual o endereço está localizado. São consideradas apenas as siglas para os estados brasileiros.
@@ -331,7 +333,7 @@ components:
           type: string
           description: Código de Endereçamento Postal. Composto por um conjunto numérico de oito dígitos, o objetivo principal do CEP é orientar e acelerar o encaminhamento, o tratamento e a entrega de objetos postados nos Correios, por meio da sua atribuição a localidades, logradouros, unidades dos Correios, serviços, órgãos públicos, empresas e edifícios.
           maxLength: 8
-          example: 17500-001
+          example: "17500001"
         country:
           type: string
           description: Nome do país.
@@ -357,13 +359,13 @@ components:
           maxLength: 4
           pattern: ^\d{4}$|^NA$
           description: Código identificador da dependência
-          example: 0001
+          example: "0001"
         checkDigit:
           type: string
           maxLength: 1
           pattern: \w*\W*
           description: Dígito verificador do código da dependência
-          example: 9
+          example: "9"
         name:
           type: string
           maxLength: 100
@@ -408,6 +410,11 @@ components:
               - closingTime
           minItems: 1
           maxItems: 7
+        exception:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: Em campo texto devem ser registradas todas as Exceções para o não atendimento.
         isPublicAccessAllowed:
           type: boolean
           description: Indica se a instalação da Dependência tem acesso restrito a clientes.
@@ -544,7 +551,7 @@ components:
             - "18"
             - "19"
           description: Código dos Serviços efetivamente prestados pelo Canal de Atendimento
-          example: "PORTABILIDADE"
+          example: "15"
       required:
       - code
       - name
@@ -582,6 +589,13 @@ components:
             - OUTROS
           description: "Tipo de canal de atendimento eletrônico"
           example: "CHAT"
+        additionalInfo:
+          type: string
+          pattern: \w*\W*
+          maxLength: 300
+          description: |
+            Campo de texto livre para descrever complementação de informações necessárias. De preenchimento obrigatório para  o tipo de canal de atendimento 'OUTROS'
+            Restrição: Preenchimento obrigatório para o tipo de canal de atendimento 'OUTROS'
         urls:
           type: array
           items:
@@ -601,7 +615,7 @@ components:
         name:
           type: string
           enum:
-            - ALTERACACOES_FORMA_PAGAMENTO
+            - ALTERACOES_FORMA_PAGAMENTO
             - AVISO_SINISTRO
             - CANCELAMENTO_SUSPENSAO_PAGAMENTO_PREMIOS_CONTRIBUICAO
             - EFETIVACAO_APORTE
@@ -621,7 +635,7 @@ components:
             - SEGUNDA_VIA_DOCUMENTOS_CONTRATUAIS
             - SUGESTOES_ELOGIOS
           description: "Nome dos Serviços efetivamente prestados pelo Canal de Atendimento"
-          example: "ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA"
+          example: "SEGUNDA_VIA_DOCUMENTOS_CONTRATUAIS"
         code:
           type: string
           enum:
@@ -646,7 +660,13 @@ components:
             - "19"
 
           description: "Código dos Serviços efetivamente prestados pelo Canal de Atendimento"
-          example: "RECLAMACAO"
+          example: "01"
+        additionalInfo:
+          type: string
+          maxLength: 2000
+          pattern: \w*\W*
+          description: "Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'"
+          example: "SIC"
     BranchPhone:
       type: object
       properties:
@@ -716,7 +736,7 @@ components:
                           areaCode: '14'
                           number: '997865532'
                     services:
-                      - name: 'ALTERACACOES_FORMA_PAGAMENTO'
+                      - name: 'ALTERACOES_FORMA_PAGAMENTO'
                         code: '01'
                       - name: 'AVISO_SINISTRO'
                         code: '02'
@@ -728,12 +748,15 @@ components:
                         - countryCallingCode: '55'
                           areaCode: '14'
                           number: '40044828'
+                          additionalInfo: 'DDI ''55''; DDD ''11'', 40044828, ''Para clientes no exterior'''
                         - countryCallingCode: '55'
                           areaCode: '14'
                           number: '40044828'
+                          additionalInfo: 'DDI ''55''; DDD ''11'', 40044828, ''Para clientes no exterior'''
                         - countryCallingCode: '55'
                           areaCode: '14'
                           number: '40044828'
+                          additionalInfo: 'DDI ''55''; DDD ''11'', 40044828, ''Para clientes no exterior'''
                     services:
                       - name: 'RECLAMACAO'
                         code: '16'
@@ -1062,7 +1085,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseError'
     InternalServerError:
-      description: Ocorreu um erro no gateway da API ou no microsserviço
+      description: Ocorreu um erro no gateway da API ou no servidor
       content:
         application/json; charset=utf-8:
           schema:
