@@ -71,7 +71,11 @@ paths:
         '504':
          $ref: '#/components/responses/GatewayTimeout'
         default:
-          $ref: '#/components/schemas/ResponsePensionPlanList'
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePensionPlanList'
 components:
   schemas:
     ResponsePensionPlanList:

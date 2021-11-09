@@ -55,7 +55,11 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/schemas/ResponseLifePensionList'
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseLifePensionList'
 components:
   schemas:
     ResponseLifePensionList:

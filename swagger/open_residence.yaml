@@ -55,7 +55,11 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/schemas/ResponseHomeInsuranceList'
+          description: ''
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/ResponseHomeInsuranceList'
 components:
   schemas:
     ResponseHomeInsuranceList:
