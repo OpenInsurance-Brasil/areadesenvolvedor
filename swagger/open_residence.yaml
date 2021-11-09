@@ -60,6 +60,7 @@ components:
   schemas:
     ResponseHomeInsuranceList:
       type: object
+      description: ''
       required:
         - data
         - links

@@ -75,6 +75,7 @@ paths:
 components:
   schemas:
     ResponsePensionPlanList:
+      description: ''
       type: object
       required:
         - data
