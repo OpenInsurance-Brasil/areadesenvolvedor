@@ -14,7 +14,7 @@ servers:
 tags:
 - name: "pension-plan"
 paths:
-  /pension-plan:
+  /pension-plan/{cnpjNumber}:
     get:
       tags:
         - pension-plan
@@ -30,6 +30,7 @@ paths:
         - $ref: "#/components/parameters/x-Frame-Options"
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/cnpjNumber"
       responses:
         '200':
           description: Dados dos Plano de Previdência com cobertura de risco

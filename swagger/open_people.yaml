@@ -16,7 +16,7 @@ servers:
 tags:
   - name: person
 paths:
-  /person:
+  /person/{cnpjNumber}:
     get:
       tags:
         - person
@@ -32,6 +32,7 @@ paths:
         - $ref: '#/components/parameters/x-Frame-Options'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/cnpjNumber'
       responses:
         '200':
           description: Dados dos Plano de Seguro de Pessoas
