@@ -59,6 +59,7 @@ paths:
 components:
   schemas:
     ResponseLifePensionList:
+      description: ''
       type: object
       required:
         - data
