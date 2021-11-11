@@ -4,7 +4,7 @@ info:
   description: As API's administrativas são recursos que podem ser consumidos apenas pelo diretório para avaliação e controle da qualidade dos serviços fornecidos pelas instituições
   version: 1.0.0
   contact:
-    url: 'https://http://novosite.susep.gov.br'
+    url: 'https://openinsurance.susep.gov.br'
 servers:
   - url: 'http://api.organizacao.com.br/open-insurance/admin/v1'
 tags:
