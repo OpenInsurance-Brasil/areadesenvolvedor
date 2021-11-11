@@ -14,7 +14,7 @@ servers:
 tags:
 - name: "life-pension"
 paths:
-  /life-pension/{cnpjNumber}:
+  /life-pension:
     get:
       tags:
         - life-pension
@@ -30,7 +30,6 @@ paths:
         - $ref: "#/components/parameters/x-Frame-Options"
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
-        - $ref: "#/components/parameters/cnpjNumber"
       responses:
         '200':
           description: Dados dos produtos de Vida e Previdência
@@ -543,13 +542,6 @@ components:
         type: integer
         default: 10
         minimum: 1
-    cnpjNumber:
-      name: cnpjNumber
-      in: path
-      description: Número de CNPJ.
-      required: true
-      schema:
-        type: string
     cache-Control:
       name: cache-control
       in: header
