@@ -1,4 +1,18 @@
-<h1 id="apis-open-data-do-open-insurance-brasil-canais-atendimento">API - Canais de Atendimento</h1>
+<!-- Generator: Widdershins v4.0.1 -->
+
+<h1 id="apis-open-data-do-open-insurance-brasil">APIs Open Data do Open Insurance Brasil v1.0.0</h1>
+
+> Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
+
+As APIs descritas neste documento são referentes as APIs da fase Open Data do Open Insurance Brasil.
+
+Base URLs:
+
+* <a href="http://api.organizacao.com.br/open-insurance/channels/v1">http://api.organizacao.com.br/open-insurance/channels/v1</a>
+
+Web: <a href="https://openinsurance.susep.gov.br">Support</a> 
+
+<h1 id="apis-open-data-do-open-insurance-brasil-channels">Channels</h1>
 
 Operações para listagem de canais de atendimentos
 
@@ -9,23 +23,42 @@ Operações para listagem de canais de atendimentos
 > Code samples
 
 ```javascript
+const data = null;
 
-const headers = {
-  'Accept':'application/json'
-};
+const xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-fetch('http://api.organizacao.com.br/open-insurance/channels/v1/branches',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
 });
 
+xhr.open("GET", "http://api.organizacao.com.br/open-insurance/channels/v1/branches");
+xhr.setRequestHeader("Accept", "application/json");
+
+xhr.send(data);
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPConnection("api.organizacao.com.br")
+
+headers = { 'Accept': "application/json" }
+
+conn.request("GET", "/open-insurance/channels/v1/branches", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("http://api.organizacao.com.br/open-insurance/channels/v1/branches")
+  .header("Accept", "application/json")
+  .asString();
 ```
 
 `GET /branches`
@@ -53,7 +86,54 @@ Método para obter a listagem de dependências próprias da instituição.
           "name": "Empresa A1",
           "cnpjNumber": "45086338000178",
           "branches": [
-            null
+            {
+              "identification": {
+                "type": "FILIAL",
+                "code": "0001",
+                "checkDigit": "9",
+                "name": "Marília"
+              },
+              "postalAddress": {
+                "address": "Av Naburo Ykesaki 1270, bloco 35, fundos",
+                "additionalInfo": "Loja B",
+                "districtName": "Centro",
+                "townName": "São Paulo",
+                "ibgeCode": "3550308",
+                "countrySubDivision": "SP",
+                "postCode": "17500001",
+                "country": "Brasil",
+                "countryCode": "BRA",
+                "geographicCoordinates": {
+                  "latitude": "-90.8365180",
+                  "longitude": "-180.836519"
+                }
+              },
+              "availability": {
+                "standards": [
+                  {
+                    "weekday": "SEGUNDA_FEIRA",
+                    "openingTime": "10:00:57Z",
+                    "closingTime": "16:00:57Z"
+                  }
+                ],
+                "exception": "string",
+                "isPublicAccessAllowed": true
+              },
+              "phones": [
+                {
+                  "type": "FIXO",
+                  "countryCallingCode": "55",
+                  "areaCode": "19",
+                  "number": "35721199"
+                }
+              ],
+              "services": [
+                {
+                  "name": "ENDOSSO",
+                  "code": "15"
+                }
+              ]
+            }
           ]
         }
       ]
@@ -85,8 +165,7 @@ Método para obter a listagem de dependências próprias da instituição.
 |405|[Method Not Allowed](https://tools.ietf.org/html/rfc7231#section-6.5.5)|O consumidor tentou acessar o recurso com um método não suportado|[ResponseError](#schemaresponseerror)|
 |406|[Not Acceptable](https://tools.ietf.org/html/rfc7231#section-6.5.6)|A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8|[ResponseError](#schemaresponseerror)|
 |429|[Too Many Requests](https://tools.ietf.org/html/rfc6585#section-4)|A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido|[ResponseError](#schemaresponseerror)|
-|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Ocorreu um erro no gateway da API ou no microsserviço|[ResponseError](#schemaresponseerror)|
-|default|Default|none|None|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Ocorreu um erro no gateway da API ou no servidor|[ResponseError](#schemaresponseerror)|
 
 <aside class="success">
 This operation does not require authentication
@@ -99,23 +178,42 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+const data = null;
 
-const headers = {
-  'Accept':'application/json'
-};
+const xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-fetch('http://api.organizacao.com.br/open-insurance/channels/v1/electronic-channels',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
 });
 
+xhr.open("GET", "http://api.organizacao.com.br/open-insurance/channels/v1/electronic-channels");
+xhr.setRequestHeader("Accept", "application/json");
+
+xhr.send(data);
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPConnection("api.organizacao.com.br")
+
+headers = { 'Accept': "application/json" }
+
+conn.request("GET", "/open-insurance/channels/v1/electronic-channels", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("http://api.organizacao.com.br/open-insurance/channels/v1/electronic-channels")
+  .header("Accept", "application/json")
+  .asString();
 ```
 
 `GET /electronic-channels`
@@ -189,8 +287,7 @@ Método para obter a listagem de canais eletrônicos de atendimento da institui�
 |405|[Method Not Allowed](https://tools.ietf.org/html/rfc7231#section-6.5.5)|O consumidor tentou acessar o recurso com um método não suportado|[ResponseError](#schemaresponseerror)|
 |406|[Not Acceptable](https://tools.ietf.org/html/rfc7231#section-6.5.6)|A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8|[ResponseError](#schemaresponseerror)|
 |429|[Too Many Requests](https://tools.ietf.org/html/rfc6585#section-4)|A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido|[ResponseError](#schemaresponseerror)|
-|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Ocorreu um erro no gateway da API ou no microsserviço|[ResponseError](#schemaresponseerror)|
-|default|Default|none|None|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Ocorreu um erro no gateway da API ou no servidor|[ResponseError](#schemaresponseerror)|
 
 <aside class="success">
 This operation does not require authentication
@@ -203,23 +300,42 @@ This operation does not require authentication
 > Code samples
 
 ```javascript
+const data = null;
 
-const headers = {
-  'Accept':'application/json'
-};
+const xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-fetch('http://api.organizacao.com.br/open-insurance/channels/v1/phone-channels',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
 });
 
+xhr.open("GET", "http://api.organizacao.com.br/open-insurance/channels/v1/phone-channels");
+xhr.setRequestHeader("Accept", "application/json");
+
+xhr.send(data);
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPConnection("api.organizacao.com.br")
+
+headers = { 'Accept': "application/json" }
+
+conn.request("GET", "/open-insurance/channels/v1/phone-channels", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("http://api.organizacao.com.br/open-insurance/channels/v1/phone-channels")
+  .header("Accept", "application/json")
+  .asString();
 ```
 
 `GET /phone-channels`
@@ -266,7 +382,7 @@ Método para obter a listagem de canais telefônicos de atendimento da institui�
               },
               "services": [
                 {
-                  "name": "ALTERACACOES_FORMA_PAGAMENTO",
+                  "name": "ALTERACOES_FORMA_PAGAMENTO",
                   "code": "01"
                 },
                 {
@@ -286,17 +402,20 @@ Método para obter a listagem de canais telefônicos de atendimento da institui�
                   {
                     "countryCallingCode": "55",
                     "areaCode": "14",
-                    "number": "40044828"
+                    "number": "40044828",
+                    "additionalInfo": "DDI '55'; DDD '11', 40044828, 'Para clientes no exterior'"
                   },
                   {
                     "countryCallingCode": "55",
                     "areaCode": "14",
-                    "number": "40044828"
+                    "number": "40044828",
+                    "additionalInfo": "DDI '55'; DDD '11', 40044828, 'Para clientes no exterior'"
                   },
                   {
                     "countryCallingCode": "55",
                     "areaCode": "14",
-                    "number": "40044828"
+                    "number": "40044828",
+                    "additionalInfo": "DDI '55'; DDD '11', 40044828, 'Para clientes no exterior'"
                   }
                 ]
               },
@@ -378,8 +497,7 @@ Método para obter a listagem de canais telefônicos de atendimento da institui�
 |405|[Method Not Allowed](https://tools.ietf.org/html/rfc7231#section-6.5.5)|O consumidor tentou acessar o recurso com um método não suportado|[ResponseError](#schemaresponseerror)|
 |406|[Not Acceptable](https://tools.ietf.org/html/rfc7231#section-6.5.6)|A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8|[ResponseError](#schemaresponseerror)|
 |429|[Too Many Requests](https://tools.ietf.org/html/rfc6585#section-4)|A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido|[ResponseError](#schemaresponseerror)|
-|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Ocorreu um erro no gateway da API ou no microsserviço|[ResponseError](#schemaresponseerror)|
-|default|Default|none|None|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|Ocorreu um erro no gateway da API ou no servidor|[ResponseError](#schemaresponseerror)|
 
 <aside class="success">
 This operation does not require authentication
@@ -388,7 +506,7 @@ This operation does not require authentication
 # Schemas
 
 <h2 id="tocS_ResponseBranchesList">ResponseBranchesList</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaresponsebrancheslist"></a>
 <a id="schema_ResponseBranchesList"></a>
 <a id="tocSresponsebrancheslist"></a>
@@ -404,7 +522,54 @@ This operation does not require authentication
           "name": "Empresa A1",
           "cnpjNumber": "45086338000178",
           "branches": [
-            null
+            {
+              "identification": {
+                "type": "FILIAL",
+                "code": "0001",
+                "checkDigit": "9",
+                "name": "Marília"
+              },
+              "postalAddress": {
+                "address": "Av Naburo Ykesaki 1270, bloco 35, fundos",
+                "additionalInfo": "Loja B",
+                "districtName": "Centro",
+                "townName": "São Paulo",
+                "ibgeCode": "3550308",
+                "countrySubDivision": "SP",
+                "postCode": "17500001",
+                "country": "Brasil",
+                "countryCode": "BRA",
+                "geographicCoordinates": {
+                  "latitude": "-90.8365180",
+                  "longitude": "-180.836519"
+                }
+              },
+              "availability": {
+                "standards": [
+                  {
+                    "weekday": "SEGUNDA_FEIRA",
+                    "openingTime": "10:00:57Z",
+                    "closingTime": "16:00:57Z"
+                  }
+                ],
+                "exception": "string",
+                "isPublicAccessAllowed": true
+              },
+              "phones": [
+                {
+                  "type": "FIXO",
+                  "countryCallingCode": "55",
+                  "areaCode": "19",
+                  "number": "35721199"
+                }
+              ],
+              "services": [
+                {
+                  "name": "ENDOSSO",
+                  "code": "15"
+                }
+              ]
+            }
           ]
         }
       ]
@@ -435,7 +600,7 @@ This operation does not require authentication
 |» meta|[MetaPaginated](#schemametapaginated)|false|none|none|
 
 <h2 id="tocS_BranchesBrand">BranchesBrand</h2>
-
+<!-- backwards compatibility -->
 <a id="schemabranchesbrand"></a>
 <a id="schema_BranchesBrand"></a>
 <a id="tocSbranchesbrand"></a>
@@ -451,32 +616,50 @@ This operation does not require authentication
       "branches": [
         {
           "identification": {
-            "type": null,
-            "code": null,
-            "checkDigit": null,
-            "name": null
+            "type": "FILIAL",
+            "code": "0001",
+            "checkDigit": "9",
+            "name": "Marília"
           },
           "postalAddress": {
-            "address": null,
-            "additionalInfo": null,
-            "districtName": null,
-            "townName": null,
-            "ibgeCode": null,
-            "countrySubDivision": null,
-            "postCode": null,
-            "country": null,
-            "countryCode": null,
-            "geographicCoordinates": null
+            "address": "Av Naburo Ykesaki 1270, bloco 35, fundos",
+            "additionalInfo": "Loja B",
+            "districtName": "Centro",
+            "townName": "São Paulo",
+            "ibgeCode": "3550308",
+            "countrySubDivision": "SP",
+            "postCode": "17500001",
+            "country": "Brasil",
+            "countryCode": "BRA",
+            "geographicCoordinates": {
+              "latitude": "-90.8365180",
+              "longitude": "-180.836519"
+            }
           },
           "availability": {
-            "standards": null,
-            "isPublicAccessAllowed": null
+            "standards": [
+              {
+                "weekday": "SEGUNDA_FEIRA",
+                "openingTime": "10:00:57Z",
+                "closingTime": "16:00:57Z"
+              }
+            ],
+            "exception": "string",
+            "isPublicAccessAllowed": true
           },
           "phones": [
-            {}
+            {
+              "type": "FIXO",
+              "countryCallingCode": "55",
+              "areaCode": "19",
+              "number": "35721199"
+            }
           ],
           "services": [
-            {}
+            {
+              "name": "ENDOSSO",
+              "code": "15"
+            }
           ]
         }
       ]
@@ -494,7 +677,7 @@ This operation does not require authentication
 |companies|[[BranchesCompany](#schemabranchescompany)]|true|none|Companies traz uma lista de todas as instuituições da Marca.|
 
 <h2 id="tocS_BranchesCompany">BranchesCompany</h2>
-
+<!-- backwards compatibility -->
 <a id="schemabranchescompany"></a>
 <a id="schema_BranchesCompany"></a>
 <a id="tocSbranchescompany"></a>
@@ -508,8 +691,8 @@ This operation does not require authentication
     {
       "identification": {
         "type": "FILIAL",
-        "code": 1,
-        "checkDigit": 9,
+        "code": "0001",
+        "checkDigit": "9",
         "name": "Marília"
       },
       "postalAddress": {
@@ -517,9 +700,9 @@ This operation does not require authentication
         "additionalInfo": "Loja B",
         "districtName": "Centro",
         "townName": "São Paulo",
-        "ibgeCode": 3550308,
+        "ibgeCode": "3550308",
         "countrySubDivision": "SP",
-        "postCode": "17500-001",
+        "postCode": "17500001",
         "country": "Brasil",
         "countryCode": "BRA",
         "geographicCoordinates": {
@@ -530,11 +713,12 @@ This operation does not require authentication
       "availability": {
         "standards": [
           {
-            "weekday": null,
-            "openingTime": null,
-            "closingTime": null
+            "weekday": "SEGUNDA_FEIRA",
+            "openingTime": "10:00:57Z",
+            "closingTime": "16:00:57Z"
           }
         ],
+        "exception": "string",
         "isPublicAccessAllowed": true
       },
       "phones": [
@@ -548,7 +732,7 @@ This operation does not require authentication
       "services": [
         {
           "name": "ENDOSSO",
-          "code": "PORTABILIDADE"
+          "code": "15"
         }
       ]
     }
@@ -562,11 +746,11 @@ This operation does not require authentication
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |name|string|true|none|none|
-|cnpjNumber|string|true|none|Número completo do CNPJ da instituição responsável pela dependência - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.<br />Deve-se ter apenas os números do CNPJ, sem máscara|
+|cnpjNumber|string|true|none|Número completo do CNPJ da instituição responsável pela dependência - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.<br>Deve-se ter apenas os números do CNPJ, sem máscara|
 |branches|[[Branch](#schemabranch)]|false|none|Lista de Dependências de uma Instituição|
 
 <h2 id="tocS_ResponseElectronicChannelsList">ResponseElectronicChannelsList</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaresponseelectronicchannelslist"></a>
 <a id="schema_ResponseElectronicChannelsList"></a>
 <a id="tocSresponseelectronicchannelslist"></a>
@@ -626,7 +810,7 @@ This operation does not require authentication
 |meta|[MetaPaginated](#schemametapaginated)|true|none|none|
 
 <h2 id="tocS_ElectronicChannelsBrand">ElectronicChannelsBrand</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaelectronicchannelsbrand"></a>
 <a id="schema_ElectronicChannelsBrand"></a>
 <a id="tocSelectronicchannelsbrand"></a>
@@ -638,18 +822,31 @@ This operation does not require authentication
   "companies": [
     {
       "name": "Empresa da Marca A",
-      "cnpjNumber": "string",
+      "cnpjNumber": "stringstringst",
       "electronicChannels": [
         {
           "identification": {
-            "type": null,
-            "urls": null
+            "type": "CHAT",
+            "additionalInfo": "string",
+            "urls": [
+              "string"
+            ]
           },
           "services": [
-            {}
+            {
+              "name": "SEGUNDA_VIA_DOCUMENTOS_CONTRATUAIS",
+              "code": "01",
+              "additionalInfo": "SIC"
+            }
           ],
           "availability": {
-            "standards": null
+            "standards": [
+              {
+                "weekday": "SEGUNDA_FEIRA",
+                "openingTime": "10:00:57Z",
+                "closingTime": "16:00:57Z"
+              }
+            ]
           }
         }
       ]
@@ -667,7 +864,7 @@ This operation does not require authentication
 |companies|[[ElectronicChannelsCompanies](#schemaelectronicchannelscompanies)]|true|none|Lista de instituições pertencentes à marca|
 
 <h2 id="tocS_ElectronicChannelsCompanies">ElectronicChannelsCompanies</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaelectronicchannelscompanies"></a>
 <a id="schema_ElectronicChannelsCompanies"></a>
 <a id="tocSelectronicchannelscompanies"></a>
@@ -676,27 +873,29 @@ This operation does not require authentication
 ```json
 {
   "name": "Empresa da Marca A",
-  "cnpjNumber": "string",
+  "cnpjNumber": "stringstringst",
   "electronicChannels": [
     {
       "identification": {
         "type": "CHAT",
+        "additionalInfo": "string",
         "urls": [
           "string"
         ]
       },
       "services": [
         {
-          "name": "ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA",
-          "code": "RECLAMACAO"
+          "name": "SEGUNDA_VIA_DOCUMENTOS_CONTRATUAIS",
+          "code": "01",
+          "additionalInfo": "SIC"
         }
       ],
       "availability": {
         "standards": [
           {
-            "weekday": null,
-            "openingTime": null,
-            "closingTime": null
+            "weekday": "SEGUNDA_FEIRA",
+            "openingTime": "10:00:57Z",
+            "closingTime": "16:00:57Z"
           }
         ]
       }
@@ -715,7 +914,7 @@ This operation does not require authentication
 |electronicChannels|[[ElectronicChannels](#schemaelectronicchannels)]|true|none|Lista  de canais de atendimento eltrônico|
 
 <h2 id="tocS_Branch">Branch</h2>
-
+<!-- backwards compatibility -->
 <a id="schemabranch"></a>
 <a id="schema_Branch"></a>
 <a id="tocSbranch"></a>
@@ -725,8 +924,8 @@ This operation does not require authentication
 {
   "identification": {
     "type": "FILIAL",
-    "code": 1,
-    "checkDigit": 9,
+    "code": "0001",
+    "checkDigit": "9",
     "name": "Marília"
   },
   "postalAddress": {
@@ -734,9 +933,9 @@ This operation does not require authentication
     "additionalInfo": "Loja B",
     "districtName": "Centro",
     "townName": "São Paulo",
-    "ibgeCode": 3550308,
+    "ibgeCode": "3550308",
     "countrySubDivision": "SP",
-    "postCode": "17500-001",
+    "postCode": "17500001",
     "country": "Brasil",
     "countryCode": "BRA",
     "geographicCoordinates": {
@@ -752,6 +951,7 @@ This operation does not require authentication
         "closingTime": "16:00:57Z"
       }
     ],
+    "exception": "string",
     "isPublicAccessAllowed": true
   },
   "phones": [
@@ -765,7 +965,7 @@ This operation does not require authentication
   "services": [
     {
       "name": "ENDOSSO",
-      "code": "PORTABILIDADE"
+      "code": "15"
     }
   ]
 }
@@ -785,7 +985,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |services|[[BranchService](#schemabranchservice)]|true|none|Traz a relação de serviços disponbilizados pelo Canal de Atendimento|
 
 <h2 id="tocS_BranchPostalAddress">BranchPostalAddress</h2>
-
+<!-- backwards compatibility -->
 <a id="schemabranchpostaladdress"></a>
 <a id="schema_BranchPostalAddress"></a>
 <a id="tocSbranchpostaladdress"></a>
@@ -797,9 +997,9 @@ Dependência destinada à prática das atividades para as quais a instituição 
   "additionalInfo": "Loja B",
   "districtName": "Centro",
   "townName": "São Paulo",
-  "ibgeCode": 3550308,
+  "ibgeCode": "3550308",
   "countrySubDivision": "SP",
-  "postCode": "17500-001",
+  "postCode": "17500001",
   "country": "Brasil",
   "countryCode": "BRA",
   "geographicCoordinates": {
@@ -826,7 +1026,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |geographicCoordinates|[BranchesGeographicCoordinates](#schemabranchesgeographiccoordinates)|false|none|Informação referente a geolocalização informada.|
 
 <h2 id="tocS_BranchIdentification">BranchIdentification</h2>
-
+<!-- backwards compatibility -->
 <a id="schemabranchidentification"></a>
 <a id="schema_BranchIdentification"></a>
 <a id="tocSbranchidentification"></a>
@@ -835,8 +1035,8 @@ Dependência destinada à prática das atividades para as quais a instituição 
 ```json
 {
   "type": "FILIAL",
-  "code": 1,
-  "checkDigit": 9,
+  "code": "0001",
+  "checkDigit": "9",
   "name": "Marília"
 }
 
@@ -860,7 +1060,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |type|DEPENDENCIA_TERCEIROS|
 
 <h2 id="tocS_BranchAvailability">BranchAvailability</h2>
-
+<!-- backwards compatibility -->
 <a id="schemabranchavailability"></a>
 <a id="schema_BranchAvailability"></a>
 <a id="tocSbranchavailability"></a>
@@ -875,6 +1075,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
       "closingTime": "16:00:57Z"
     }
   ],
+  "exception": "string",
   "isPublicAccessAllowed": true
 }
 
@@ -888,6 +1089,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |» weekday|string|true|none|Dia da semana de abertura da dependência|
 |» openingTime|string|true|none|Horário de abertura da dependência (UTC)|
 |» closingTime|string|true|none|Horário de fechamento da dependência (UTC)|
+|exception|string|false|none|Em campo texto devem ser registradas todas as Exceções para o não atendimento.|
 |isPublicAccessAllowed|boolean|false|none|Indica se a instalação da Dependência tem acesso restrito a clientes.|
 
 #### Enumerated Values
@@ -903,7 +1105,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |weekday|SABADO|
 
 <h2 id="tocS_EletronicChannelsAvailability">EletronicChannelsAvailability</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaeletronicchannelsavailability"></a>
 <a id="schema_EletronicChannelsAvailability"></a>
 <a id="tocSeletronicchannelsavailability"></a>
@@ -944,7 +1146,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |weekday|SABADO|
 
 <h2 id="tocS_PhoneChannelsAvailability">PhoneChannelsAvailability</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaphonechannelsavailability"></a>
 <a id="schema_PhoneChannelsAvailability"></a>
 <a id="tocSphonechannelsavailability"></a>
@@ -985,7 +1187,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |weekday|SABADO|
 
 <h2 id="tocS_BranchService">BranchService</h2>
-
+<!-- backwards compatibility -->
 <a id="schemabranchservice"></a>
 <a id="schema_BranchService"></a>
 <a id="tocSbranchservice"></a>
@@ -994,7 +1196,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 ```json
 {
   "name": "ENDOSSO",
-  "code": "PORTABILIDADE"
+  "code": "15"
 }
 
 ```
@@ -1050,7 +1252,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |code|19|
 
 <h2 id="tocS_ElectronicChannels">ElectronicChannels</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaelectronicchannels"></a>
 <a id="schema_ElectronicChannels"></a>
 <a id="tocSelectronicchannels"></a>
@@ -1060,14 +1262,16 @@ Dependência destinada à prática das atividades para as quais a instituição 
 {
   "identification": {
     "type": "CHAT",
+    "additionalInfo": "string",
     "urls": [
       "string"
     ]
   },
   "services": [
     {
-      "name": "ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA",
-      "code": "RECLAMACAO"
+      "name": "SEGUNDA_VIA_DOCUMENTOS_CONTRATUAIS",
+      "code": "01",
+      "additionalInfo": "SIC"
     }
   ],
   "availability": {
@@ -1092,7 +1296,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |availability|[EletronicChannelsAvailability](#schemaeletronicchannelsavailability)|false|none|none|
 
 <h2 id="tocS_ElectronicChannelsIdentification">ElectronicChannelsIdentification</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaelectronicchannelsidentification"></a>
 <a id="schema_ElectronicChannelsIdentification"></a>
 <a id="tocSelectronicchannelsidentification"></a>
@@ -1101,6 +1305,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 ```json
 {
   "type": "CHAT",
+  "additionalInfo": "string",
   "urls": [
     "string"
   ]
@@ -1113,6 +1318,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |type|string|true|none|Tipo de canal de atendimento eletrônico|
+|additionalInfo|string|false|none|Campo de texto livre para descrever complementação de informações necessárias. De preenchimento obrigatório para  o tipo de canal de atendimento 'OUTROS'<br>Restrição: Preenchimento obrigatório para o tipo de canal de atendimento 'OUTROS'|
 |urls|[[ElectronicChannelsUrl](#schemaelectronicchannelsurl)]|true|none|Lista das URLs que atendem um tipo de canal eletrônico selecionado|
 
 #### Enumerated Values
@@ -1127,7 +1333,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |type|OUTROS|
 
 <h2 id="tocS_ElectronicChannelsUrl">ElectronicChannelsUrl</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaelectronicchannelsurl"></a>
 <a id="schema_ElectronicChannelsUrl"></a>
 <a id="tocSelectronicchannelsurl"></a>
@@ -1145,7 +1351,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |*anonymous*|string|false|none|none|
 
 <h2 id="tocS_ElectronicChannelsServices">ElectronicChannelsServices</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaelectronicchannelsservices"></a>
 <a id="schema_ElectronicChannelsServices"></a>
 <a id="tocSelectronicchannelsservices"></a>
@@ -1153,8 +1359,9 @@ Dependência destinada à prática das atividades para as quais a instituição 
 
 ```json
 {
-  "name": "ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA",
-  "code": "RECLAMACAO"
+  "name": "SEGUNDA_VIA_DOCUMENTOS_CONTRATUAIS",
+  "code": "01",
+  "additionalInfo": "SIC"
 }
 
 ```
@@ -1165,12 +1372,13 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |---|---|---|---|---|
 |name|string|true|none|Nome dos Serviços efetivamente prestados pelo Canal de Atendimento|
 |code|string|true|none|Código dos Serviços efetivamente prestados pelo Canal de Atendimento|
+|additionalInfo|string|false|none|Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'|
 
 #### Enumerated Values
 
 |Property|Value|
 |---|---|
-|name|ALTERACACOES_FORMA_PAGAMENTO|
+|name|ALTERACOES_FORMA_PAGAMENTO|
 |name|AVISO_SINISTRO|
 |name|CANCELAMENTO_SUSPENSAO_PAGAMENTO_PREMIOS_CONTRIBUICAO|
 |name|EFETIVACAO_APORTE|
@@ -1210,7 +1418,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |code|19|
 
 <h2 id="tocS_BranchPhone">BranchPhone</h2>
-
+<!-- backwards compatibility -->
 <a id="schemabranchphone"></a>
 <a id="schema_BranchPhone"></a>
 <a id="tocSbranchphone"></a>
@@ -1243,7 +1451,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |type|MOVEL|
 
 <h2 id="tocS_ResponsePhoneChannelsList">ResponsePhoneChannelsList</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaresponsephonechannelslist"></a>
 <a id="schema_ResponsePhoneChannelsList"></a>
 <a id="tocSresponsephonechannelslist"></a>
@@ -1278,7 +1486,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
               },
               "services": [
                 {
-                  "name": "ALTERACACOES_FORMA_PAGAMENTO",
+                  "name": "ALTERACOES_FORMA_PAGAMENTO",
                   "code": "01"
                 },
                 {
@@ -1298,17 +1506,20 @@ Dependência destinada à prática das atividades para as quais a instituição 
                   {
                     "countryCallingCode": "55",
                     "areaCode": "14",
-                    "number": "40044828"
+                    "number": "40044828",
+                    "additionalInfo": "DDI '55'; DDD '11', 40044828, 'Para clientes no exterior'"
                   },
                   {
                     "countryCallingCode": "55",
                     "areaCode": "14",
-                    "number": "40044828"
+                    "number": "40044828",
+                    "additionalInfo": "DDI '55'; DDD '11', 40044828, 'Para clientes no exterior'"
                   },
                   {
                     "countryCallingCode": "55",
                     "areaCode": "14",
-                    "number": "40044828"
+                    "number": "40044828",
+                    "additionalInfo": "DDI '55'; DDD '11', 40044828, 'Para clientes no exterior'"
                   }
                 ]
               },
@@ -1389,7 +1600,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |meta|[MetaPaginated](#schemametapaginated)|true|none|none|
 
 <h2 id="tocS_PhoneChannelsBrand">PhoneChannelsBrand</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaphonechannelsbrand"></a>
 <a id="schema_PhoneChannelsBrand"></a>
 <a id="tocSphonechannelsbrand"></a>
@@ -1405,14 +1616,29 @@ Dependência destinada à prática das atividades para as quais a instituição 
       "phoneChannels": [
         {
           "identification": {
-            "type": null,
-            "phones": null
+            "type": "OUVIDORIA",
+            "phones": [
+              {
+                "countryCallingCode": "55",
+                "areaCode": "19",
+                "number": "08007787788"
+              }
+            ]
           },
           "services": [
-            {}
+            {
+              "name": "AVISO_SINISTRO",
+              "code": "01"
+            }
           ],
           "availability": {
-            "standards": null
+            "standards": [
+              {
+                "weekday": "SEGUNDA_FEIRA",
+                "openingTime": "10:00:57Z",
+                "closingTime": "16:00:57Z"
+              }
+            ]
           }
         }
       ]
@@ -1430,7 +1656,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |companies|[[PhoneChannelsCompanies](#schemaphonechannelscompanies)]|true|none|Lista de instituições pertencentes à marca|
 
 <h2 id="tocS_PhoneChannelsCompanies">PhoneChannelsCompanies</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaphonechannelscompanies"></a>
 <a id="schema_PhoneChannelsCompanies"></a>
 <a id="tocSphonechannelscompanies"></a>
@@ -1446,9 +1672,9 @@ Dependência destinada à prática das atividades para as quais a instituição 
         "type": "OUVIDORIA",
         "phones": [
           {
-            "countryCallingCode": null,
-            "areaCode": null,
-            "number": null
+            "countryCallingCode": "55",
+            "areaCode": "19",
+            "number": "08007787788"
           }
         ]
       },
@@ -1461,9 +1687,9 @@ Dependência destinada à prática das atividades para as quais a instituição 
       "availability": {
         "standards": [
           {
-            "weekday": null,
-            "openingTime": null,
-            "closingTime": null
+            "weekday": "SEGUNDA_FEIRA",
+            "openingTime": "10:00:57Z",
+            "closingTime": "16:00:57Z"
           }
         ]
       }
@@ -1478,11 +1704,11 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |name|string|true|none|Nome da Instituição, pertencente à organização, responsável pelo Canal Telefônico.|
-|cnpjNumber|string|true|none|Número completo do CNPJ da instituição responsável pela dependência - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.<br />Deve-se ter apenas os números do CNPJ, sem máscara|
+|cnpjNumber|string|true|none|Número completo do CNPJ da instituição responsável pela dependência - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.<br>Deve-se ter apenas os números do CNPJ, sem máscara|
 |phoneChannels|[[PhoneChannels](#schemaphonechannels)]|true|none|Lista  de canais de atendimento telefônico|
 
 <h2 id="tocS_PhoneChannels">PhoneChannels</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaphonechannels"></a>
 <a id="schema_PhoneChannels"></a>
 <a id="tocSphonechannels"></a>
@@ -1528,7 +1754,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |availability|[PhoneChannelsAvailability](#schemaphonechannelsavailability)|false|none|none|
 
 <h2 id="tocS_PhoneChannelsIdentification">PhoneChannelsIdentification</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaphonechannelsidentification"></a>
 <a id="schema_PhoneChannelsIdentification"></a>
 <a id="tocSphonechannelsidentification"></a>
@@ -1552,7 +1778,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|type|string|true|none|Tipo de canal telefônico de atendimento: <br />* `CENTRAL_TELEFONICA` <br />* `SAC` <br />* `OUVIDORIA`|
+|type|string|true|none|Tipo de canal telefônico de atendimento: <br>* `CENTRAL_TELEFONICA` <br>* `SAC` <br>* `OUVIDORIA`|
 |phones|[[PhoneChannelsPhones](#schemaphonechannelsphones)]|false|none|Lista de telefones do Canal de Atendimento|
 
 #### Enumerated Values
@@ -1564,7 +1790,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |type|OUVIDORIA|
 
 <h2 id="tocS_PhoneChannelsPhones">PhoneChannelsPhones</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaphonechannelsphones"></a>
 <a id="schema_PhoneChannelsPhones"></a>
 <a id="tocSphonechannelsphones"></a>
@@ -1588,7 +1814,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |number|string|true|none|Número de telefone de acesso ao canal.|
 
 <h2 id="tocS_PhoneChannelsServices">PhoneChannelsServices</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaphonechannelsservices"></a>
 <a id="schema_PhoneChannelsServices"></a>
 <a id="tocSphonechannelsservices"></a>
@@ -1653,7 +1879,7 @@ Dependência destinada à prática das atividades para as quais a instituição 
 |code|19|
 
 <h2 id="tocS_BranchesGeographicCoordinates">BranchesGeographicCoordinates</h2>
-
+<!-- backwards compatibility -->
 <a id="schemabranchesgeographiccoordinates"></a>
 <a id="schema_BranchesGeographicCoordinates"></a>
 <a id="tocSbranchesgeographiccoordinates"></a>
@@ -1677,7 +1903,7 @@ Informação referente a geolocalização informada.
 |longitude|string|false|none|Informação da longitude referente a geolocalização informada. Formato númerico 3 casas antes da vírgula, 11 posições.|
 
 <h2 id="tocS_LinksPaginated">LinksPaginated</h2>
-
+<!-- backwards compatibility -->
 <a id="schemalinkspaginated"></a>
 <a id="schema_LinksPaginated"></a>
 <a id="tocSlinkspaginated"></a>
@@ -1705,7 +1931,7 @@ Informação referente a geolocalização informada.
 |last|string|false|none|URL da última página de registros|
 
 <h2 id="tocS_MetaPaginated">MetaPaginated</h2>
-
+<!-- backwards compatibility -->
 <a id="schemametapaginated"></a>
 <a id="schema_MetaPaginated"></a>
 <a id="tocSmetapaginated"></a>
@@ -1727,7 +1953,7 @@ Informação referente a geolocalização informada.
 |totalPages|integer|true|none|Total de páginas para os registros encontrados|
 
 <h2 id="tocS_ResponseError">ResponseError</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaresponseerror"></a>
 <a id="schema_ResponseError"></a>
 <a id="tocSresponseerror"></a>

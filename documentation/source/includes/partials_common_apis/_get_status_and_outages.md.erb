@@ -1,5 +1,8 @@
+<!-- Generator: Widdershins v4.0.1 -->
 
-## API de status e outages
+<h1 id="apis-open-data-do-open-insurance-brasil">APIs Open Data do Open Insurance Brasil v1.0.0</h1>
+
+> Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
 As APIs descritas neste documento são referentes as APIs da fase Open Data do Open Insurance Brasil.
 
@@ -7,37 +10,58 @@ Base URLs:
 
 * <a href="http://api.seguradora.com.br/open-insurance/discovery/v1">http://api.seguradora.com.br/open-insurance/discovery/v1</a>
 
-Email: <a href="mailto:apiteam@swagger.io">Support</a>
+Email: <a href="mailto:apiteam@swagger.io">Support</a> 
 
-### A descrição referente ao código de status retornado pelas APIs
+<h1 id="apis-open-data-do-open-insurance-brasil-discovery">Discovery</h1>
+
+## A descrição referente ao código de status retornado pelas APIs
 
 <a id="opIdgetStatus"></a>
 
 > Code samples
 
 ```javascript
+const data = null;
 
-const headers = {
-  'Accept':'application/json'
-};
+const xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-fetch('http://api.seguradora.com.br/open-insurance/discovery/v1/status',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
 });
 
+xhr.open("GET", "http://api.seguradora.com.br/open-insurance/discovery/v1/status");
+xhr.setRequestHeader("Accept", "application/json");
+
+xhr.send(data);
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPConnection("api.seguradora.com.br")
+
+headers = { 'Accept': "application/json" }
+
+conn.request("GET", "/open-insurance/discovery/v1/status", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("http://api.seguradora.com.br/open-insurance/discovery/v1/status")
+  .header("Accept", "application/json")
+  .asString();
 ```
 
 `GET /status`
 
-  Descrição referente ao código de status retornado pelas APIs
+ Descrição referente ao código de status retornado pelas APIs
 
 <h3 id="a-descrição-referente-ao-código-de-status-retornado-pelas-apis-parameters">Parameters</h3>
 
@@ -90,30 +114,49 @@ fetch('http://api.seguradora.com.br/open-insurance/discovery/v1/status',
 This operation does not require authentication
 </aside>
 
-### a descrição referente a listagem de indisponibilidades agendadas para os serviços
+## a descrição referente a listagem de indisponibilidades agendadas para os serviços
 
 <a id="opIdgetOutage"></a>
 
 > Code samples
 
 ```javascript
+const data = null;
 
-const headers = {
-  'Accept':'application/json'
-};
+const xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-fetch('http://api.seguradora.com.br/open-insurance/discovery/v1/outages',
-{
-  method: 'GET',
-
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
 });
 
+xhr.open("GET", "http://api.seguradora.com.br/open-insurance/discovery/v1/outages");
+xhr.setRequestHeader("Accept", "application/json");
+
+xhr.send(data);
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPConnection("api.seguradora.com.br")
+
+headers = { 'Accept': "application/json" }
+
+conn.request("GET", "/open-insurance/discovery/v1/outages", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("http://api.seguradora.com.br/open-insurance/discovery/v1/outages")
+  .header("Accept", "application/json")
+  .asString();
 ```
 
 `GET /outages`
@@ -139,7 +182,9 @@ a descrição referente a listagem de indisponibilidades agendadas para os servi
       "duration": "PT2H30M",
       "isPartial": false,
       "explanation": "Atualização do API Gateway",
-      "unavailableEndpoints": "electronic-channels"
+      "unavailableEndpoints": [
+        "https://api.seguradora.com.br/open-insurance/channels/v1/electronic-channels"
+      ]
     }
   ],
   "links": {
@@ -166,10 +211,10 @@ a descrição referente a listagem de indisponibilidades agendadas para os servi
 This operation does not require authentication
 </aside>
 
-## Schemas
+# Schemas
 
 <h2 id="tocS_ResponseDiscoveryStatusList">ResponseDiscoveryStatusList</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaresponsediscoverystatuslist"></a>
 <a id="schema_ResponseDiscoveryStatusList"></a>
 <a id="tocSresponsediscoverystatuslist"></a>
@@ -216,7 +261,7 @@ This operation does not require authentication
 |meta|[Meta](#schemameta)|true|none|none|
 
 <h2 id="tocS_ResponseDiscoveryOutageList">ResponseDiscoveryOutageList</h2>
-
+<!-- backwards compatibility -->
 <a id="schemaresponsediscoveryoutagelist"></a>
 <a id="schema_ResponseDiscoveryOutageList"></a>
 <a id="tocSresponsediscoveryoutagelist"></a>
@@ -230,7 +275,9 @@ This operation does not require authentication
       "duration": "PT2H30M",
       "isPartial": false,
       "explanation": "Atualização do API Gateway",
-      "unavailableEndpoints": "electronic-channels"
+      "unavailableEndpoints": [
+        "https://api.seguradora.com.br/open-insurance/channels/v1/electronic-channels"
+      ]
     }
   ],
   "links": {
@@ -257,12 +304,12 @@ This operation does not require authentication
 |» duration|string|true|none|Duração prevista da indisponibilidade|
 |» isPartial|boolean|true|none|Flag que indica se a indisponibilidade é parcial (atingindo apenas alguns end points) ou total (atingindo todos os end points)|
 |» explanation|string|true|none|Explicação sobre os motivos da indisponibilidade.|
-|» unavailableEndpoints|array|true|none|Endpoints com indisponibilidade.|
+|» unavailableEndpoints|[string]|true|none|Endpoints com indisponibilidade.|
 |links|[Links](#schemalinks)|true|none|none|
 |meta|[Meta](#schemameta)|true|none|none|
 
 <h2 id="tocS_Links">Links</h2>
-
+<!-- backwards compatibility -->
 <a id="schemalinks"></a>
 <a id="schema_Links"></a>
 <a id="tocSlinks"></a>
@@ -290,7 +337,7 @@ This operation does not require authentication
 |last|string|false|none|URL da última página de registros|
 
 <h2 id="tocS_Meta">Meta</h2>
-
+<!-- backwards compatibility -->
 <a id="schemameta"></a>
 <a id="schema_Meta"></a>
 <a id="tocSmeta"></a>
@@ -312,7 +359,7 @@ This operation does not require authentication
 |totalPages|integer|true|none|Total de páginas para os registros encontrados|
 
 <h2 id="tocS_Status">Status</h2>
-
+<!-- backwards compatibility -->
 <a id="schemastatus"></a>
 <a id="schema_Status"></a>
 <a id="tocSstatus"></a>
@@ -336,7 +383,7 @@ This operation does not require authentication
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|code|string|true|none|Condição atual da API:<br />  * `OK` - A implementação é totalmente funcional<br />  * `PARTIAL_FAILURE` - Um ou mais endpoints estão indisponíveis<br />  * `UNAVAILABLE` - A implementação completa está indisponível<br />  * `SCHEDULED_OUTAGE` - Uma interrupção anunciada está em vigor|
+|code|string|true|none|Condição atual da API:<br>  * `OK` - A implementação é totalmente funcional<br>  * `PARTIAL_FAILURE` - Um ou mais endpoints estão indisponíveis<br>  * `UNAVAILABLE` - A implementação completa está indisponível<br>  * `SCHEDULED_OUTAGE` - Uma interrupção anunciada está em vigor|
 |explanation|string|true|none|Fornece uma explicação da interrupção atual que pode ser exibida para um cliente final. Será obrigatoriamente preenchido se code tiver algum valor que não seja OK|
 |detectionTime|string|false|none|A data e hora em que a interrupção atual foi detectada. Será obrigatoriamente preenchido se a propriedade code for PARTIAL_FAILURE ou UNAVAILABLE|
 |expectedResolutionTime|string|false|none|A data e hora em que o serviço completo deve continuar (se conhecido). Será obrigatoriamente preenchido se code tiver algum valor que não seja OK|
