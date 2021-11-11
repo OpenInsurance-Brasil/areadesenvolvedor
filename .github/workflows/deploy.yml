@@ -1,0 +1,75 @@
+on:
+  push:
+    tags:
+      - v1.*
+
+name: Deploy Documentation
+
+jobs:
+  docs-build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: documentation
+
+    strategy:
+      matrix:
+        ruby-version: [2.5, 2.6, 2.7, 3.0]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: gems-${{ runner.os }}-${{ env.ruby-version }}-${{ hashFiles('**/Gemfile.lock') }}
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - run: npm install -g @apidevtools/swagger-cli
+      - run: npm install -g widdershins
+
+      - run: swagger-cli validate source/swagger/open_data_status_outage.yaml
+      - run: widdershins \
+          "source/swagger/open_data_status_outage.yaml" \
+          -o source/includes/partials_common_apis/_get_status_and_outages.md.erb \
+          --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
+          --omitHeader --summary --httpsnippet
+
+      # Fase 1
+      - run: swagger-cli validate source/swagger/open_data_channels.yaml
+      - run: swagger-cli validate source/swagger/open_data_products_services.yaml
+      - run: swagger-cli validate source/swagger/open_data_status_outage.yaml
+      - run: widdershins \
+          "source/swagger/open_data_channels.yaml" \
+          "source/swagger/open_data_products_services.yaml" \
+          "source/swagger/open_data_status_outage.yaml" \
+          -o source/includes/partials_open_insurance/_open_insurance_fase1_apis.md.erb \
+          --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
+          --omitHeader --summary --httpsnippet
+
+      - uses: actions/cache@v1
+        with:
+          path: build
+          key: ${{ runner.os }}-${{ hashFiles('**/source') }}
+
+      - run: bundle config set deployment 'true'
+      - run: bundle install
+      - run: bundle exec middleman build
+
+      - uses: stoplightio/spectral-action@v0.8.1
+        with:
+          file_glob: 'documentation/source/swagger/*.yaml'
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_PAT }}
+          publish_dir: ./documentation/build
