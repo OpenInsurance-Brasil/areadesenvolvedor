@@ -19,7 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # Run Spectral
       - uses: stoplightio/spectral-action@v0.8.1
         with:
-          file_glob: 'swagger/*.yaml'
+          file_glob: 'documentation/source/swagger/*.yaml'
