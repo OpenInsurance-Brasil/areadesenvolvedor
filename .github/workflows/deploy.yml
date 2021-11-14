@@ -37,14 +37,12 @@ jobs:
 
       - run: mkdir source/includes/partials_common_apis && mkdir source/includes/partials_open_insurance
 
-      - run: widdershins \
-          source/swagger/open_admin_metrics.yaml \
+      - run: widdershins source/swagger/open_admin_metrics.yaml \
           -o source/includes/partials_common_apis/_open_admin_metrics.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins \
-          source/swagger/open_data_status_outage.yaml \
+      - run: widdershins source/swagger/open_data_status_outage.yaml \
           -o source/includes/partials_common_apis/_get_status_and_outages.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
