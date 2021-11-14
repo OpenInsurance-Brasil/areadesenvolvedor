@@ -3,3 +3,6 @@ vendor
 .idea
 .DS_Store
 docs
+
+documentation/source/includes/partials_common_apis
+documentation/source/includes/partials_open_insurance
