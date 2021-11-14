@@ -35,6 +35,8 @@ jobs:
 
       - run: npm install -g widdershins
 
+      - run: mkdir source/includes/partials_common_apis && mkdir source/includes/partials_open_insurance
+
       - run: widdershins \
           "source/swagger/open_admin_metrics.yaml" \
           -o source/includes/partials_common_apis/_open_admin_metrics.md.erb \
