@@ -50,44 +50,37 @@ jobs:
           --omitHeader --summary --httpsnippet
 
       # Fase 1
-      - run: widdershins \
-          source/swagger/open_data_channels.yaml \
+      - run: widdershins source/swagger/open_data_channels.yaml \
           -o source/includes/partials_open_insurance/_open_data_channels.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins \
-          source/swagger/open_life_welfare.yaml \
+      - run: widdershins source/swagger/open_life_welfare.yaml \
           -o source/includes/partials_open_insurance/_open_life_welfare.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins \
-          source/swagger/open_people.yaml \
+      - run: widdershins source/swagger/open_people.yaml \
           -o source/includes/partials_open_insurance/open_people.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins \
-          source/swagger/open_price_linked_bonds.yaml \
+      - run: widdershins source/swagger/open_price_linked_bonds.yaml \
           -o source/includes/partials_open_insurance/_open_price_linked_bonds.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins \
-          source/swagger/open_residence.yaml \
+      - run: widdershins source/swagger/open_residence.yaml \
           -o source/includes/partials_open_insurance/_open_residence.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins \
-          source/swagger/open_vehicle.yaml \
+      - run: widdershins source/swagger/open_vehicle.yaml \
           -o source/includes/partials_open_insurance/_open_vehicle.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins \
-          source/swagger/open_welfare.yaml \
+      - run: widdershins source/swagger/open_welfare.yaml \
           -o source/includes/partials_open_insurance/_open_welfare.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
