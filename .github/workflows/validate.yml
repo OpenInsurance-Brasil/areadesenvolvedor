@@ -7,7 +7,7 @@ on:
     branches:
       - '**'
 
-name: Validate Documentation
+name: Validate
 
 jobs:
   test:
@@ -38,11 +38,17 @@ jobs:
           node-version: '12'
 
       - run: npm install -g @apidevtools/swagger-cli
+      - run: swagger-cli validate source/swagger/open_admin_metrics.yaml
       - run: swagger-cli validate source/swagger/open_data_status_outage.yaml
 
       # Fase 1
       - run: swagger-cli validate source/swagger/open_data_channels.yaml
-      - run: swagger-cli validate source/swagger/open_data_products_services.yaml
+      - run: swagger-cli validate source/swagger/open_life_welfare.yaml
+      - run: swagger-cli validate source/swagger/open_people.yaml
+      - run: swagger-cli validate source/swagger/open_price_linked_bonds.yaml
+      - run: swagger-cli validate source/swagger/open_residence.yaml
+      - run: swagger-cli validate source/swagger/open_vehicle.yaml
+      - run: swagger-cli validate source/swagger/open_welfare.yaml
 
       - uses: stoplightio/spectral-action@v0.8.1
         with:
