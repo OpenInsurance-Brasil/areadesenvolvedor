@@ -37,59 +37,60 @@ jobs:
 
       - run: mkdir source/includes/partials_common_apis && mkdir source/includes/partials_open_insurance
 
-      - run: widdershins source/swagger/open_admin_metrics.yaml \
+      - name: widdershins admin metrics and status outage
+        run: |
+          widdershins source/swagger/open_admin_metrics.yaml \
           -o source/includes/partials_common_apis/_open_admin_metrics.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins source/swagger/open_data_status_outage.yaml \
+          widdershins source/swagger/open_data_status_outage.yaml \
           -o source/includes/partials_common_apis/_get_status_and_outages.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
       # Fase 1
-      - run: widdershins source/swagger/open_data_channels.yaml \
+      - name: widdershins fase 1
+        run: |
+          widdershins source/swagger/open_data_channels.yaml \
           -o source/includes/partials_open_insurance/_open_data_channels.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins source/swagger/open_life_welfare.yaml \
+          widdershins source/swagger/open_life_welfare.yaml \
           -o source/includes/partials_open_insurance/_open_life_welfare.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins source/swagger/open_people.yaml \
+          widdershins source/swagger/open_people.yaml \
           -o source/includes/partials_open_insurance/open_people.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins source/swagger/open_price_linked_bonds.yaml \
+          widdershins source/swagger/open_price_linked_bonds.yaml \
           -o source/includes/partials_open_insurance/_open_price_linked_bonds.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins source/swagger/open_residence.yaml \
+          widdershins source/swagger/open_residence.yaml \
           -o source/includes/partials_open_insurance/_open_residence.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins source/swagger/open_vehicle.yaml \
+          widdershins source/swagger/open_vehicle.yaml \
           -o source/includes/partials_open_insurance/_open_vehicle.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - run: widdershins source/swagger/open_welfare.yaml \
+          widdershins source/swagger/open_welfare.yaml \
           -o source/includes/partials_open_insurance/_open_welfare.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v1
         with:
-          path: vendor/bundle
-          key: gems-${{ runner.os }}-${{ matrix.ruby-version }}-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            gems-${{ runner.os }}-${{ matrix.ruby-version }}-
-            gems-${{ runner.os }}-
+          path: build
+          key: ${{ runner.os }}-${{ hashFiles('**/source') }}
 
       - name: bundle install
         run: |
