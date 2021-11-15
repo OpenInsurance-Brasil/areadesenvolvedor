@@ -1,16 +1,12 @@
 openapi: 3.0.0
 info:
-  title: APIs Open Data do Open Insurance Brasil
-  description:
-    API de informações de Planos de Previdência e Seguros de Pessoas ambos com cobertura por sobrevivência (excluindo seguros Dotais). Os recursos que podem ser consumidos pelos participantes conforme a regra 3.1.1 do manual de escopo de dados.
+  title: API - Produtos e serviços
+  description: As APIs descritas neste documento são referentes as APIs da fase Open Data do Open Insurance Brasil.
   version: 1.0.0
   contact:
-    url: 'https://openinsurance.susep.gov.br'
+    url: https://openinsurance.susep.gov.br
 servers:
-  - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
-    description: Servidor de Produção
-  - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
-    description: Servidor de Homologação
+  - url: https://api.organizacao.com.br/open-insurance/products-services/v1
 tags:
 - name: "life-pension"
 paths:
