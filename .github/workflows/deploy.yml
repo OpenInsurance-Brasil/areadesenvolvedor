@@ -36,9 +36,9 @@ jobs:
       - name: Set up widdershins
         run: |
           npm install -g widdershins
-          mkdir source/includes/partials_admin_metrics
-          mkdir source/includes/partials_common_apis
-          mkdir source/includes/partials_open_insurance
+          mkdir -p source/includes/partials_admin_metrics
+          mkdir -p source/includes/partials_common_apis
+          mkdir -p source/includes/partials_open_insurance
 
       - name: Run widdershins for admin metrics and status outage
         run: |
