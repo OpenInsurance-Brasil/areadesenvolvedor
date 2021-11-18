@@ -64,7 +64,7 @@ jobs:
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
-          widdershins source/swagger/open_data_status_outage.yaml \
+          widdershins source/swagger/status_outage.yaml \
           -o source/includes/partials_common_apis/_get_status_and_outages.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
