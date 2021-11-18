@@ -59,12 +59,11 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/ResponseHomeInsuranceList'
+                $ref: '#/components/schemas/ResponseHomeInsuranceList'
 components:
   schemas:
     ResponseHomeInsuranceList:
       type: object
-      description: ''
       required:
         - data
         - links
@@ -188,12 +187,12 @@ components:
           minimumRequirements:
             $ref: '#/components/schemas/HomeInsuranceMinimumRequirements'
           targetAudiences:
-            type: array
+            type: string
             description: Público a quem se destina o produto
             maxLength: 30
-            example: [PESSOA NATURAL]
+            example: PESSOA_NATURAL
             items:
-              enum: [PESSOA NATURAL , PESSOA JURIDICA, AMBAS]
+              enum: [PESSOA_NATURAL , PESSOA_JURIDICA, AMBAS]
     HomeInsuranceMinimumRequirements:
       type: object
       description: Produtos de Seguro Residencial.
@@ -308,8 +307,8 @@ components:
             paymentType:
               type: string
               description: Forma de pagamento
-              example: PAGAMENTO_UNICO
-              enum: [PAGAMENTO_UNICO , PARCELADO, AMBOS]
+              example: A_VISTA
+              enum: [A_VISTA , PARCELADO, AMBOS]
     HomeInsuranceAssistanceServices:
       type: array
       description: Agrupamento dos serviços de assistências disponíveis vinculado ao produto.
@@ -317,7 +316,7 @@ components:
         type: object
         required:
         - assistanceServicesPackage
-        - assistanceServicesDetail
+        - complementaryAssistanceServicesDetail
         - chargeTypeSignaling
         properties:
           assistanceServicesPackage:
@@ -325,7 +324,7 @@ components:
             description: Pacotes de Assistência.
             example: ATE_10_SERVICOS
             enum: [ATE_10_SERVICOS, ATE_20_SERVICOS , ACIMA_20_SERVICOS, CUSTOMIZAVEL]
-          assistanceServicesDetail:
+          complementaryAssistanceServicesDetail:
             type: string
             description: Campo livre para descrição dos serviços ofertados por cada sociedade participante.
             maxLength: 1000
@@ -348,7 +347,7 @@ components:
         properties:
           coverageType:
             type: string
-            enum: [IMOVEL_BASICA , IMOVEL_AMPLA , DANOS_ELETRICOS , DANOS_POR_AGUA , ALAGAMENTO , RESPONSABILIDADE_CIVIL_FAMILIAR, RESPONSABILIDADE_CIVIL_DANOS_MORAIS , ROUBO_SUBTRACAO_BENS , ROUBO_SUBTRACAO_BENS_FORA_LOCAL_SEGURADO , TACOS_GOLFE_HOLE_ONE , PEQUENAS_REFORMAS_OBRA , GREVES_TUMULTOS_LOCKOUT , MICROEMPREENDEDOR , ESCRITORIO_RESIDENCIA , DANOS_EQUIPAMENTOS_ELETRONICOS , QUEBRA_VIDROS , IMPACTO_VEICULOS , VENDAVAL , PERDA_PAGAMENTO_ALUGUEL , BICICLETA , RESPONSABILIDADE_CIVIL_BICICLETA , RC_EMPREGADOR , DESMORONAMENTO , DESPESAS , JOIAS_OBRAS_ARTE , TERREMOTO , IMPACTO_AERONAVES , PAISAGISMO ,  INCENDIO , QUEDA_RAIO , EXPLOSAO, OUTROS]
+            enum: [IMOVEL_BASICA , IMOVEL_AMPLA , DANOS_ELETRICOS , DANOS_POR_AGUA , ALAGAMENTO , RESPONSABILIDADE_CIVIL_FAMILIAR, RESPONSABILIDADE_CIVIL_DANOS_MORAIS , ROUBO_SUBTRACAO_BENS , ROUBO_SUBTRACAO_BENS_FORA_LOCAL_SEGURADO , TACOS_GOLFE_HOLE_ONE , PEQUENAS_REFORMAS_OBRA , GREVES_TUMULTOS_LOCKOUT , MICROEMPREENDEDOR , ESCRITORIO_RESIDENCIA , DANOS_EQUIPAMENTOS_ELETRONICOS , QUEBRA_VIDROS , IMPACTO_VEICULOS , VENDAVAL , PERDA_PAGAMENTO_ALUGUEL , BICICLETA , RESPONSABILIDADE_CIVIL_BICICLETA , RC_EMPREGADOR , DESMORONAMENTO , DESPESAS_EXTRAORDINARIAS , JOIAS_OBRAS_ARTE , TERREMOTO , IMPACTO_AERONAVES , PAISAGISMO ,  INCENDIO , QUEDA_RAIO , EXPLOSAO, OUTRAS]
             description: Nome do tipo da cobertura.
             maxLength: 1000
             example: ESCRITORIO_RESIDENCIA

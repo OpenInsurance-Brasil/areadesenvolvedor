@@ -5,7 +5,7 @@ info:
     API de informações de Plano de Previdência com cobertura de risco. Os recursos que podem ser consumidos pelos participantes conforme a regra 3.1.2 do manual de escopo de dados.
   version: 1.0.0
   contact:
-    url: 'https://openinsurance.susep.gov.br'
+    url: 'https://http://novosite.susep.gov.br'
 servers:
   - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
     description: Servidor de Produção
@@ -78,7 +78,6 @@ paths:
 components:
   schemas:
     ResponsePensionPlanList:
-      description: ''
       type: object
       required:
         - data
@@ -162,8 +161,9 @@ components:
           modality:
             type: string
             description: Lista padronizada de modalidades de coberturas  incluídas no produto.
-            example: PECULIO
+            example: PENSAO_PRAZO_CERTO
             enum: [PECULIO,
+                   RENDA,
                     PENSAO_PRAZO_CERTO,
                     PENSAO_MENORES_21,
                     PENSAO_MENORES_24,
@@ -188,11 +188,9 @@ components:
                   example: VITALICIA
                   enum: [VITALICIA, TEMPORARIA]
           additional:
-            type: array
-            items:
-              type: string
-              description: Adicional ao plano.
-              enum: [SORTEIO, OUTROS]
+            type: string
+            description: Adicional ao plano.
+            enum: [SORTEIO, OUTROS]
           additionalOthers:
             type: string
             description: Lista a ser preenchida pelas participantes quando houver ‘Outros’ no campo ‘additional’
@@ -398,7 +396,7 @@ components:
         updateIndex:
           type: string
           description: Índice utilizado na atualização da PMBaC.
-          example: INPC
+          example: IGPM
           enum: [FINANCEIRA, IGPM, INPC]
     PensionPlanAgeReframing:
       type: object
@@ -461,15 +459,17 @@ components:
         contributionPaymentMethod:
           type: array
           description: Forma de pagamento da contribuição.
-          example: [CARTAO_CREDITO]
           items:
             type: string
+            example: CARTAO_CREDITO
             enum: [CARTAO_CREDITO, DEBITO_CONTA, DEBITO_CONTA_POUPANCA, BOLETO_BANCARIO, PIX, TED_DOC, CONSIGNACAO_FOLHA_PAGAMENTO, PONTOS_PROGRAMA_BENEFICIO, OUTROS]
         contributionPeriodicity:
-          type: string
+          type: array
           description: Periodicidade de pagamento da contribuição.
-          example: MENSAL
-          enum: [MENSAL, UNICA, ANUAL, TRIMESTRAL, SEMESTRAL, BIMESTRAL, OUTRAS]
+          items:
+            type: string
+            example: MENSAL
+            enum: [MENSAL, UNICA, ANUAL, TRIMESTRAL, SEMESTRAL, BIMESTRAL, OUTRAS]
     PensionPlanMinimumRequirements:
       type: object
       description: Requisitos mínimos.
@@ -593,6 +593,13 @@ components:
         type: integer
         default: 10
         minimum: 1
+    cnpjNumber:
+      name: cnpjNumber
+      in: path
+      description: Número de CNPJ.
+      required: true
+      schema:
+        type: string
     cache-Control:
       name: cache-control
       in: header

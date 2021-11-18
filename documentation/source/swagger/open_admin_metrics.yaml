@@ -4,7 +4,7 @@ info:
   description: As API's administrativas são recursos que podem ser consumidos apenas pelo diretório para avaliação e controle da qualidade dos serviços fornecidos pelas instituições
   version: 1.0.0
   contact:
-    url: 'https://openinsurance.susep.gov.br'
+    url: 'https://http://novosite.susep.gov.br'
 servers:
   - url: 'http://api.organizacao.com.br/open-insurance/admin/v1'
 tags:
@@ -120,31 +120,35 @@ components:
             endpoints:
               $ref: '#/components/schemas/EndpointDowntime'
     EndpointUptime:
-      type: object
-      description: Tempos de uptime por endpoint.
-      required:
-        - url
-        - uptimeRate
-      properties:
-        url:
-          type: string
-          description: URL do endpoint
-        uptimeRate:
-          type: string
-          description: Taxa de disponibilidade do endpoint.
+      type: array
+      items:
+        type: object
+        description: Tempos de uptime por endpoint.
+        required:
+          - url
+          - uptimeRate
+        properties:
+          url:
+            type: string
+            description: URL do endpoint
+          uptimeRate:
+            type: string
+            description: Taxa de disponibilidade do endpoint.
     EndpointDowntime:
-      type: object
-      description: Tempos de downtime por endpoint.
-      required:
-        - url
-        - partialDowntime
-      properties:
-        url:
-          type: string
-          description: URL do endpoint
-        partialDowntime:
-          type: integer
-          description: Quantidade de segundos de indisponibilidade do endpoint.
+      type: array
+      items:
+        type: object
+        description: Tempos de downtime por endpoint.
+        required:
+          - url
+          - partialDowntime
+        properties:
+          url:
+            type: string
+            description: URL do endpoint
+          partialDowntime:
+            type: integer
+            description: Quantidade de segundos de indisponibilidade do endpoint.
     InvocationMetrics:
       type: object
       required:

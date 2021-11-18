@@ -57,7 +57,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          description: ''
+          description: Dados dos Seguros de Automóveis
           content:
             application/json:
               schema:
@@ -65,7 +65,6 @@ paths:
 components:
   schemas:
     ResponseAutoInsuranceList:
-      description: ''
       type: object
       required:
         - data
@@ -161,7 +160,7 @@ components:
             enum: [SORTEIO_GRATUITO , CLUBE_BENEFICIOS , CASHBACK, DESCONTOS, OUTROS]
           additionalOthers:
             type: string
-            description: Campo aberto para descrição de cada participante ao selecionar o domínio ‘Outros’ no campo acima ‘Adicionais’.
+            description: Campo aberto para descrição de cada participante ao selecionar o domínio ‘Outros’ no campo acima ‘Adicionais’
           assistanceServices:
             $ref: '#/components/schemas/AutoInsuranceAssistanceServices'
           termAndCondition:
@@ -191,7 +190,7 @@ components:
                 type: string
                 maxLength: 30
                 example: PESSOA NATURAL
-                enum: [PESSOA NATURAL, PESSOA JURIDICA, AMBAS]
+                enum: [PESSOA NATURAL, PESSOA JURIDICA]
     AutoInsuranceCoverage:
       type: array
       description: Listagem de coberturas incluídas no produto que deve observar a relação discriminada de coberturas, conforme Tabela II.5 do Anexo II
@@ -205,8 +204,26 @@ components:
             coverage:
               type: string
               description: Conjunto de riscos elencados na apólice.
-              example: ROUBO
-              enum: [ROUBO , FURTO , INCENDIO , ALAGAMENTO , COLISAO_INDENIZACAO_PARCIAL, COLIZA_INDENIZACAO_INTEGRAL , DANOS_CORPORAIS_RCFV , DANOS_MORAIS_RCFV , DANOS_MATERIAIS_RCFV, DANOS_ESTETICOS_RCFV, DANOS_CORPORAIS_RCFC, DANOS_MORAIS_RCFC, ACIDENTES_PESSOAIS_PASSAGEIROS, VIDROS, FAROIS, LANTERNAS, RETROVISORES, CARRO_RESERVA, PEQUENOS_REPAROS, PNEUS, RESPONSABILIDADE_CIVIL]
+              example: VIDROS
+              enum: [CASCO_COMPREENSIVA_COLISAO_INCENDIO_ROUBO_FURTO,
+                      CASCO_INCENDIO_ROUBO_FURTO,
+                      CASCO_ROUBO_FURTO,
+                      CASCO_INCENDIO,
+                      CASCO_ALAGAMENTO,
+                      CASCO_COLISAO_INDENIZACAO_PARCIAL,
+                      CASCO_COLISAO_INDENIZACAO_INTEGRAL,
+                      RESPONSABILIDADE_CIVIL_FACULTATIVA_VEICULOS_RCFV,
+                      RESPONSABILIDADE_CIVIL_FACULTATIVA_CONDUTOR_RCFC,
+                      ACIDENTE_PESSOAIS_PASSAGEIROS_VEICULO,
+                      ACIDENTE_PESSOAIS_PASSAGEIROS_CONDUTOR,
+                      VIDROS,
+                      DIARIA_INDISPONIBILIDADE,
+                      LFR_LANTERNAS_FAROIS_RETROVISORES,
+                      ACESSORIOS_EQUIPAMENTOS,
+                      CARRO_RESERVA,
+                      PEQUENOS_REPAROS,
+                      RESPONSABILIDADE_CIVIL_CARTA_VERDE,
+                      OUTRAS]
             coverageDetail:
               type: string
               description: Campo aberto para detalhamento de riscos possíveis dos produtos a ser feito para cada participante.
@@ -241,7 +258,6 @@ components:
     AutoInsuranceContractBase:
       type: array
       description: Base de contratação.
-
       items:
         type: object
         required:
@@ -252,12 +268,10 @@ components:
               description: Incidência ao capital segurado da cobertura de casco.
               example: VALOR_DETERMINADO
               enum: [VALOR_DETERMINADO, VALOR_MERCADO, AMBOS]
-
             contractBaseMinValue:
-              description: Valor Base de Contratação Mínimo.
-
+              $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
             contractBaseMaxValue:
-              description: Valor Base de Contratação Máximo.
+              $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
     AutoInsuranceCoverageAttributes:
       type: object
       description: Atributos da cobertura.
@@ -277,7 +291,7 @@ components:
         minLMI:
           $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
         maxLMI:
-          description: Lista com valor máximo de LMI aceito pela sociedade para cada cobertura.
+          $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
         contractBase:
           $ref: '#/components/schemas/AutoInsuranceContractBase'
         newCarMaximumCalculatingPeriod:
@@ -285,10 +299,10 @@ components:
           description: Prazo máximo para apuração do valor a ser indenizado para veículo zero quilômetro. Em meses.
           maxLength: 3
           example: 12
+        newCardContractBase:
+          $ref: '#/components/schemas/AutoInsuranceContractBase'
         fullIndemnityPercentage:
-          description: Percentual do Limite Máximo de Indenização para caracterização de indenização integral.
-          maxLength: 6
-          example: 10.20
+          $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
         deductibleType:
           type: array
           description: Listagem de tipo de franquia para cada tipo de cobertura do produto.
@@ -300,6 +314,9 @@ components:
           type: boolean
           description: Franquia para Indenização Integral.
           example: true
+        deductibleExists:
+          type: boolean
+          description: Existência de Franquia
         deductiblePaymentByCoverage:
           type: boolean
           description: Sinalização para cada cobertura se a seguradora exige pagamento de franquia.
@@ -316,11 +333,10 @@ components:
           items:
             type: string
             example: NACIONAL
-            enum: [NACIONAL, REGIONAL, OUTROS_PAISES]
+            enum: [NACIONAL, REGIONAL, INTERNACIONAL, OUTROS_PAISES]
         geographicScopeCoverageOthers:
           type: string
-          description: Âmbito geográfico da cobertura - Outros
-          maxLength: 100
+          description: Âmbito geográficoda cobertura - Outros
     AutoInsuranceMinimumRequirements:
       type: object
       description: Produtos de Seguro de Automóvel.
@@ -334,7 +350,7 @@ components:
           items:
             type: string
             example: COLETIVO
-            enum: [COLETIVO , INDIVIDUAL, COLETIVO_INDIVIDUAL]
+            enum: [COLETIVO , INDIVIDUAL]
         contractingMinRequirement:
           type: string
           description: Campo aberto contendo todos os requisitos mínimos para contratação (possibilidade de incluir URL).
@@ -372,18 +388,17 @@ components:
             items:
               type: string
               example: CARTAO_CREDITO
-              enum: [CARTAO_CREDITO, CARTAO_DEBITO, DEBITO_CONTA_CORRENTE , DEBITO_CONTA_POUPANCA , BOLETO_BANCARIO , PIX, CONSIGINACAO_FOLHA_PAGAMENTO, PAGAMENTO_COM_PONTOS, OUTROS]
+              enum: [CARTAO_CREDITO, CARTAO_DEBITO, DEBITO_CONTA_CORRENTE , DEBITO_CONTA_POUPANCA , BOLETO_BANCARIO , PIX, CONSIGINACAO_FOLHA_PAGAMENTO, PONTOS_PROGRAMA_BENEFICIO, OUTROS]
         paymentType:
             type: array
             description: Forma de pagamento.
             items:
               type: string
-              example: PAGAMENTO_UNICO
-              enum: [PAGAMENTO_UNICO , PARCELADO, PAGAMENTO_UNICO_PARCELADO]
+              example: PARCELADO
+              enum: [A_VISTA , PARCELADO, AMBOS]
         paymentDetail:
-            type: string
-            description: Campo aberto para detalhamento do campo ‘Outros’ por cada participante.
-            maxLength: 100
+          type: string
+          description: Campo aberto para detalhamento do campo ‘Outros’ por cada participante.
     AutoInsuranceAssistanceServices:
       type: object
       description: Serviços de Assistência.

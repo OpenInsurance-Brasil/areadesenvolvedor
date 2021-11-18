@@ -54,7 +54,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          description: ''
+          description: Dados dos produtos de Vida e Previdência
           content:
             application/json:
               schema:
@@ -62,57 +62,56 @@ paths:
 components:
   schemas:
     ResponseLifePensionList:
-      description: ''
-      type: object
-      required:
-        - data
-        - links
-        - meta
-      properties:
-        data:
+      type: array
+      items:
           type: object
           required:
             - brand
+            - idenfication
+            - products
+            - targetAudience
+            - links
+            - meta
           properties:
-            brand:
-              $ref: '#/components/schemas/LifePensionBrand'
-        links:
-          $ref: '#/components/schemas/LinksPaginated'
-        meta:
-          $ref: '#/components/schemas/MetaPaginated'
-    LifePensionBrand:
+            idenfication:
+              $ref: '#/components/schemas/LifePensionIdentification'
+            products:
+              $ref: '#/components/schemas/LifePensionProduct'
+            minimumRequirements:
+                $ref: '#/components/schemas/LifePensionMinimumRequirements'
+            targetAudience:
+              type: string
+              description: Público-alvo.
+              example: PESSOA_NATURAL
+              maxLength: 15
+              enum: [PESSOA_NATURAL, PESSOA_JURIDICA]
+            links:
+              $ref: '#/components/schemas/LinksPaginated'
+            meta:
+              $ref: '#/components/schemas/MetaPaginated'
+    LifePensionIdentification:
       type: object
       description: Organização controladora do grupo.
       required:
-        - name
-        - companies
+        - brand
+        - societyName
+        - cnpjNumber
       properties:
-        name:
+        brand:
           type: string
           description: Nome da marca reportada pelo participante do Open Insurance. O conceito a que se refere a marca é em essência uma promessa das sociedades sob ela em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.
-          example: EMPRESA
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/LifePensionCompany'
-    LifePensionCompany:
-      type: object
-      description: Informações referente a sociedade a qual a marca pertence.
-      required:
-        - name
-        - cnpjNumber
-        - products
-      properties:
-        name:
+          maxLength: 80
+          example: Brasilprev
+        societyName:
           type: string
           description: Nome da sociedade pertencente à marca.
-          example: EMPRESA Seguros
+          maxLength: 80
+          example: Brasilprev Seguros e Previdência S.A
         cnpjNumber:
           type: string
           description: CNPJ da sociedade pertencente à marca.
-          example: "45086338000178"
-        products:
-          $ref: '#/components/schemas/LifePensionProduct'
+          maxLength: 14
+          example: "27665207000131"
     LifePensionProduct:
         type: array
         items:
@@ -140,6 +139,12 @@ components:
               maxLength: 20
               example: PREVIDENCIA
               enum: [SEGURO_PESSOAS , PREVIDENCIA]
+            type:
+                type: string
+                description: Tipo do produto contratado.
+                maxLength: 20
+                example: PGBL
+                enum: [PGBL , PRGP , PAGP, PRSA, PRI, PDR, VGBL, VRGP, VAGP, VRSA, VRI, VDR, DEMAIS_PRODUTOS_PREVIDENCIA]
             modality:
               type: string
               description: Modalidade do produto contratado.
@@ -152,14 +157,6 @@ components:
               maxLength: 1024
             productDetails:
               $ref: '#/components/schemas/LifePensionProductDetails'
-            minimumRequirements:
-                $ref: '#/components/schemas/LifePensionMinimumRequirements'
-            targetAudience:
-              type: string
-              description: Público-alvo.
-              example: PESSOA_NATURAL
-              maxLength: 15
-              enum: [PESSOA_NATURAL, PESSOA_JURIDICA]
     LifePensionProductDetails:
       type: array
       items:
@@ -177,16 +174,10 @@ components:
               description: Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais.
               example: 15414.614141/2020-71
               maxLength: 30
-            type:
-                type: string
-                description: Tipo do produto contratado.
-                maxLength: 20
-                example: PGBL
-                enum: [PGBL , PRGP , PAGP, PRSA, PRI, PDR, VGBL, VRGP, VAGP, VRSA, VRI, VDR]
             contractTermsConditions:
               type: string
               description: Campo aberto (possibilidade de incluir URL).
-              example: https://example.com/requirements
+              example: https://example.com/mobilebanking
               maxLength: 1024
             defferalPeriod:
               $ref: '#/components/schemas/LifePensionDefferalPeriod'
@@ -239,7 +230,10 @@ components:
           items:
             type: object
             description: Valor mínimo em R$ de prêmio/ contribuição aceita pela sociedade ao plano (identificar valor mensal e/ou aporte único).
-            example: {minimumPremiumAmountValue: 250, minimumPremiumAmountDescription: VALOR MENSAL}
+            example: {
+              minimumPremiumAmountValue: 250,
+              minimumPremiumAmountDescription: ''
+            }
             maxLength: 100
             properties:
               minimumPremiumAmountValue:
@@ -259,7 +253,7 @@ components:
             description: Meio de pagamento escolhido pelo segurado.
             example: CARTAO_CREDITO
             maxLength: 20
-            enum: [CARTAO_CREDITO, DEBITO_CONTA, DEBITO_CONTA_POUPANCA, BOLETO_BANCARIO, PIX, CARTAO_DEBITO, REGRA_PARCEIRO, CONSIGUINACAO_FOLHA_PAGAMENTO, PONTOS_PROGRAMA_BENEFICIO, OUTROS]
+            enum: [CARTAO_CREDITO, DEBITO_CONTA, DEBITO_CONTA_POUPANCA, BOLETO_BANCARIO, PIX, CARTAO_DEBITO, REGRA_PARCEIRO, CONSIGNACAO_FOLHA_PAGAMENTO, PONTOS_PROGRAMA_BENEFICIO, TED_DOC, OUTROS]
         permissionExtraordinaryContributions:
           type: boolean
           description: Se ficam permitidos aportes extraordinários.
@@ -371,7 +365,7 @@ components:
           items:
             type: string
             description: Modalidades de renda disponíveis para contratação. A considerar os seguintes domínios
-            example: RENDA_PRAZO_CERTO
+            example: RENDA_VITALICIA
             maxLength: 100
             enum: [PAGAMENTO_UNICO, RENDA_PRAZO_CERTO, RENDA_TEMPORARIA, RENDA_TEMPORARIA_REVERSIVEL, RENDA_TEMPORARIA_MINMO_GARANTIDO, RENDA_TEMPORARIA_REVERSIVEL_MININO_GARANTIDO, RENDA_VITALICIA, RENDA_VITALICIA_REVERSIVEL_BENEFICIARIO_INDICADO, RENDA_VITALICIA_CONJUGE_CONTINUIDADE_MENORES, RENDA_VITALICIA_MINIMO_GARANTIDO, RENDA_VITALICIA_PRAZO_MINIMO_GRANTIDO]
         biometricTable:
@@ -381,7 +375,7 @@ components:
             description: Tábua biométrica é o instrumento que mede a duração da vida humana (também conhecida como tábua de mortalidade) ou a probabilidade de entrada em invalidez e é um parâmetro utilizado para tarifar os planos de previdência complementar aberta.
             example: AT_2000_FEMALE_SUAVIZADA_15
             maxLength: 100
-            enum: [AT_2000_MALE_FEMALE, AT_2000_FEMALE, AT_2000_MALE_SUAVIZADA_10, AT_2000_FEMALE_SUAVIZADA_10,  AT_2000_MALE_SUAVIZADA_15, AT_2000_FEMALE_SUAVIZADA_15, AT_83_MALE,AT_83_FEMALE, BR_EMSSB_MALE, BR_EMSSB_FEMALE]
+            enum: [AT_2000_MALE, AT_2000_FEMALE, AT_2000_MALE_FEMALE, AT_2000_MALE_SUAVIZADA_10, AT_2000_FEMALE_SUAVIZADA_10, AT_2000_MALE_FEMALE_SUAVIZADA_10, AT_2000_MALE_SUAVIZADA_15, AT_2000_FEMALE_SUAVIZADA_15, AT_2000_MALE_FEMALE_SUAVIZADA_15, AT_83_MALE, AT_83_FEMALE, AT_83_MALE_FEMALE, BR_EMSSB_MALE, BR_EMSSB_FEMALE, BR_EMSSB_MALE_FEMALE]
         interestRate:
           type: number
           description: Taxa de juros garantida utilizada para conversão em renda. Em %.
@@ -445,7 +439,7 @@ components:
         minRequirementsContract:
           type: string
           description: Campo aberto contendo todos os requisitos mínimos para contratação (possibilidade de incluir URL).
-          example: https://example.com/requirements
+          example: https://example.com/mobile-banking
           maxLength: 1024
     LinksPaginated:
       type: object
@@ -542,6 +536,13 @@ components:
         type: integer
         default: 10
         minimum: 1
+    cnpjNumber:
+      name: cnpjNumber
+      in: path
+      description: Número de CNPJ.
+      required: true
+      schema:
+        type: string
     cache-Control:
       name: cache-control
       in: header
