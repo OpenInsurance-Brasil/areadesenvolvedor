@@ -1,0 +1,128 @@
+on:
+  push:
+    branches:
+      - '**'
+      - '!master'
+  pull_request:
+    branches:
+      - '**'
+
+name: Build
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: documentation
+
+    strategy:
+      matrix:
+        ruby-version: [3.0]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: gems-${{ runner.os }}-${{ env.ruby-version }}-${{ hashFiles('**/Gemfile.lock') }}
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - run: npm install -g @apidevtools/swagger-cli
+
+      - run: swagger-cli validate source/swagger/open_admin_metrics.yaml
+      - run: swagger-cli validate source/swagger/open_data_status_outage.yaml
+
+      # Fase 1
+      - run: swagger-cli validate source/swagger/open_data_channels.yaml
+      - run: swagger-cli validate source/swagger/open_life_welfare.yaml
+      - run: swagger-cli validate source/swagger/open_people.yaml
+      - run: swagger-cli validate source/swagger/open_price_linked_bonds.yaml
+      - run: swagger-cli validate source/swagger/open_residence.yaml
+      - run: swagger-cli validate source/swagger/open_vehicle.yaml
+      - run: swagger-cli validate source/swagger/open_welfare.yaml
+
+      - uses: stoplightio/spectral-action@v0.8.1
+        with:
+          file_glob: 'source/swagger/*.yaml'
+
+      - run: npm install -g widdershins
+
+      - run: mkdir source/includes/partials_common_apis && mkdir source/includes/partials_open_insurance
+
+      - name: widdershins admin metrics and status outage
+        run: |
+          widdershins source/swagger/open_admin_metrics.yaml \
+          -o source/includes/partials_common_apis/_open_admin_metrics.md.erb \
+          --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
+          --omitHeader --summary --httpsnippet
+
+          widdershins source/swagger/open_data_status_outage.yaml \
+          -o source/includes/partials_common_apis/_get_status_and_outages.md.erb \
+          --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
+          --omitHeader --summary --httpsnippet
+
+      # Fase 1
+      - name: widdershins fase 1
+        run: |
+          widdershins source/swagger/open_data_channels.yaml \
+          -o source/includes/partials_open_insurance/_open_data_channels.md.erb \
+          --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
+          --omitHeader --summary --httpsnippet
+
+          widdershins source/swagger/open_life_welfare.yaml \
+          -o source/includes/partials_open_insurance/_open_life_welfare.md.erb \
+          --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
+          --omitHeader --summary --httpsnippet
+
+          widdershins source/swagger/open_people.yaml \
+          -o source/includes/partials_open_insurance/open_people.md.erb \
+          --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
+          --omitHeader --summary --httpsnippet
+
+          widdershins source/swagger/open_price_linked_bonds.yaml \
+          -o source/includes/partials_open_insurance/_open_price_linked_bonds.md.erb \
+          --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
+          --omitHeader --summary --httpsnippet
+
+          widdershins source/swagger/open_residence.yaml \
+          -o source/includes/partials_open_insurance/_open_residence.md.erb \
+          --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
+          --omitHeader --summary --httpsnippet
+
+          widdershins source/swagger/open_vehicle.yaml \
+          -o source/includes/partials_open_insurance/_open_vehicle.md.erb \
+          --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
+          --omitHeader --summary --httpsnippet
+
+          widdershins source/swagger/open_welfare.yaml \
+          -o source/includes/partials_open_insurance/_open_welfare.md.erb \
+          --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
+          --omitHeader --summary --httpsnippet
+
+      - uses: actions/cache@v1
+        with:
+          path: build
+          key: ${{ runner.os }}-${{ hashFiles('**/source') }}
+
+      - name: bundle install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - run: bundle exec middleman build --verbose
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: slate-build
+          path: ./documentation/build
