@@ -60,12 +60,12 @@ jobs:
       - name: Run widdershins for admin metrics and status outage
         run: |
           widdershins source/swagger/admin_metrics.yaml \
-          -o source/includes/partials_admin_metrics/admin_metrics.md.erb \
+          -o source/includes/partials_admin_metrics/_admin_metrics.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
           widdershins source/swagger/status_outage.yaml \
-          -o source/includes/partials_common_apis/_get_status_and_outages.md.erb \
+          -o source/includes/partials_common_apis/_status_and_outages.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
