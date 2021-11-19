@@ -1,19 +1,20 @@
 openapi: 3.0.0
 info:
-  title: APIs Open Data do Open Insurance Brasil
+  title: APIs comuns
   description: As APIs descritas neste documento são referentes as APIs da fase Open Data do Open Insurance Brasil.
   version: 1.0.0
   contact:
-    email: "apiteam@swagger.io"
+    url: https://openinsurance.susep.gov.br
 servers:
-  - url: 'http://api.seguradora.com.br/open-insurance/discovery/v1'
+  - url: https://api.organizacao.com.br/open-insurance/discovery/v1
 tags:
-- name: "Discovery"
+  - name: "API de status"
+  - name: "API de outages"
 paths:
   /status:
     get:
       tags:
-        - Discovery
+        - API de status
       summary: A descrição referente ao código de status retornado pelas APIs
       description: " Descrição referente ao código de status retornado pelas APIs"
       operationId: "getStatus"
@@ -30,7 +31,7 @@ paths:
   /outages:
     get:
       tags:
-        - Discovery
+        - API de outages
       summary: a descrição referente a listagem de indisponibilidades agendadas para os serviços
       description: "a descrição referente a listagem de indisponibilidades agendadas para os serviços"
       operationId: "getOutage"
