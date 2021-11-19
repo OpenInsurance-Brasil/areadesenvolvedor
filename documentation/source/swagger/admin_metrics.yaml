@@ -1,19 +1,19 @@
 openapi: 3.0.0
 info:
-  title: APIs Open Data do Open Insurance Brasil
-  description: As API's administrativas são recursos que podem ser consumidos apenas pelo diretório para avaliação e controle da qualidade dos serviços fornecidos pelas instituições
+  title: API - Admin
+  description: As APIs administrativas são recursos que podem ser consumidos apenas pelo diretório para avaliação e controle da qualidade dos serviços fornecidos pelas sociedades participantes.
   version: 1.0.0
   contact:
-    url: 'https://openinsurance.susep.gov.br'
+    url: https://openinsurance.susep.gov.br
 servers:
-  - url: 'http://api.organizacao.com.br/open-insurance/admin/v1'
+  - url: https://api.organizacao.com.br/open-insurance/admin/v1
 tags:
-- name: "Metrics"
+  - name: "Métricas"
 paths:
-  /metrics:  
+  /metrics:
     get:
       tags:
-        - Metrics
+        - "Métricas"
       summary: Obtém as métricas de disponibilidade das APIs
       description: "Obtém as métricas de disponibilidade das APIs"
       operationId: "getMetrics"
@@ -394,7 +394,7 @@ components:
       in: header
       description: Controle de cache para evitar que informações confidenciais sejam armazenadas em cache.
       required: true
-      schema: 
+      schema:
         type: string
         pattern: '[\w\W\s]*'
     content-Security-Policy:
@@ -431,4 +431,4 @@ components:
       description: Campo indica se o navegador deve ou não renderizar um frame.
       schema:
         type: string
-        pattern: '[\w\W\s]*'    
+        pattern: '[\w\W\s]*'

@@ -4,5 +4,6 @@ vendor
 .DS_Store
 docs
 
+documentation/source/includes/partials_admin_metrics
 documentation/source/includes/partials_common_apis
 documentation/source/includes/partials_open_insurance
