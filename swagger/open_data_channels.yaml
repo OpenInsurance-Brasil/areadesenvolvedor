@@ -45,6 +45,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          description: Lista de dependências próprias obtida com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBranchesList'
   /electronic-channels:
     get:
       tags:
@@ -78,6 +84,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          description: Listagem de canais eletrônicos de atendimento obtida com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseElectronicChannelsList'
   /phone-channels:
     get:
       tags:
@@ -111,9 +123,16 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          description: Listagem de canais telefônicos de atendimento obtida com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePhoneChannelsList'
 components:
   schemas:
     ResponseBranchesList:
+      description: ''
       type: object
       required:
         - data
@@ -176,6 +195,7 @@ components:
           minItems: 1
           description: Lista de Dependências de uma Instituição
     ResponseElectronicChannelsList:
+      description: ''
       type: object
       required:
         - data
@@ -347,8 +367,8 @@ components:
         type:
           type: string
           description: Tipo de dependência.
-          enum: [FILIAL, UNIDADE_ADMINISTRATIVA_DESMEMBRADA, DEPENDENCIA_TERCEIROS]
-          example: FILIAL
+          enum: [POSTO_ATENDIMENTO, UNIDADE_ADMINISTRATIVA_DESMEMBRADA]
+          example: POSTO_ATENDIMENTO
         code:
           type: string
           maxLength: 4
@@ -546,7 +566,7 @@ components:
             - "18"
             - "19"
           description: Código dos Serviços efetivamente prestados pelo Canal de Atendimento
-          example: "15"
+          example: "01"
       required:
       - code
       - name
@@ -584,13 +604,10 @@ components:
             - OUTROS
           description: "Tipo de canal de atendimento eletrônico"
           example: "CHAT"
-        additionalInfo:
+        accessType:
           type: string
-          pattern: \w*\W*
-          maxLength: 300
-          description: |
-            Campo de texto livre para descrever complementação de informações necessárias. De preenchimento obrigatório para  o tipo de canal de atendimento 'OUTROS'
-            Restrição: Preenchimento obrigatório para o tipo de canal de atendimento 'OUTROS'
+          description: Tipo de acesso
+          enum: [EMAIL, INTERNET, APP, CHAT, WHATSAPP, CONSUMIDOR, OUTROS]
         urls:
           type: array
           items:
@@ -610,7 +627,7 @@ components:
         name:
           type: string
           enum:
-            - ALTERACOES_FORMA_PAGAMENTO
+            - ALTERACACOES_FORMA_PAGAMENTO
             - AVISO_SINISTRO
             - CANCELAMENTO_SUSPENSAO_PAGAMENTO_PREMIOS_CONTRIBUICAO
             - EFETIVACAO_APORTE
@@ -630,7 +647,7 @@ components:
             - SEGUNDA_VIA_DOCUMENTOS_CONTRATUAIS
             - SUGESTOES_ELOGIOS
           description: "Nome dos Serviços efetivamente prestados pelo Canal de Atendimento"
-          example: "SEGUNDA_VIA_DOCUMENTOS_CONTRATUAIS"
+          example: "ALTERACACOES_FORMA_PAGAMENTO"
         code:
           type: string
           enum:
@@ -695,6 +712,7 @@ components:
     ####################
     #### ResponsePhoneChannelsList ####
     ResponsePhoneChannelsList:
+      description: ''
       type: object
       required:
         - data
@@ -1080,7 +1098,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseError'
     InternalServerError:
-      description: Ocorreu um erro no gateway da API ou no servidor
+      description: Ocorreu um erro no gateway da API ou no microsserviço
       content:
         application/json; charset=utf-8:
           schema:
