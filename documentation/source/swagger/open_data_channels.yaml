@@ -1,20 +1,21 @@
 openapi: 3.0.0
 info:
-  title: APIs Open Data do Open Insurance Brasil
+  title: API - Canais de Atendimento
   description: As APIs descritas neste documento são referentes as APIs da fase Open Data do Open Insurance Brasil.
   version: 1.0.0
   contact:
-    url: 'https://openinsurance.susep.gov.br'
-tags:
-  - name: "Channels"
-    description: "Operações para listagem de canais de atendimentos"
+    url: https://openinsurance.susep.gov.br
 servers:
-  - url: http://api.organizacao.com.br/open-insurance/channels/v1
+  - url: https://api.organizacao.com.br/open-insurance/channels/v1
+tags:
+  - name: "Dependências próprias"
+  - name: "Canais de atendimento eletrônico"
+  - name: "Canais de atendimento telefônico"
 paths:
   /branches:
     get:
       tags:
-        - "Channels"
+        - "Dependências próprias"
       summary: Obtém a listagem de dependências próprias da instituição.
       description: "Método para obter a listagem de dependências próprias da instituição."
       operationId: "getBranches"
@@ -53,7 +54,7 @@ paths:
   /electronic-channels:
     get:
       tags:
-        - "Channels"
+        - "Canais de atendimento eletrônico"
       summary: Obtém a listagem de canais eletrônicos de atendimento da instituição.
       description: "Método para obter a listagem de canais eletrônicos de atendimento da instituição."
       operationId: "getElectronicChannels"
@@ -92,7 +93,7 @@ paths:
   /phone-channels:
     get:
       tags:
-        - "Channels"
+        - "Canais de atendimento telefônico"
       summary: "Obtém a listagem de canais telefônicos de atendimento da instituição."
       description: "Método para obter a listagem de canais telefônicos de atendimento da instituição."
       operationId: "getPhoneChannels"
