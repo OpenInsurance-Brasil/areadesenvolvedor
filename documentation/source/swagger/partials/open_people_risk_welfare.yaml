@@ -119,6 +119,7 @@ components:
         required:
           - name
           - code
+          - category
           - insuranceModality
           - coverages
           - additional
