@@ -201,7 +201,6 @@ components:
                         SERVICO_AUXILIO_FUNERAL,
                         SOBREVIVENCIA,
                         TRANSPLANTE_ORGAOS,
-                        TRANSLADO,
                         TRANSLADO_MEDICO,
                         TRANSLADO_CORPO,
                         VERBA_RESCISORIA,
