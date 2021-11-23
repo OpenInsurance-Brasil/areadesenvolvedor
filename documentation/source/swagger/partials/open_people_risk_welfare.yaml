@@ -126,6 +126,7 @@ components:
           - termsAndConditions
           - contractType
           - otherGuaranteedValues
+          - allowPortability
           - portabilityGraceTime
           - indemnityPaymentMethod
         properties:
@@ -299,6 +300,10 @@ VITIMA]
           otherGuaranteedValues:
             type: string
             enum: [SALDAMENTO, BENEFICIO_PROLONGADO, NAO_SE_APLICA]
+          allowPortability:
+            type: boolean
+            description: Permite portabilidade
+            example: true
           portabilityGraceTime:
             type: integer
             description: Prazo de carência em dias para Portabilidade
