@@ -180,6 +180,7 @@ components:
                         DOENCAS_TROPICAIS,
                         INCAPACIDADE_TOTAL_ACIDENTE,
                         INCAPACIDADE_PARCIAL_ACIDENTE,
+                        INTERNACAO_HOSPITALAR,
                         INVALIDEZ_FUNCIONAL_PERMANENTE_DOENCA,
                         INVALIDEZ_LABORATIVA_DOENCA,
                         MORTE,
