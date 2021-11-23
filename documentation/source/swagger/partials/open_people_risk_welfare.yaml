@@ -176,6 +176,7 @@ components:
                         DIARIA_INTERNACAO_HOSPITALAR,
                         DIARIAS_INCAPACIDADE_PECUNIARIA_DIP,
                         DOENCA_CONGENITA_FILHOS_DCF,
+                        DOENCA_GRAVE,
                         FRATURA_OSSEA,
                         DOENCAS_TROPICAIS,
                         INCAPACIDADE_TOTAL_ACIDENTE,
