@@ -91,8 +91,7 @@ components:
           description: Nome da marca reportada pelo participante do Open Insurance. O conceito a que se refere a marca é em essência uma promessa das sociedades sob ela em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.
           example: Marca
         companies:
-          items:
-            $ref: '#/components/schemas/PersonCompany'
+          $ref: '#/components/schemas/PersonCompany'
     PersonCompany:
       type: array
       items:
