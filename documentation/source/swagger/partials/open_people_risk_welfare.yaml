@@ -356,6 +356,7 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
           type: string
           description: Campo aberto (possibilidade de incluir URL).
     PersonCovaregeAttibutesDetailsUnit:
+      description: Listagem do valor mínimo ou máximo de cobertura (Capital Segurado), diária ou parcela aceito pela  sociedade para cada  combinação de modalidade/cobertura do produto. Em reais
       type: object
       required:
         - code
@@ -427,15 +428,9 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
            example: INDENIZACAO_UNICA
            enum: [INDENIZACAO_UNICA, DIARIA_OU_PARCELA]
         minValue:
-          type: array
-          description: Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela  sociedade para cada  combinação de modalidade/cobertura do produto. Em reais
-          items:
-           $ref: '#/components/schemas/PersonCovaregeAttibutesDetails'
+          $ref: '#/components/schemas/PersonCovaregeAttibutesDetails'
         maxValue:
-          type: array
-          description: Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito  pela sociedade para cada  combinação de modalidade/cobertura do produto. Em reais
-          items:
-           $ref: '#/components/schemas/PersonCovaregeAttibutesDetails'
+          $ref: '#/components/schemas/PersonCovaregeAttibutesDetails'
         indemnifiablePeriod:
           type: array
           description: Listagem de período indenizável para cada combinação de modalidade/cobertura do produto
