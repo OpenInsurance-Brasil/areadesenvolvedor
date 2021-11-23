@@ -456,7 +456,7 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
           type: number
           description: Detalhamento da franquia em dias diferentes para cada cobertura que exista alguma especificidade. Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.
         deductibleBRL:
-          type: number
+          type: string
           description: Listagem de franquia em reais para cada combinação de modalidade/cobertura do produto.
         differentiatedDeductibleBRL:
           type: string
