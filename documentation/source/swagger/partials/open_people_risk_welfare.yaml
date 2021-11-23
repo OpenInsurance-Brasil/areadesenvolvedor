@@ -179,6 +179,7 @@ components:
                         DOENCA_GRAVE,
                         FRATURA_OSSEA,
                         DOENCAS_TROPICAIS,
+                        INCAPACIDADE_TOTAL_OU_TEMPORARIA,
                         INCAPACIDADE_TOTAL_ACIDENTE,
                         INCAPACIDADE_PARCIAL_ACIDENTE,
                         INTERNACAO_HOSPITALAR,
