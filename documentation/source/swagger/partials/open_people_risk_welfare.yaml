@@ -314,8 +314,7 @@ VITIMA]
             description: Permite portabilidade
             example: true
           portabilityGraceTime:
-            type: integer
-            description: Prazo de carência em dias para Portabilidade
+            $ref: '#/components/schemas/PersonPortabilityGraceTime'
           indemnityPaymentMethod:
             type: array
             items:
@@ -585,6 +584,17 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
              enum: [COLETIVO, INDIVIDUAL]
           contractingMinRequirement:
             type: string
+    PersonPortabilityGraceTime:
+      description: Prazo de carência em dias para Portabilidade
+      type: object
+      properties:
+        amount:
+          description: Prazo de carência
+          type: integer
+        unit:
+          description: Unidade do prazo (dias ou meses)
+          type: string
+          enum: [DIAS, MESES]
     LinksPaginated:
       type: object
       properties:
