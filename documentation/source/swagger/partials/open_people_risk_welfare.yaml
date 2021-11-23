@@ -131,6 +131,7 @@ components:
           - allowPortability
           - portabilityGraceTime
           - indemnityPaymentMethod
+          - indemnityPaymentIncome
         properties:
           name:
             type: string
