@@ -125,6 +125,7 @@ components:
           - additional
           - serviceDetail
           - termsAndConditions
+          - globalCapital
           - contractType
           - otherGuaranteedValues
           - allowPortability
