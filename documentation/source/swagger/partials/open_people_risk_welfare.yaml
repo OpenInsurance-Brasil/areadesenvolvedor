@@ -132,6 +132,7 @@ components:
           - portabilityGraceTime
           - indemnityPaymentMethod
           - indemnityPaymentIncome
+          - targetAudience
         properties:
           name:
             type: string
