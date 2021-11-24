@@ -383,7 +383,7 @@ components:
                 description: Descrição do tipo de uso da propriedade.
                 example: HABITUAL
                 enum: [HABITUAL , VERANEIO , DESOCUPADO , CASA_ESCRITORIO , ALUGUEL_TEMPORADA]
-            importanceInsured:
+            destinationInsuredImportance:
               type: string
               description: Destinação da Importância Segurada.
               example: PREDIO
