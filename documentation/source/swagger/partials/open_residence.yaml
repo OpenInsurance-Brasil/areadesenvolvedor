@@ -242,7 +242,7 @@ components:
           - unit
         properties:
           amount:
-            type: number
+            type: string
           unit:
             $ref: '#/components/schemas/HomeInsuranceCovaregeAttibutesDetailsUnit'
     HomeInsuranceTermsAndConditions:
@@ -326,7 +326,7 @@ components:
             type: string
             description: Sinalização em campo exclusivo se o pacote de Assistência é gratuita ou contratada/paga.
             example: GRATUITA
-            enum: [GRATUITA, PAGA]
+            enum: [GRATUITA, PAGO]
     HomeInsuranceCoverages:
       type: array
       description: Listagem de coberturas incluídas no produto.
