@@ -149,7 +149,7 @@ components:
             description: Forma de custeio
             items:
                 type: string
-                enum: [PAGMENTO_UNICO, PAGAMENTO_MENSAL, PAGAMENTO_PERIODICO]
+                enum: [PAGAMENTO_UNICO, PAGAMENTO_MENSAL, PAGAMENTO_PERIODICO]
           termsAndConditions:
             $ref: '#/components/schemas/CapitalizationTitleTerms'
           quotas:
