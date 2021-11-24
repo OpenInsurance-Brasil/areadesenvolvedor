@@ -198,20 +198,26 @@ components:
           - chargingQuota
         properties:
             capitalizationQuota:
-              type: number
+              type: array
               description: Percentual da contribuição destinado à constituição de capital referente ao direito de resgate.
-              maxLength: 9
-              example: 10.000000
+              items:
+                type: number
+                maxLength: 9
+                example: 10.000000
             raffleQuota:
-              type: number
+              type: array
               description: Percentual da contribuição designado a custear os sorteios, se previstos no plano
-              maxLength: 9
-              example: 10.000000
+              items:
+                type: number
+                maxLength: 9
+                example: 10.000000
             chargingQuota:
-              type: number
+              type: array
               description: Percentual da contribuição destinado aos custos de despesas com corretagem, colocação e administração do título de capitalização, emissão, divulgação, lucro da sociedade de capitalização e eventuais despesas relavas ao custeio da contemplação obrigatória e da distribuição de bônus.
-              maxLength: 9
-              example: 10.000000
+              items:
+                type: number
+                maxLength: 9
+                example: 10.000000
     CapitalizationTitleValidity:
         type: integer
         description: Prazo de vigência do título de capitalização em meses.
@@ -255,9 +261,11 @@ components:
             $ref: '#/components/schemas/CapitalizationTitleContributionAmount'
           earlyRedemption:
             description: Possibilidade de o titular efetuar o resgate do capital constituído antes do fim do prazo de vigência do título, podendo ocorrer por solicitação expressa do titular ou por contemplação em sorteio com liquidação antecipada
-            type: number
-            maxLength: 9
-            example: 10.000000
+            type: array
+            items:
+                type: number
+                maxLength: 9
+                example: 10.000000
           redemptionPercentageEndTerm:
             description: Percentual mínimo da soma das contribuições efetuadas que poderá ser resgatado ao final da vigência,  tendo como condição os pagamentos das parcelas nos respectivos vencimentos.
             type: number
