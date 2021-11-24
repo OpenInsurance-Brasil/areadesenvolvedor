@@ -246,24 +246,22 @@ components:
           unit:
             $ref: '#/components/schemas/HomeInsuranceCovaregeAttibutesDetailsUnit'
     HomeInsuranceTermsAndConditions:
-      type: array
+      type: object
       description: Informações dos termos e condições conforme número do processo SUSEP.
-      items:
-        type: object
-        required:
-          - susepProcessNumber
-          - termAndCondition
-        properties:
-          susepProcessNumber:
-            type: number
-            description: Número do processo SUSEP.
-            maxLength: 20
-            example: 0000000000000000
-          definition:
-            type: string
-            description: Campo aberto (possibilidade de incluir uma url).
-            maxLength: 1024
-            example: https://openinsurance.com.br/aaa
+      required:
+        - susepProcessNumber
+        - termAndCondition
+      properties:
+        susepProcessNumber:
+          type: number
+          description: Número do processo SUSEP.
+          maxLength: 20
+          example: 0000000000000000
+        termAndCondition:
+          type: string
+          description: Campo aberto (possibilidade de incluir uma url).
+          maxLength: 1024
+          example: https://openinsurance.com.br/aaa
     HomeInsuranceValidity:
         type: array
         description: Vigência
