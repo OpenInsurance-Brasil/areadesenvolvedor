@@ -204,7 +204,7 @@ components:
                         TRANSLADO_MEDICO,
                         TRANSLADO_CORPO,
                         VERBA_RESCISORIA,
-                        OUTROS]
+                        OUTRAS]
                 coverageOthers:
                   type: array
                   items:
