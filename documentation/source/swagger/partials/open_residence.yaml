@@ -65,17 +65,12 @@ components:
     ResponseHomeInsuranceList:
       type: object
       required:
-        - data
+        - brand
         - links
         - meta
       properties:
-        data:
-          type: object
-          required:
-            - HomeInsuranceBrand
-          properties:
-            brand:
-              $ref: '#/components/schemas/HomeInsuranceBrand'
+        brand:
+          $ref: '#/components/schemas/HomeInsuranceBrand'
         links:
           $ref: '#/components/schemas/Links'
         meta:
