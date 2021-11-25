@@ -31,5 +31,7 @@ RUN widdershins source/swagger/admin_metrics.yaml -o source/includes/partials_ad
     && widdershins source/swagger/open_data_channels.yaml -o source/includes/partials_open_insurance/_open_data_channels.md.erb --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" --omitHeader --summary --httpsnippet \
     && widdershins source/swagger/open_data_products_services.yaml -o source/includes/partials_open_insurance/_open_data_products_services.md.erb --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" --omitHeader --summary --httpsnippet
 
+RUN bundle install
+
 ENTRYPOINT ["/slate.sh"]
 CMD ["build"]
