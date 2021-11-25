@@ -48,7 +48,7 @@ jobs:
           --omitHeader --summary --httpsnippet
 
           widdershins source/swagger/status_outage.yaml \
-          -o source/includes/partials_common_apis/_status_outages.md.erb \
+          -o source/includes/partials_common_apis/_status_outage.md.erb \
           --language_tabs "javascript:JavaScript:request" "python:Python:request" "java:Java::request" \
           --omitHeader --summary --httpsnippet
 
