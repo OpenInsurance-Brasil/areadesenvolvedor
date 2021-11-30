@@ -1,19 +1,26 @@
 openapi: 3.0.3
 info:
-  title: API - Produtos e serviços
-  description: As APIs descritas neste documento são referentes as APIs da fase Open Data do Open Insurance Brasil.
+  title: APIs Open Data do Open Insurance Brasil
+  description: >-
+    API de informações de Planos de Previdência e Seguros de Pessoas ambos com
+    cobertura por sobrevivência (excluindo seguros Dotais). Os recursos que
+    podem ser consumidos pelos participantes conforme a regra 3.1.1 do manual de
+    escopo de dados.
   version: 1.0.0
   contact:
-    url: https://openinsurance.susep.gov.br
+    url: 'https://openinsurance.susep.gov.br'
 servers:
-  - url: https://api.organizacao.com.br/open-insurance/products-services/v1
+  - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
+    description: Servidor de Produção
+  - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
+    description: Servidor de Homologação
 tags:
   - name: life-pension
   - name: person
-  - name: pension-plan
-  - name: auto-insurance
+  - name: capitalization-title
   - name: home-insurance
-  - name: price-linked-bonds
+  - name: auto-insurance
+  - name: pension-plan
 paths:
   /life-pension:
     get:
@@ -55,7 +62,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          description: ''
+          description: Dados dos produtos de Vida e Previdência
           content:
             application/json:
               schema:
@@ -100,11 +107,150 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          description: ''
+          description: Dados dos Plano de Seguro de Pessoas
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponsePersonList'
+  /capitalization-title:
+    get:
+      tags:
+        - capitalization-title
+      summary: Obtém a lista dos produtos do tipo título de capitalização
+      description: Obtém a lista dos produtos do tipo título de capitalização
+      operationId: capitalizationTitle
+      parameters:
+        - $ref: '#/components/parameters/cache-Control'
+        - $ref: '#/components/parameters/content-Security-Policy'
+        - $ref: '#/components/parameters/content-Type'
+        - $ref: '#/components/parameters/strict-Transport-Security'
+        - $ref: '#/components/parameters/x-Content-Type-Options'
+        - $ref: '#/components/parameters/x-Frame-Options'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          description: Dados dos produtos de Título de Capitalização
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseCapitalizationTitleList'
+        '400':
+          $ref: '#/components/responses/BadRequest1'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          description: Dados dos produtos de Título de Capitalização
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseCapitalizationTitleList'
+  '/home-insurance/commercializationArea/{commercializationArea}':
+    get:
+      tags:
+        - home-insurance
+      summary: Obtém informações de seguros residenciais
+      description: Obtém informações de seguros redidenciais
+      operationId: getResidentialInsurance
+      parameters:
+        - $ref: '#/components/parameters/cache-Control'
+        - $ref: '#/components/parameters/content-Security-Policy'
+        - $ref: '#/components/parameters/content-Type'
+        - $ref: '#/components/parameters/strict-Transport-Security'
+        - $ref: '#/components/parameters/x-Content-Type-Options'
+        - $ref: '#/components/parameters/x-Frame-Options'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/commercializationArea'
+      responses:
+        '200':
+          description: Dados dos Seguros Residenciais
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseHomeInsuranceList'
+        '400':
+          $ref: '#/components/responses/BadRequest2'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden1'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          description: Dados dos Seguros Residenciais
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseHomeInsuranceList'
+  '/auto-insurance/{commercializationArea}/{fipeCode}/{year}':
+    get:
+      tags:
+        - auto-insurance
+      summary: Obtém informações de seguros de automóveis
+      description: Obtém informações de seguros de automóveis
+      operationId: getAutoInsurance
+      parameters:
+        - $ref: '#/components/parameters/cache-Control'
+        - $ref: '#/components/parameters/content-Security-Policy'
+        - $ref: '#/components/parameters/content-Type'
+        - $ref: '#/components/parameters/strict-Transport-Security'
+        - $ref: '#/components/parameters/x-Content-Type-Options'
+        - $ref: '#/components/parameters/x-Frame-Options'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/commercializationArea1'
+        - $ref: '#/components/parameters/fipeCode'
+        - $ref: '#/components/parameters/year'
+      responses:
+        '200':
+          description: Dados dos Seguros de Automóveis
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseAutoInsuranceList'
+        '400':
+          $ref: '#/components/responses/BadRequest3'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden2'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError1'
+        default:
+          description: Dados dos Seguros de Automóveis
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseAutoInsuranceList'
   /pension-plan:
     get:
       tags:
@@ -139,11 +285,11 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
-          $ref: '#/components/responses/Forbidden'
+          $ref: '#/components/responses/Forbidden3'
         '404':
           $ref: '#/components/responses/NotFound'
         '405':
-          $ref: '#/components/responses/MethodNotAllowed'
+          $ref: '#/components/responses/MethodNotAllowed1'
         '406':
           $ref: '#/components/responses/NotAcceptable'
         '410':
@@ -155,7 +301,7 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
-          $ref: '#/components/responses/InternalServerError'
+          $ref: '#/components/responses/InternalServerError2'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
         '504':
@@ -166,175 +312,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponsePensionPlanList'
-  /auto-insurance/{commercializationArea}/{fipeCode}/{year}:
-    get:
-      tags:
-        - auto-insurance
-      summary: Obtém informações de seguros de automóveis
-      description: Obtém informações de seguros de automóveis
-      operationId: getAutoInsurance
-      parameters:
-        - $ref: '#/components/parameters/cache-Control'
-        - $ref: '#/components/parameters/content-Security-Policy'
-        - $ref: '#/components/parameters/content-Type'
-        - $ref: '#/components/parameters/strict-Transport-Security'
-        - $ref: '#/components/parameters/x-Content-Type-Options'
-        - $ref: '#/components/parameters/x-Frame-Options'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/commercializationArea'
-        - $ref: '#/components/parameters/fipeCode'
-        - $ref: '#/components/parameters/year'
-      responses:
-        '200':
-          description: Dados dos Seguros de Automóveis
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseAutoInsuranceList'
-        '400':
-          $ref: '#/components/responses/BadRequest1'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '406':
-          $ref: '#/components/responses/NotAcceptable'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseAutoInsuranceList'
-  /home-insurance/commercializationArea/{commercializationArea}:
-    get:
-      tags:
-        - home-insurance
-      summary: Obtém informações de seguros residenciais
-      description: Obtém informações de seguros redidenciais
-      operationId: getResidentialInsurance
-      parameters:
-        - $ref: '#/components/parameters/cache-Control'
-        - $ref: '#/components/parameters/content-Security-Policy'
-        - $ref: '#/components/parameters/content-Type'
-        - $ref: '#/components/parameters/strict-Transport-Security'
-        - $ref: '#/components/parameters/x-Content-Type-Options'
-        - $ref: '#/components/parameters/x-Frame-Options'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/commercializationArea1'
-      responses:
-        '200':
-          description: Dados dos Seguros Residenciais
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseHomeInsuranceList'
-        '400':
-          $ref: '#/components/responses/BadRequest2'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden1'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '406':
-          $ref: '#/components/responses/NotAcceptable'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponseHomeInsuranceList'
-  /prize-linked-bonds:
-    get:
-      tags:
-        - price-linked-bonds
-      summary: Obtém dados dos títulos de capitalização
-      description: Obtém dados dos títulos de capitalização
-      operationId: getPrizeLinkedBonds
-      parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/pageSize1'
-      responses:
-        '200':
-          description: Dados sobre títulos de capitalização obtidos com sucesso.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResponsePrizeLinkedBonds'
 components:
   schemas:
     ResponseLifePensionList:
-      description: ''
-      type: object
-      required:
-        - data
-        - links
-        - meta
-      properties:
-        data:
-          type: object
-          required:
-            - brand
-          properties:
-            brand:
-              $ref: '#/components/schemas/LifePensionBrand'
-        links:
-          $ref: '#/components/schemas/LinksPaginated'
-        meta:
-          $ref: '#/components/schemas/MetaPaginated'
-    LifePensionBrand:
+      type: array
+      items:
+        type: object
+        required:
+          - identification
+          - products
+          - links
+          - meta
+        properties:
+          identification:
+            $ref: '#/components/schemas/LifePensionIdentification'
+          products:
+            $ref: '#/components/schemas/LifePensionProduct'
+          links:
+            $ref: '#/components/schemas/LinksPaginated'
+          meta:
+            $ref: '#/components/schemas/MetaPaginated'
+    LifePensionIdentification:
       type: object
       description: Organização controladora do grupo.
       required:
-        - name
-        - companies
+        - brand
+        - societyName
+        - cnpjNumber
       properties:
-        name:
+        brand:
           type: string
           description: >-
             Nome da marca reportada pelo participante do Open Insurance. O
             conceito a que se refere a marca é em essência uma promessa das
             sociedades sob ela em fornecer uma série específica de atributos,
             benefícios e serviços uniformes aos clientes.
-          example: EMPRESA
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/LifePensionCompany'
-    LifePensionCompany:
-      type: object
-      description: Informações referente a sociedade a qual a marca pertence.
-      required:
-        - name
-        - cnpjNumber
-        - products
-      properties:
-        name:
+          maxLength: 80
+          example: Brasilprev
+        societyName:
           type: string
           description: Nome da sociedade pertencente à marca.
-          example: EMPRESA Seguros
+          maxLength: 80
+          example: Brasilprev Seguros e Previdência S.A
         cnpjNumber:
           type: string
           description: CNPJ da sociedade pertencente à marca.
-          example: '45086338000178'
-        products:
-          $ref: '#/components/schemas/LifePensionProduct'
+          maxLength: 14
+          example: '27665207000131'
     LifePensionProduct:
       type: array
       items:
@@ -345,6 +369,8 @@ components:
           - segment
           - modality
           - coverages
+          - minimumRequirements
+          - targetAudience
         properties:
           name:
             type: string
@@ -366,6 +392,25 @@ components:
             enum:
               - SEGURO_PESSOAS
               - PREVIDENCIA
+          type:
+            type: string
+            description: Tipo do produto contratado.
+            maxLength: 20
+            example: PGBL
+            enum:
+              - PGBL
+              - PRGP
+              - PAGP
+              - PRSA
+              - PRI
+              - PDR
+              - VGBL
+              - VRGP
+              - VAGP
+              - VRSA
+              - VRI
+              - VDR
+              - DEMAIS_PRODUTOS_PREVIDENCIA
           modality:
             type: string
             description: Modalidade do produto contratado.
@@ -409,28 +454,10 @@ components:
               eletrônicos na SUSEP, com caracteres especiais.
             example: 15414.614141/2020-71
             maxLength: 30
-          type:
-            type: string
-            description: Tipo do produto contratado.
-            maxLength: 20
-            example: PGBL
-            enum:
-              - PGBL
-              - PRGP
-              - PAGP
-              - PRSA
-              - PRI
-              - PDR
-              - VGBL
-              - VRGP
-              - VAGP
-              - VRSA
-              - VRI
-              - VDR
           contractTermsConditions:
             type: string
             description: Campo aberto (possibilidade de incluir URL).
-            example: 'https://example.com/requirements'
+            example: 'https://example.com/mobilebanking'
             maxLength: 1024
           defferalPeriod:
             $ref: '#/components/schemas/LifePensionDefferalPeriod'
@@ -499,7 +526,7 @@ components:
               ao plano (identificar valor mensal e/ou aporte único).
             example:
               minimumPremiumAmountValue: 250
-              minimumPremiumAmountDescription: VALOR MENSAL
+              minimumPremiumAmountDescription: ''
             maxLength: 100
             properties:
               minimumPremiumAmountValue:
@@ -527,8 +554,9 @@ components:
               - PIX
               - CARTAO_DEBITO
               - REGRA_PARCEIRO
-              - CONSIGUINACAO_FOLHA_PAGAMENTO
+              - CONSIGNACAO_FOLHA_PAGAMENTO
               - PONTOS_PROGRAMA_BENEFICIO
+              - TED_DOC
               - OUTROS
         permissionExtraordinaryContributions:
           type: boolean
@@ -654,7 +682,7 @@ components:
             description: >-
               Modalidades de renda disponíveis para contratação. A considerar os
               seguintes domínios
-            example: RENDA_PRAZO_CERTO
+            example: RENDA_VITALICIA
             maxLength: 100
             enum:
               - PAGAMENTO_UNICO
@@ -680,16 +708,21 @@ components:
             example: AT_2000_FEMALE_SUAVIZADA_15
             maxLength: 100
             enum:
-              - AT_2000_MALE_FEMALE
+              - AT_2000_MALE
               - AT_2000_FEMALE
+              - AT_2000_MALE_FEMALE
               - AT_2000_MALE_SUAVIZADA_10
               - AT_2000_FEMALE_SUAVIZADA_10
+              - AT_2000_MALE_FEMALE_SUAVIZADA_10
               - AT_2000_MALE_SUAVIZADA_15
               - AT_2000_FEMALE_SUAVIZADA_15
+              - AT_2000_MALE_FEMALE_SUAVIZADA_15
               - AT_83_MALE
               - AT_83_FEMALE
+              - AT_83_MALE_FEMALE
               - BR_EMSSB_MALE
               - BR_EMSSB_FEMALE
+              - BR_EMSSB_MALE_FEMALE
         interestRate:
           type: number
           description: Taxa de juros garantida utilizada para conversão em renda. Em %.
@@ -763,7 +796,7 @@ components:
           description: >-
             Campo aberto contendo todos os requisitos mínimos para contratação
             (possibilidade de incluir URL).
-          example: 'https://example.com/requirements'
+          example: 'https://example.com/mobile-banking'
           maxLength: 1024
     LinksPaginated:
       type: object
@@ -846,7 +879,6 @@ components:
           $ref: '#/components/schemas/MetaPaginated'
       additionalProperties: false
     ResponsePersonList:
-      description: ''
       type: object
       required:
         - data
@@ -880,8 +912,7 @@ components:
             benefícios e serviços uniformes aos clientes.
           example: Marca
         companies:
-          items:
-            $ref: '#/components/schemas/PersonCompany'
+          $ref: '#/components/schemas/PersonCompany'
     PersonCompany:
       type: array
       items:
@@ -909,15 +940,20 @@ components:
         required:
           - name
           - code
+          - category
           - insuranceModality
           - coverages
           - additional
-          - serviceDetail
           - termsAndConditions
+          - globalCapital
+          - validity
           - contractType
           - otherGuaranteedValues
+          - allowPortability
           - portabilityGraceTime
           - indemnityPaymentMethod
+          - indemnityPaymentIncome
+          - targetAudience
         properties:
           name:
             type: string
@@ -978,12 +1014,16 @@ components:
                     - DESPESAS_MEDICAS_HOSPITALARES_ODONTOLOGICAS_EXTERIOR
                     - DIARIA_INCAPACIDADE_TOTAL_TEMPORARIA
                     - DIARIA_INTERNACAO_HOSPITALAR
+                    - INTERNACAO_HOSPITALAR
                     - DIARIAS_INCAPACIDADE_PECUNIARIA_DIP
+                    - DOENCA_GRAVE
                     - DOENCA_CONGENITA_FILHOS_DCF
                     - FRATURA_OSSEA
                     - DOENCAS_TROPICAIS
-                    - INCAPACIDADE_TOTAL_ACIDENTE
-                    - INCAPACIDADE_PARCIAL_ACIDENTE
+                    - INCAPACIDADE_TOTAL_OU_TEMPORARIA
+                    - INVALIDEZ_PERMANENTE_TOTAL_PARCIAL
+                    - INVALIDEZ_TOTAL_ACIDENTE
+                    - INVALIDEZ_PARCIAL_ACIDENTE
                     - INVALIDEZ_FUNCIONAL_PERMANENTE_DOENCA
                     - INVALIDEZ_LABORATIVA_DOENCA
                     - MORTE
@@ -1003,9 +1043,10 @@ components:
                     - SOBREVIVENCIA
                     - TRANSPLANTE_ORGAOS
                     - TRANSLADO
+                    - TRANSLADO_MEDICO
                     - TRANSLADO_CORPO
                     - VERBA_RESCISORIA
-                    - OUTROS
+                    - OUTRAS
                 coverageOthers:
                   type: array
                   items:
@@ -1041,6 +1082,7 @@ components:
                 - EMPRESARIAL
                 - ENCANADOR
                 - ENTRETENIMENTO
+                - EQUIPAMENTOS_MEDICOS
                 - FIANCAS_DESPESAS_LEGAIS
                 - FISIOTERAPIA
                 - FUNERAL
@@ -1076,14 +1118,15 @@ components:
                 - TELEMEDICINA
                 - VIAGEM
                 - VITIMA
+                - OUTROS
           additional:
             type: array
             items:
               type: string
               enum:
                 - SORTEIO
-                - SERVICO_ASSISTENCIAS_COMPLEMENTARES_PAGO
-                - SERVICO_ASSISTENCIAS_COMPLEMENTARES_GRATUITO
+                - SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO
+                - SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO
                 - OUTROS
                 - NAO_HA
           assistanceTypeOthers:
@@ -1135,6 +1178,9 @@ components:
               - SALDAMENTO
               - BENEFICIO_PROLONGADO
               - NAO_SE_APLICA
+          allowPortability:
+            type: boolean
+            description: Permite Portabilidade
           portabilityGraceTime:
             type: integer
             description: Prazo de carência em dias para Portabilidade
@@ -1163,7 +1209,7 @@ components:
           premiumPayment:
             $ref: '#/components/schemas/PersonPremiumPayment'
           minimunRequirements:
-            $ref: '#/components/schemas/PersonMinimunRequirements'
+            $ref: '#/components/schemas/PersonMinimumRequirements'
           targetAudience:
             type: string
             enum:
@@ -1181,7 +1227,7 @@ components:
         definition:
           type: string
           description: Campo aberto (possibilidade de incluir URL).
-    PersonCovaregeAttibutesDetailsUnit:
+    PersonCoverageAttibutesDetailsUnit:
       type: object
       required:
         - code
@@ -1195,7 +1241,7 @@ components:
           type: string
           description: Descrição da unidade de medida
           example: description
-    PersonCovaregeAttibutesDetails:
+    PersonCoverageAttibutesDetails:
       type: object
       required:
         - amount
@@ -1206,9 +1252,26 @@ components:
           description: Valor.
           example: 60
         unit:
-          $ref: '#/components/schemas/PersonCovaregeAttibutesDetailsUnit'
+          $ref: '#/components/schemas/PersonCoverageAttibutesDetailsUnit'
     PersonGracePeriodUnit:
       type: object
+      description: Período de carência
+      properties:
+        amount:
+          type: number
+          description: Prazo de Carência
+          example: 60
+        unit:
+          type: string
+          description: Unidade do prazo (dias ou meses).
+          example: DIAS
+          enum:
+            - DIAS
+            - MESES
+            - NAO_SE_APLICA
+    personPortabilityGraceTime:
+      type: object
+      description: Prazo de carência em dias para Portabilidade
       properties:
         amount:
           type: number
@@ -1264,21 +1327,21 @@ components:
               - INDENIZACAO_UNICA
               - DIARIA_OU_PARCELA
         minValue:
-          type: array
+          type: object
           description: >-
             Listagem do valor mínimo de cobertura (Capital Segurado), diária ou
             parcela aceito pela  sociedade para cada  combinação de
             modalidade/cobertura do produto. Em reais
           items:
-            $ref: '#/components/schemas/PersonCovaregeAttibutesDetails'
+            $ref: '#/components/schemas/PersonCoverageAttibutesDetails'
         maxValue:
-          type: array
+          type: object
           description: >-
             Listagem do valor máximo de cobertura (Capital Segurado), diária ou
             parcela aceito  pela sociedade para cada  combinação de
             modalidade/cobertura do produto. Em reais
           items:
-            $ref: '#/components/schemas/PersonCovaregeAttibutesDetails'
+            $ref: '#/components/schemas/PersonCoverageAttibutesDetails'
         indemnifiablePeriod:
           type: array
           description: >-
@@ -1467,17 +1530,9 @@ components:
             - ZMW
             - ZWL
         gracePeriod:
-          type: array
-          description: >-
-            Listagem de período de carência default de cobertura para cada
-            combinação de modalidade/cobertura do produto. Prazo em meses
-          items:
-            $ref: '#/components/schemas/PersonGracePeriodUnit'
+          $ref: '#/components/schemas/PersonGracePeriodUnit'
         differentiatedGracePeriod:
-          description: >-
-            Detalhamento do período de carência diferentes para cada cobertura
-            que exista alguma especificidade. Caso a seguradora não tenha essa
-            diferenciação, não retornará nada no campo
+          $ref: '#/components/schemas/PersonGracePeriodUnit'
         deductibleDays:
           type: integer
           description: >-
@@ -1527,22 +1582,10 @@ components:
           type: boolean
           description: Indicar se a cobertura pode ser contratada isoladamente ou não.
           example: true
-        minCoverageGroupRequired:
-          type: string
-          description: >-
-            Listagem para indicar para cada cobertura quais serão a(s)
-            cobertura(s) que deverá(rão) ser contratadas de forma conjunta.
-        minCoverageGroupRequiredOthers:
-          type: string
-          description: >-
-            Campo outros para o caso da cobertura não constar na listagem padrão
-            da tabela de tipo de cobertura.
     PersonPmbacRemuneration:
       type: object
       required:
-        - interestRate
         - pmbacUpdateIndex
-        - capitalizationMethod
       properties:
         interestRate:
           type: number
@@ -1555,13 +1598,6 @@ components:
             - IPCA
             - IGP-M
             - INPC
-        capitalizationMethod:
-          type: string
-          description: Forma de capitalização escolhida.
-          example: FINANCEIRA
-          enum:
-            - FINANCEIRA
-            - ATUARIAL
     PersonBenefitRecalculation:
       type: object
       required:
@@ -1642,7 +1678,7 @@ components:
           type: string
           description: Campo aberto (possibilidade de incluir URL).
         gracePeriod:
-          $ref: '#/components/schemas/PersonCovaregeAttibutesDetails'
+          $ref: '#/components/schemas/PersonGracePeriodUnit'
     PersonPremiumPayment:
       type: object
       required:
@@ -1685,7 +1721,7 @@ components:
           description: >-
             Distribuição de frequência relativa aos valores referentes às taxas
             cobradas.
-    PersonMinimunRequirements:
+    PersonMinimumRequirements:
       type: object
       required:
         - contractingType
@@ -1698,8 +1734,1605 @@ components:
             - INDIVIDUAL
         contractingMinRequirement:
           type: string
+    ResponseCapitalizationTitleList:
+      type: object
+      required:
+        - data
+        - brand
+        - links
+        - meta
+      properties:
+        requestTime:
+          description: >-
+            Data e hora da consulta, conforme especificação RFC-3339, formato
+            UTC.
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 2048
+          format: date-time
+          example: '2021-08-20T08:30:00Z'
+        brand:
+          $ref: '#/components/schemas/CapitalizationTitleBrand'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    CapitalizationTitleBrand:
+      type: object
+      description: Organização controladora do grupo.
+      required:
+        - name
+        - companies
+      properties:
+        name:
+          type: string
+          description: >-
+            Nome da marca reportada pelo participante do Open Insurance. O
+            conceito a que se refere a marca é em essência uma promessa das
+            sociedades sob ela em fornecer uma série específica de atributos,
+            benefícios e serviços uniformes aos clientes.
+          maxLength: 80
+          example: ACME seguros
+        companies:
+          $ref: '#/components/schemas/CapitalizationTitleCompany'
+    CapitalizationTitleCompany:
+      type: array
+      items:
+        description: Informações referente a sociedade a qual a marca pertence.
+        required:
+          - name
+          - cnpjNumber
+          - product
+        properties:
+          name:
+            type: string
+            description: Nome da sociedade pertencente à marca.
+            maxLength: 80
+            example: ACME cap da ACME seguros
+          cnpjNumber:
+            type: string
+            description: CNPJ da sociedade pertencente à marca.
+            maxLength: 14
+            example: '12345678901234'
+          product:
+            $ref: '#/components/schemas/CapitalizationTitleProduct'
+    CapitalizationTitleProduct:
+      type: array
+      description: Lista de produtos de uma empresa.
+      items:
+        type: object
+        required:
+          - name
+          - code
+          - modality
+          - quotas
+          - coverages
+          - costType
+        properties:
+          name:
+            type: string
+            description: >-
+              Nome comercial do produto, pelo qual é identificado nos canais de
+              distribuição e atendimento da sociedade.
+            maxLength: 80
+            example: ACMEcap
+          code:
+            type: string
+            description: Código único a ser definido pela sociedade.
+            maxLength: 100
+            example: 01234589_cap
+          modality:
+            type: array
+            description: Modalidade.
+            items:
+              type: string
+              enum:
+                - TRADICIONAL
+                - INSTRUMENTO_GARANTIA
+                - COMPRA_PROGRAMADA
+                - POPULAR
+                - INCENTIVO
+                - FILANTROPIA_PREMIAVEL
+          costType:
+            type: array
+            description: Forma de custeio
+            items:
+              type: string
+              enum:
+                - PAGAMENTO_UNICO
+                - PAGAMENTO_MENSAL
+                - PAGAMENTO_PERIODICO
+          termsAndConditions:
+            $ref: '#/components/schemas/CapitalizationTitleTerms'
+          quotas:
+            type: array
+            items:
+              $ref: '#/components/schemas/CapitalizationTitleQuotas'
+          validity:
+            $ref: '#/components/schemas/CapitalizationTitleValidity'
+          serieSize:
+            $ref: '#/components/schemas/CapitalizationTitleSerieSize'
+          capitalizationPeriod:
+            $ref: '#/components/schemas/CapitalizationTitlePeriod'
+          latePayment:
+            $ref: '#/components/schemas/CapitalizationTitleLatePayment'
+          contributionPayment:
+            $ref: '#/components/schemas/CapitalizationTitleContributionPayment'
+          redemption:
+            $ref: '#/components/schemas/CapitalizationTitleredemption'
+          raffle:
+            $ref: '#/components/schemas/CapitalizationTitleRaffle'
+          additionalDetails:
+            $ref: '#/components/schemas/CapitalizationTitleAdditionals'
+          minimumRequirements:
+            $ref: '#/components/schemas/CapitalizationTitleMinimumRequirements'
+    CapitalizationTitleTerms:
+      type: object
+      description: Informações dos termos e condições conforme número do processo SUSEP.
+      required:
+        - susepProcessNumber
+        - termsRegulations
+      properties:
+        susepProcessNumber:
+          type: number
+          description: Número do processo SUSEP.
+          maxLength: 20
+          example: 15414622222222222
+        termsRegulations:
+          type: string
+          description: Campo aberto (possibilidade de incluir uma url).
+          maxLength: 1024
+          example: >-
+            https://ey.exemplo/capitalizacao/tradicional/pdf/condicoes_gerais.pdf
+    CapitalizationTitleQuotas:
+      type: object
+      description: Quotas
+      required:
+        - quota
+        - capitalizationQuota
+        - raffleQuota
+        - chargingQuota
+      properties:
+        quota:
+          type: integer
+          description: Número da parcela.
+          example: 10
+        capitalizationQuota:
+          type: array
+          description: >-
+            Percentual da contribuição destinado à constituição de capital
+            referente ao direito de resgate.
+          items:
+            type: number
+            maxLength: 9
+            example: 10
+        raffleQuota:
+          type: array
+          description: >-
+            Percentual da contribuição designado a custear os sorteios, se
+            previstos no plano
+          items:
+            type: number
+            maxLength: 9
+            example: 10
+        chargingQuota:
+          type: array
+          description: >-
+            Percentual da contribuição destinado aos custos de despesas com
+            corretagem, colocação e administração do título de capitalização,
+            emissão, divulgação, lucro da sociedade de capitalização e eventuais
+            despesas relavas ao custeio da contemplação obrigatória e da
+            distribuição de bônus.
+          items:
+            type: number
+            maxLength: 9
+            example: 10
+    CapitalizationTitleValidity:
+      type: integer
+      description: Prazo de vigência do título de capitalização em meses.
+      maxLength: 3
+      example: 48
+    CapitalizationTitleSerieSize:
+      type: integer
+      description: >-
+        Os títulos de capitalização que prevejam sorteio devem ser estruturados
+        em series, ou seja, em sequencias ou em grupos de títulos submetidos às
+        mesmas condições e características, à exceção do valor do pagamento.
+      maxLength: 10
+      example: 5000000
+    CapitalizationTitlePeriod:
+      description: Período de Capitalização
+      type: object
+      required:
+        - interestRate
+        - updateIndex
+        - contributionAmount
+        - earlyRedemption
+        - redemptionPercentageEndTerm
+        - gracePeriodRedemption
+      properties:
+        interestRate:
+          description: >-
+            Taxa que remunera a parte da mensalidade destinada a formar o
+            Capital, ou seja, a Provisão Matemática de Resgate, também chamada
+            de saldo de capitalização. Em porcentagem ao mês (% a.m)
+          type: number
+          maxLength: 7
+          example: 0.25123
+        updateIndex:
+          type: array
+          description: >-
+            Índice utilizado na correção que remunera a provisão matemática para
+            capitalização
+          items:
+            type: string
+            example: IPCA
+            enum:
+              - IPCA
+              - IGPM
+              - INPC
+              - TR
+              - INDICE_REMUNERACAO_DEPOSITOS_POUPANCA
+              - OUTROS
+        others:
+          type: array
+          description: Preenchida pelas participantes quando houver ‘Outros’ no campo.
+          items:
+            type: string
+            example: Índice de atualização
+        contributionAmount:
+          $ref: '#/components/schemas/CapitalizationTitleContributionAmount'
+        earlyRedemption:
+          description: >-
+            Possibilidade de o titular efetuar o resgate do capital constituído
+            antes do fim do prazo de vigência do título, podendo ocorrer por
+            solicitação expressa do titular ou por contemplação em sorteio com
+            liquidação antecipada
+          type: array
+          items:
+            type: number
+            maxLength: 9
+            example: 10
+        redemptionPercentageEndTerm:
+          description: >-
+            Percentual mínimo da soma das contribuições efetuadas que poderá ser
+            resgatado ao final da vigência,  tendo como condição os pagamentos
+            das parcelas nos respectivos vencimentos.
+          type: number
+          maxLength: 7
+          example: 100.002
+        gracePeriodRedemption:
+          description: >-
+            Intervalo de tempo mínimo entre contratação e resgate do direito, em
+            meses.
+          type: integer
+          maxLength: 3
+          example: 48
+    CapitalizationTitleContributionAmount:
+      type: object
+      properties:
+        minValue:
+          type: number
+          description: Valor Mínimo
+          example: 500
+        maxValue:
+          type: number
+          description: Valor Máximo
+          example: 5000
+        frequency:
+          type: string
+          description: 'Pagamento mensal, pagamento único ou periódico.'
+          example: MENSAL
+          enum:
+            - MENSAL
+            - UNICO
+            - PERIODICO
+        value:
+          type: number
+          description: valor
+    CapitalizationTitleLatePayment:
+      type: object
+      description: Atraso de Pagamento
+      required:
+        - suspensionPeriod
+        - termExtensionOption
+      properties:
+        suspensionPeriod:
+          description: >-
+            Prazo máximo (contínuo ou intermitente) em meses que o título fica
+            suspenso por atraso de pagamento, antes de ser cancelado (não
+            aplicável a pagamento único).
+          type: integer
+          maxLength: 3
+          example: 10
+        termExtensionOption:
+          description: 'Alteração do prazo de vigência original, pela suspensão.'
+          type: boolean
+          example: true
+    CapitalizationTitleContributionPayment:
+      type: object
+      description: Pagamento da contribuição
+      required:
+        - paymentMethod
+        - updateIndex
+      properties:
+        paymentMethod:
+          description: Meio de Pagamento utilizados para pagamento da contribuição.
+          type: array
+          items:
+            type: string
+            example: CARTAO_CREDITO
+            enum:
+              - CARTAO_CREDITO
+              - CARTAO_DEBITO
+              - DEBITO_CONTA_CORRENTE
+              - DEBITO_CONTA_POUPANCA
+              - BOLETO_BANCARIO
+              - PIX
+              - CONSIGNACAO_FOLHA_PAGAMENTO
+              - PAGAMENTO_COM_PONTOS
+              - OUTROS
+        updateIndex:
+          description: >-
+            Índice utilizado na atualização dos pagamentos mensais (para títulos
+            com mais de 12 meses de vigência)
+          type: array
+          items:
+            type: string
+            example: IPCA
+            enum:
+              - IPCA
+              - IGPM
+              - INPC
+              - TR
+              - INDICE_REMUNERACAO_DEPOSITOS_POUPANCA
+              - OUTROS
+        others:
+          type: array
+          description: Preenchida pelas participantes quando houver ‘Outros’ no campo.
+          items:
+            type: string
+            example: Índice de atualização
+    CapitalizationTitleredemption:
+      type: object
+      required:
+        - redemption
+      properties:
+        redemption:
+          description: Valor percentual (%) de resgate final permitido.
+          type: number
+          maxLength: 6
+          example: 151.23
+    CapitalizationTitleRaffle:
+      description: Sorteio
+      type: object
+      required:
+        - timeInterval
+        - raffleQty
+        - raffleValue
+        - earlySettlementRaffle
+        - mandatoryContemplation
+        - RuleDescription
+        - minimumContemplationProbability
+      properties:
+        raffleQty:
+          type: integer
+          description: Número da quantidade de sorteios previstos ao longo da vigência
+          maxLength: 5
+          example: 10000
+        timeInterval:
+          description: Intervalo de tempo regular previsto entre os sorteios.
+          type: array
+          items:
+            type: string
+            example: QUINZENAL
+            enum:
+              - UNICO
+              - DIARIO
+              - SEMANAL
+              - QUINZENAL
+              - MENSAL
+              - BIMESTRAL
+              - TRIMESTRAL
+              - QUADRIMESTRAL
+              - SEMESTRAL
+              - ANUAL
+              - OUTROS
+        raffleValue:
+          type: integer
+          description: >-
+            Valor dos sorteios representado por múltiplo do valor de
+            contribuição.
+          maxLength: 6
+          example: 5
+        earlySettlementRaffle:
+          type: boolean
+          description: >-
+            Liquidação antecipada em Sorteio. Modelo de sorteio que acarreta, ao
+            título contemplado, o seu resgate total obrigatório (Resolução
+            Normativa 384/20).
+          example: true
+        mandatoryContemplation:
+          type: boolean
+          description: >-
+            Contemplação obrigatória. Possibilidade de realização de sorteio com
+            previsão de que o título sorteado seja obrigatoriamente um título
+            comercializado, desde que atingidos os requisitos definidos nas
+            condições gerais do plano.
+          example: true
+        ruleDescription:
+          type: string
+          description: >-
+            Campo aberto para descrição a ser feita por cada participante das
+            regras dos sorteios do produto.
+          maxLength: 200
+          example: Sorteio às quartas-feiras
+        minimumContemplationProbability:
+          type: number
+          description: >-
+            Número representativo da probabilidade mínima de contemplação nos
+            sorteios, em porcentagem (%).
+          maxLength: 8
+          example: 0.000001
+    CapitalizationTitleAdditionals:
+      type: object
+      required:
+        - additionalDetails
+      properties:
+        additionalDetails:
+          type: string
+          description: Campo aberto (possibilidade de incluir URL).
+          maxLength: 1024
+          example: 'https://example.com/openinsurance'
+    CapitalizationTitleMinimumRequirements:
+      type: object
+      description: Requisitos mínimos.
+      required:
+        - minimumRequirementDetails
+        - targetAudiences
+      properties:
+        minimumRequirementDetails:
+          type: string
+          description: >-
+            Detalhamento do requisito mínimo para contratação - Campo aberto
+            (possibilidade de incluir URL).
+          maxLength: 1024
+          example: 'https://ey.exemplo/capitalizacao/tradicional/PU/requisitos_min'
+        targetAudiences:
+          description: Público Alvo
+          type: array
+          items:
+            type: string
+            example: PESSOAL_NATURAL
+            enum:
+              - PESSOAL_NATURAL
+              - PESSOA_JURIDICA
+    Links:
+      type: object
+      properties:
+        self:
+          type: string
+          description: URL da página atualmente requisitada
+          example: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
+        first:
+          type: string
+          description: URL da primeira página de registros
+          example: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
+        prev:
+          type: string
+          description: URL da página anterior de registros
+        next:
+          type: string
+          description: URL da próxima página de registros
+        last:
+          type: string
+          description: URL da última página de registros
+          example: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
+    Meta:
+      type: object
+      properties:
+        totalRecords:
+          type: integer
+          description: Total de registros encontrados
+          example: 10
+        totalPages:
+          type: integer
+          description: Total de páginas para os registros encontrados
+          example: 1
+      required:
+        - totalRecords
+        - totalPages
+    ResponseError1:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+              - requestDateTime
+            properties:
+              code:
+                description: Código de erro específico do endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descrição legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+              requestDateTime:
+                description: >-
+                  Data e hora da consulta, conforme especificação RFC-3339,
+                  formato UTC.
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+                format: date-time
+                example: '2021-08-20T08:30:00Z'
+            additionalProperties: false
+        meta:
+          $ref: '#/components/schemas/Meta'
+      additionalProperties: false
+    ResponseHomeInsuranceList:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          required:
+            - HomeInsuranceBrand
+          properties:
+            brand:
+              $ref: '#/components/schemas/HomeInsuranceBrand'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    HomeInsuranceBrand:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: >-
+            Nome da marca reportada pelo participante do Open Insurance. O
+            conceito a que se refere a marca é em essência uma promessa das
+            sociedades sob ela em fornecer uma série específica de atributos,
+            benefícios e serviços uniformes aos clientes.
+          maxLength: 80
+          example: EMPRESA A seguros
+        company:
+          $ref: '#/components/schemas/HomeInsuranceCompany'
+    HomeInsuranceCompany:
+      type: array
+      items:
+        description: Informações referente a sociedade a qual a marca pertence.
+        required:
+          - name
+          - cnpjNumber
+        properties:
+          name:
+            type: string
+            description: Nome da sociedade pertencente à marca.
+            maxLength: 80
+            example: ABCDE SEGUROS
+          cnpjNumber:
+            type: string
+            description: CNPJ da sociedade pertencente à marca.
+            maxLength: 14
+            example: '12345678901234'
+          products:
+            $ref: '#/components/schemas/HomeInsuranceProduct'
+    HomeInsuranceProduct:
+      type: array
+      description: Produtos de Seguro Residencial.
+      items:
+        type: object
+        required:
+          - name
+          - code
+          - coverages
+          - propertyCharacteristics
+          - propertyZipCode
+          - protective
+          - additional
+          - assistanceServices
+          - termsAndConditions
+          - validity
+          - customerService
+          - premiumPayments
+          - minimumRequirement
+          - targetAudiences
+        properties:
+          name:
+            type: string
+            description: >-
+              Nome comercial do produto, pelo qual é identificado nos canais de
+              distribuição e atendimento da sociedade.
+            maxLength: 80
+            example: RESIDENCIAL XPTO
+          code:
+            type: string
+            description: Código único a ser definido pela sociedade.
+            maxLength: 80
+            example: 0000-0
+          coverages:
+            $ref: '#/components/schemas/HomeInsuranceCoverages'
+          propertyCharacteristics:
+            $ref: '#/components/schemas/HomeInsurancePropertyCharacteristics'
+          propertyZipCode:
+            type: string
+            description: Código de Endereçamento Postal do Imóvel
+            maxLength: 8
+            example: '1311000'
+          protective:
+            type: boolean
+            description: Protecionais - Indicativo de exigência de itens protecionais.
+            example: true
+          additional:
+            type: array
+            items:
+              type: string
+              description: Adicionais do Produto.
+              example: SORTEIO_GRATUITO
+              enum:
+                - SORTEIO_GRATUITO
+                - CLUBE_BENEFICIOS
+                - CASHBACK
+                - DESCONTOS
+                - OUTROS
+          additionalOthers:
+            type: string
+            description: >-
+              Campo aberto para descrição de cada participante ao selecionar o
+              domínio ‘Outros’ no campo acima ‘Adicionais’.
+            maxLength: 100
+          assistanceServices:
+            $ref: '#/components/schemas/HomeInsuranceAssistanceServices'
+          termsAndConditions:
+            $ref: '#/components/schemas/HomeInsuranceTermsAndConditions'
+          validity:
+            $ref: '#/components/schemas/HomeInsuranceValidity'
+          customerServices:
+            type: array
+            description: Informações de pagamento de prêmio.
+            items:
+              type: string
+              example: LIVRE_ESCOLHA
+              enum:
+                - REDE_REFERENCIADA
+                - LIVRE_ESCOLHA
+                - REDE_REFERENCIADA_LIVRE_ESCOLHA
+          premiumRates:
+            type: array
+            description: >-
+              Distribuição de frequência relativa aos valores referentes às
+              taxas cobradas.
+            items:
+              type: string
+          premiumPayments:
+            $ref: '#/components/schemas/HomeInsurancePremiumPayment'
+          minimumRequirements:
+            type: array
+            items:
+              $ref: '#/components/schemas/HomeInsuranceMinimumRequirements'
+          targetAudiences:
+            type: array
+            items:
+              type: string
+              description: Público a quem se destina o produto
+              example: PESSOA_NATURAL
+              enum:
+                - PESSOA_NATURAL
+                - PESSOA_JURIDICA
+                - AMBAS
+    HomeInsuranceMinimumRequirements:
+      type: object
+      description: Produtos de Seguro Residencial.
+      required:
+        - contractingMinRequirement
+        - contractingType
+      properties:
+        contractingType:
+          type: string
+          description: Tipo de contratação.
+          enum:
+            - COLETIVO
+            - INDIVIDUAL
+            - AMBAS
+        contractingMinRequirement:
+          type: string
+          description: >-
+            Campo aberto contendo todos os requisitos mínimos para contratação
+            (possibilidade de incluir URL).
+          maxLength: 1024
+          example: 'https://openinsurance.com.br/aaa'
+    HomeInsuranceCoverageAttributes:
+      type: object
+      description: Informações de cobertura do Seguro Residencial.
+      required:
+        - minLMI
+        - maxLMI
+        - minDeductibleAmount
+        - insuredMandatoryParticipationPercentage
+      properties:
+        minLMI:
+          $ref: '#/components/schemas/HomeInsuranceCovaregeAttibutesDetails'
+        maxLMI:
+          $ref: '#/components/schemas/HomeInsuranceCovaregeAttibutesDetails'
+        minDeductibleAmount:
+          $ref: '#/components/schemas/HomeInsuranceCovaregeAttibutesDetails'
+        insuredMandatoryParticipationPercentage:
+          type: number
+          description: >-
+            Listagem percentual de franquia e/ou percentual de participação
+            obrigatória do segurado estabelecida pela sociedade para cada tipo
+            de cobertura de produto.
+          maxLength: 9
+    HomeInsuranceCovaregeAttibutesDetailsUnit:
+      type: object
+      required:
+        - code
+        - description
+      properties:
+        code:
+          type: string
+          example: R$
+        description:
+          type: string
+          example: REAL
+    HomeInsuranceCovaregeAttibutesDetails:
+      type: object
+      required:
+        - amount
+        - unit
+      properties:
+        amount:
+          type: number
+        unit:
+          $ref: '#/components/schemas/HomeInsuranceCovaregeAttibutesDetailsUnit'
+    HomeInsuranceTermsAndConditions:
+      type: array
+      description: Informações dos termos e condições conforme número do processo SUSEP.
+      items:
+        type: object
+        required:
+          - susepProcessNumber
+          - definition
+        properties:
+          susepProcessNumber:
+            type: string
+            description: Número do processo SUSEP.
+            maxLength: 20
+            example: XXXXX.XXXXXX/XXXX-XX
+          definition:
+            type: string
+            description: Campo aberto (possibilidade de incluir uma url).
+            maxLength: 1024
+            example: 'https://openinsurance.com.br/aaa'
+    HomeInsuranceValidity:
+      type: array
+      description: Vigência
+      items:
+        type: object
+        required:
+          - term
+        properties:
+          term:
+            type: string
+            description: >-
+              Prazo de vigência do seguro contratado Intervalo contínuo de tempo
+              durante o qual está em vigor o contrato de seguro. (RESOLUÇÃO CNSP
+              Nº 341/2016).
+            example: ANUAL
+            enum:
+              - ANUAL
+              - ANUAL_INTERMITENTE
+              - PLURIANUAL
+              - PLURIANUAL_INTERMITENTE
+              - MENSAL
+              - MENSAL_INTERMITENTE
+              - DIARIO
+              - DIARIO_INTERMITENTE
+              - OUTROS
+          termOthers:
+            type: string
+            description: >-
+              Campo livre para descrição por cada participante ao selecionar o
+              domínio “Outros” no campo Prazo (acima).
+            maxLength: 100
+    HomeInsurancePremiumPayment:
+      type: array
+      description: Informações de pagamento de prêmio.
+      items:
+        type: object
+        required:
+          - paymentMethod
+          - paymentType
+        properties:
+          paymentMethod:
+            type: string
+            description: Meio de pagamento escolhido pelo segurado.
+            example: CARTAO_CREDITO
+            enum:
+              - CARTAO_CREDITO
+              - CARTAO_DEBITO
+              - DEBITO_CONTA_CORRENTE
+              - DEBITO_CONTA_POUPANCA
+              - BOLETO_BANCARIO
+              - PIX
+              - CONSIGINACAO_FOLHA_PAGAMENTO
+              - PONTOS_PROGRAMAS_BENEFICIO
+              - OUTROS
+          paymentMethodDetail:
+            type: string
+            description: >-
+              Campo aberto para detalhamento do campo ‘Outros’ por cada
+              participante.
+            maxLength: 100
+          paymentType:
+            type: string
+            description: Forma de pagamento
+            example: PAGAMENTO_UNICO
+            enum:
+              - PAGAMENTO_UNICO
+              - PARCELADO
+              - AMBOS
+    HomeInsuranceAssistanceServices:
+      type: array
+      description: >-
+        Agrupamento dos serviços de assistências disponíveis vinculado ao
+        produto.
+      items:
+        type: object
+        required:
+          - assistanceServicesPackage
+          - complementaryAssistanceServicesDetail
+          - chargeTypeSignaling
+        properties:
+          assistanceServicesPackage:
+            type: string
+            description: Pacotes de Assistência.
+            example: ATE_10_SERVICOS
+            enum:
+              - ATE_10_SERVICOS
+              - ATE_20_SERVICOS
+              - ACIMA_20_SERVICOS
+              - CUSTOMIZAVEL
+          complementaryAssistanceServicesDetail:
+            type: string
+            description: >-
+              Campo livre para descrição dos serviços ofertados por cada
+              sociedade participante.
+            maxLength: 1000
+            example: reboque pane seca
+          chargeTypeSignaling:
+            type: string
+            description: >-
+              Sinalização em campo exclusivo se o pacote de Assistência é
+              gratuita ou contratada/paga.
+            example: GRATUITA
+            enum:
+              - GRATUITA
+              - PAGO
+    HomeInsuranceCoverages:
+      type: array
+      description: Listagem de coberturas incluídas no produto.
+      items:
+        type: object
+        required:
+          - coverageType
+          - coverageDetail
+          - coveragePermissionSeparteAquisition
+          - coverageAttributes
+        properties:
+          coverageType:
+            type: string
+            enum:
+              - IMOVEL_BASICA
+              - IMOVEL_AMPLA
+              - DANOS_ELETRICOS
+              - DANOS_POR_AGUA
+              - ALAGAMENTO
+              - RESPONSABILIDADE_CIVIL_FAMILIAR
+              - RESPONSABILIDADE_CIVIL_DANOS_MORAIS
+              - ROUBO_SUBTRACAO_BENS
+              - ROUBO_SUBTRACAO_BENS_FORA_LOCAL_SEGURADO
+              - TACOS_GOLFE_HOLE_ONE
+              - PEQUENAS_REFORMAS_OBRAS
+              - GREVES_TUMULTOS_LOCKOUT
+              - MICROEMPREENDEDOR
+              - ESCRITORIO_RESIDENCIA
+              - DANOS_EQUIPAMENTOS_ELETRONICOS
+              - QUEBRA_VIDROS
+              - IMPACTO_VEICULOS
+              - VENDAVAL
+              - PERDA_PAGAMENTO_ALUGUEL
+              - BICICLETA
+              - RESPONSABILIDADE_CIVIL_BICICLETA
+              - RC_EMPREGADOR
+              - DESMORONAMENTO
+              - DESPESAS_EXTRAORDINARIAS
+              - JOIAS_OBRAS_ARTE
+              - TERREMOTO
+              - IMPACTO_AERONAVES
+              - PAISAGISMO
+              - INCENDIO
+              - QUEDA_RAIO
+              - EXPLOSAO
+              - OUTRAS
+            description: Nome do tipo da cobertura.
+            maxLength: 1000
+            example: ESCRITORIO_RESIDENCIA
+          coverageDetail:
+            type: string
+            description: >-
+              Campo aberto para detalhamento por coberturas possíveis dos
+              produtos a ser feito por cada participante.
+            maxLength: 1000
+            example: Cobertura especial para escritório residenciais
+          coveragePermissionSeparteAquisition:
+            type: boolean
+            description: >-
+              Indicação se a cobertura permite contratação separada (por
+              cobertura selecionada).
+            example: false
+          coverageAttributes:
+            $ref: '#/components/schemas/HomeInsuranceCoverageAttributes'
+    HomeInsurancePropertyCharacteristics:
+      type: array
+      description: Caracteristicas do imóvel.
+      items:
+        type: object
+        required:
+          - propertyType
+          - propertyUsageType
+          - propertyBuildType
+          - destinationInsuredImportance
+        properties:
+          propertyType:
+            description: Tipo de imóvel.
+            type: string
+            example: CASA
+            enum:
+              - CASA
+              - APARTAMENTO
+          propertyBuildType:
+            type: string
+            description: Descrição do tipo de construção da propriedade.
+            example: ALVENARIA
+            enum:
+              - ALVENARIA
+              - MADEIRA
+              - METALICA
+              - MISTA
+          propertyUsageType:
+            type: string
+            description: Descrição do tipo de uso da propriedade.
+            example: HABITUAL
+            enum:
+              - HABITUAL
+              - VERANEIO
+              - DESOCUPADO
+              - CASA_ESCRITORIO
+              - ALUGUEL_TEMPORADA
+          destinationInsuredImportance:
+            type: string
+            description: Destinação da Importância Segurada.
+            example: PREDIO
+            enum:
+              - PREDIO
+              - CONTEUDO
+              - AMBOS
+    ResponseError2:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+              - requestDateTime
+            properties:
+              code:
+                description: Código de erro específico do endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descrição legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+              requestDateTime:
+                description: >-
+                  Data e hora da consulta, conforme especificação RFC-3339,
+                  formato UTC.
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+                format: date-time
+                example: '2021-08-20T08:30:00Z'
+            additionalProperties: false
+        meta:
+          $ref: '#/components/schemas/Meta'
+      additionalProperties: false
+    ResponseAutoInsuranceList:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          required:
+            - AutoInsuranceBrand
+          properties:
+            brand:
+              $ref: '#/components/schemas/AutoInsuranceBrand'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    AutoInsuranceBrand:
+      type: object
+      required:
+        - name
+        - company
+      properties:
+        name:
+          type: string
+          description: >-
+            Nome da marca reportada pelo participante do Open Insurance. O
+            conceito a que se refere a marca é em essência uma promessa das
+            sociedades sob ela em fornecer uma série específica de atributos,
+            benefícios e serviços uniformes aos clientes.
+        company:
+          $ref: '#/components/schemas/AutoInsuranceCompany'
+    AutoInsuranceCompany:
+      type: array
+      items:
+        description: Informações referente a sociedade a qual a marca pertence.
+        required:
+          - name
+          - cnpjNumber
+          - products
+        properties:
+          name:
+            type: string
+            description: Nome da sociedade pertencente à marca.
+          cnpjNumber:
+            type: string
+            description: CNPJ da sociedade pertencente à marca.
+          products:
+            $ref: '#/components/schemas/AutoInsuranceProduct'
+    AutoInsuranceProduct:
+      type: array
+      description: Produtos de Seguro de Automóveis.
+      items:
+        type: object
+        required:
+          - name
+          - code
+          - coverages
+          - carParts
+          - carModels
+          - vehicleOvernightZipCode
+          - additional
+          - assistanceServices
+          - termsAndConditions
+          - terms
+          - customerService
+          - premiumPayment
+          - minimumRequirements
+          - targetAudiences
+        properties:
+          name:
+            type: string
+            description: >-
+              Nome comercial do produto, pelo qual é identificado nos canais de
+              distribuição e atendimento da sociedade.
+          code:
+            type: string
+            description: Código único a ser definido pela sociedade.
+          coverages:
+            $ref: '#/components/schemas/AutoInsuranceCoverage'
+          carParts:
+            $ref: '#/components/schemas/AutoInsuranceCarPart'
+          carModels:
+            $ref: '#/components/schemas/AutoInsuranceCarModel'
+          vehicleOvernightZipCode:
+            type: string
+            description: Área de comercialização do seguro do automóvel.
+            maxLength: 8
+            example: '1311000'
+          additional:
+            type: array
+            items:
+              type: string
+              description: Adicionais
+              example: SORTEIO_GRATUITO
+              enum:
+                - SORTEIO_GRATUITO
+                - CLUBE_BENEFICIOS
+                - CASHBACK
+                - DESCONTOS
+                - OUTROS
+          additionalOthers:
+            type: string
+            description: >-
+              Campo aberto para descrição de cada participante ao selecionar o
+              domínio ‘Outros’ no campo acima ‘Adicionais’
+          assistanceServices:
+            type: array
+            items:
+              $ref: '#/components/schemas/AutoInsuranceAssistanceServices'
+          termsAndConditions:
+            $ref: '#/components/schemas/AutoInsuranceTermsAndConditions'
+          terms:
+            type: array
+            description: Prazo.
+            items:
+              type: string
+              example: ANUAL
+              enum:
+                - ANUAL
+                - ANUAL_INTERMITENTE
+                - PLURIANUAL
+                - PLURIANUAL_INTERMITENTE
+                - SEMESTRAL
+                - SEMESTRAL_INTERMITENTE
+                - MENSAL
+                - MENSAL_INTERMITENTE
+                - DIARIO
+                - DIARIO_INTERMITENTE
+                - OUTROS
+          customerService:
+            type: array
+            description: Rede de atendimento do seguro contratado.
+            items:
+              type: string
+              example: REDE_REFERENCIADA
+              enum:
+                - REDE_REFERENCIADA
+                - LIVRE_ESCOLHA
+                - REDE_REFERENCIADA_LIVRE_ESCOLHA
+          premiumPayment:
+            $ref: '#/components/schemas/AutoInsurancePremiumPayment'
+          minimumRequirements:
+            $ref: '#/components/schemas/AutoInsuranceMinimumRequirements'
+          targetAudiences:
+            type: array
+            description: Público-alvo.
+            items:
+              type: string
+              maxLength: 30
+              example: PESSOA_NATURAL
+              enum:
+                - PESSOA_NATURAL
+                - PESSOA_JURIDICA
+                - AMBAS
+    AutoInsuranceCoverage:
+      type: array
+      description: >-
+        Listagem de coberturas incluídas no produto que deve observar a relação
+        discriminada de coberturas, conforme Tabela II.5 do Anexo II
+      items:
+        type: object
+        required:
+          - coverage
+          - coverageDetail
+          - coverageAttribute
+        properties:
+          coverage:
+            type: string
+            description: Conjunto de riscos elencados na apólice.
+            example: VIDROS
+            enum:
+              - CASCO_COMPREENSIVA_COLISAO_INCENDIO_ROUBO_FURTO
+              - CASCO_INCENDIO_ROUBO_FURTO
+              - CASCO_ROUBO_FURTO
+              - CASCO_INCENDIO
+              - CASCO_ALAGAMENTO
+              - CASCO_COLISAO_INDENIZACAO_PARCIAL
+              - CASCO_COLISAO_INDENIZACAO_INTEGRAL
+              - RESPONSABILIDADE_CIVIL_FACULTATIVA_VEICULOS_RCFV
+              - RESPONSABILIDADE_CIVIL_FACULTATIVA_CONDUTOR_RCFC
+              - ACIDENTE_PESSOAIS_PASSAGEIROS_VEICULO
+              - ACIDENTE_PESSOAIS_PASSAGEIROS_CONDUTOR
+              - VIDROS
+              - DIARIA_INDISPONIBILIDADE
+              - LFR_LANTERNAS_FAROIS_RETROVISORES
+              - ACESSORIOS_EQUIPAMENTOS
+              - CARRO_RESERVA
+              - RESPONSABILIDADE_CIVIL_CARTA_VERDE
+              - VOUCHER_MOBILIDADE
+              - DESPESAS_EXTRAORDINARIAS
+              - PEQUENOS_REPAROS
+              - GARANTIA_MECANICA
+              - OUTRAS
+          coverageDetail:
+            type: string
+            description: >-
+              Campo aberto para detalhamento de riscos possíveis dos produtos a
+              ser feito para cada participante.
+            maxLength: 1000
+            example: Roubo total
+          coveragePermissionSeparteAcquisition:
+            type: boolean
+            description: >-
+              Indicação se a cobertura permite contratação separada (por
+              cobertura selecionada).
+            example: true
+          coverageAttributes:
+            $ref: '#/components/schemas/AutoInsuranceCoverageAttributes'
+    AutoInsuranceCovaregeAttibutesDetailsUnit:
+      description: >-
+        Listagem percentual de franquia e/ou percentual de participação
+        obrigatória do segurado estabelecida pela sociedade para cada tipo de
+        cobertura de produto.
+      type: object
+      required:
+        - code
+        - description
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+    AutoInsuranceCovaregeAttibutesDetails:
+      type: object
+      required:
+        - amount
+        - unit
+      properties:
+        amount:
+          type: number
+        unit:
+          $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetailsUnit'
+    AutoInsuranceContractBase:
+      type: array
+      description: Base de contratação.
+      items:
+        type: object
+        required:
+          - contractBaseType
+        properties:
+          contractBaseType:
+            type: string
+            description: Incidência ao capital segurado da cobertura de casco.
+            example: VALOR_DETERMINADO
+            enum:
+              - VALOR_DETERMINADO
+              - VALOR_MERCADO
+              - AMBOS
+          contractBaseMinValue:
+            $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
+          contractBaseMaxValue:
+            $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
+    AutoInsuranceCoverageAttributes:
+      type: object
+      description: Atributos da cobertura.
+      required:
+        - minLMI
+        - maxLMI
+        - contractBase
+        - newCarMaximumCalculatingPeriod
+        - fullIndemnityPercentage
+        - deductibleType
+        - fullIndemnityDeductible
+        - deductiblePaymentByCoverage
+        - deductiblePercentage
+        - mandatoryParticipation
+        - geographicScopeCoverage
+      properties:
+        minLMI:
+          $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
+        maxLMI:
+          $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
+        contractBase:
+          $ref: '#/components/schemas/AutoInsuranceContractBase'
+        newCarMaximumCalculatingPeriod:
+          type: integer
+          description: >-
+            Prazo máximo para apuração do valor a ser indenizado para veículo
+            zero quilômetro. Em meses.
+          maxLength: 3
+          example: 12
+        newCarContractBase:
+          $ref: '#/components/schemas/AutoInsuranceContractBase'
+        fullIndemnityPercentage:
+          $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
+        deductibleType:
+          type: array
+          description: Listagem de tipo de franquia para cada tipo de cobertura do produto.
+          items:
+            type: string
+            example: NORMAL
+            enum:
+              - NORMAL
+              - REDUZIDA
+              - ISENTA
+              - MAJORADA
+              - FLEXIVEL
+        fullIndemnityDeductible:
+          type: boolean
+          description: Franquia para Indenização Integral.
+          example: true
+        deductiblePaymentByCoverage:
+          type: boolean
+          description: >-
+            Sinalização para cada cobertura se a seguradora exige pagamento de
+            franquia.
+        deductiblePercentage:
+          $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
+        mandatoryParticipation:
+          type: string
+          description: Participação Obrigatória do Segurado.
+          maxLength: 300
+          example: Casco - RCF-V Danos
+        geographicScopeCoverage:
+          type: array
+          description: >-
+            Listagem de abrangência geográfica do produto para fins de cada
+            cobertura.
+          items:
+            type: string
+            example: NACIONAL
+            enum:
+              - NACIONAL
+              - REGIONAL
+              - INTERNACIONAL
+              - OUTROS_PAISES
+        geographicScopeCoverageOthers:
+          type: string
+          description: Âmbito geográficoda cobertura - Outros
+    AutoInsuranceMinimumRequirements:
+      type: object
+      description: Produtos de Seguro de Automóvel.
+      required:
+        - contractingType
+        - contractingMinRequirement
+      properties:
+        contractingType:
+          type: array
+          description: Informações sobre todos os requisitos mínimos para contratação.
+          items:
+            type: string
+            example: COLETIVO
+            enum:
+              - COLETIVO
+              - INDIVIDUAL
+              - AMBAS
+        contractingMinRequirement:
+          type: string
+          description: >-
+            Campo aberto contendo todos os requisitos mínimos para contratação
+            (possibilidade de incluir URL).
+          maxLength: 1024
+          example: 'https://example.com/mobile-banking'
+    AutoInsuranceTermsAndConditions:
+      type: array
+      items:
+        type: object
+        description: Informações dos termos e condições conforme número do processo SUSEP.
+        required:
+          - susepProcessNumber
+          - definition
+        properties:
+          susepProcessNumber:
+            type: string
+            description: Número do processo SUSEP.
+            maxLength: 20
+            example: 15414.622222/2222-22
+          definition:
+            type: string
+            description: Campo aberto (possibilidade de incluir uma url).
+            maxLength: 1024
+            example: >-
+              https://ey.exemplo/capitalizacao/tradicional/pdf/condicoes_gerais.pdf
+    AutoInsurancePremiumPayment:
+      type: object
+      description: Informações de pagamento de prêmio.
+      required:
+        - paymentMethod
+        - paymentTypee
+      properties:
+        paymentMethod:
+          type: array
+          description: Meio de pagamento escolhido pelo segurado.
+          items:
+            type: string
+            example: CARTAO_CREDITO
+            enum:
+              - CARTAO_CREDITO
+              - CARTAO_DEBITO
+              - DEBITO_CONTA_CORRENTE
+              - DEBITO_CONTA_POUPANCA
+              - BOLETO_BANCARIO
+              - PIX
+              - CONSIGINACAO_FOLHA_PAGAMENTO
+              - PONTOS_PROGRAMA_BENEFICIO
+              - OUTROS
+        paymentType:
+          type: array
+          description: Forma de pagamento.
+          items:
+            type: string
+            example: PARCELADO
+            enum:
+              - A_VISTA
+              - PARCELADO
+              - AMBOS
+        paymentDetail:
+          type: string
+          description: >-
+            Campo aberto para detalhamento do campo ‘Outros’ por cada
+            participante.
+    AutoInsuranceAssistanceServices:
+      type: object
+      description: Serviços de Assistência.
+      required:
+        - assistanceServicesPackage
+        - assistanceServicesDetail
+      properties:
+        assistanceServicesPackage:
+          type: array
+          description: Pacotes de Assistência - Agrupamento.
+          items:
+            type: string
+            example: ATE_10_SERVICOS
+            enum:
+              - ATE_10_SERVICOS
+              - ATE_20_SERVICOS
+              - ACIMA_20_SERVICOS
+              - CUSTOMIZAVEL
+        assistanceServicesDetail:
+          type: string
+          description: Serviços de assistência - Detalhamento.
+          maxLength: 1000
+          example: Perda Parcial - Colisão
+        chargeTypeSignaling:
+          type: string
+          description: >-
+            Sinalização em campo exclusivo se o pacote de Assistência é gratuita
+            ou contratada/paga.
+          example: GRATUITA
+          enum:
+            - GRATUITA
+            - PAGA
+    AutoInsuranceCarPart:
+      type: array
+      description: Tipo de peça utilizada para reparação.
+      items:
+        required:
+          - carPartCondition
+          - carPartType
+        properties:
+          carPartCondition:
+            type: string
+            description: Nova ou usada
+            example: NOVAS
+            enum:
+              - NOVAS
+              - USADAS
+              - AMBAS
+          carPartType:
+            type: string
+            description: Originais e não originais
+            example: ORIGINAIS
+            enum:
+              - ORIGINAIS
+              - COMPATIVEIS
+              - AMBAS
+    AutoInsuranceCarModel:
+      type: array
+      description: >-
+        Listagem de modelos / ano de veículos. Deve ser padronizada na proposta
+        técnica submetida pela Estrutura Inicial de Governança para observância
+        comum por todas as sociedades participantes.
+      items:
+        required:
+          - manufacturer
+          - model
+          - year
+          - fipeCode
+        properties:
+          manufacturer:
+            type: string
+            description: Fabricante
+            maxLength: 20
+            example: FORD
+          model:
+            type: string
+            description: Modelo
+            maxLength: 20
+            example: KA
+          year:
+            type: integer
+            description: Ano de fabricação.
+            maxLength: 4
+            example: 2018
+          fipeCode:
+            type: string
+            description: Código FIPE do veículo.
+    ResponseError3:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+              - requestDateTime
+            properties:
+              code:
+                description: Código de erro específico do endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descrição legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+              requestDateTime:
+                description: >-
+                  Data e hora da consulta, conforme especificação RFC-3339,
+                  formato UTC.
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+                format: date-time
+                example: '2021-08-20T08:30:00Z'
+            additionalProperties: false
+        meta:
+          $ref: '#/components/schemas/Meta'
+      additionalProperties: false
     ResponsePensionPlanList:
-      description: ''
       type: object
       required:
         - data
@@ -1793,9 +3426,10 @@ components:
             description: >-
               Lista padronizada de modalidades de coberturas  incluídas no
               produto.
-            example: PECULIO
+            example: PENSAO_PRAZO_CERTO
             enum:
               - PECULIO
+              - RENDA
               - PENSAO_PRAZO_CERTO
               - PENSAO_MENORES_21
               - PENSAO_MENORES_24
@@ -1823,13 +3457,11 @@ components:
                     - VITALICIA
                     - TEMPORARIA
           additional:
-            type: array
-            items:
-              type: string
-              description: Adicional ao plano.
-              enum:
-                - SORTEIO
-                - OUTROS
+            type: string
+            description: Adicional ao plano.
+            enum:
+              - SORTEIO
+              - OUTROS
           additionalOthers:
             type: string
             description: >-
@@ -2241,7 +3873,7 @@ components:
         updateIndex:
           type: string
           description: Índice utilizado na atualização da PMBaC.
-          example: INPC
+          example: IGPM
           enum:
             - FINANCEIRA
             - IGPM
@@ -2311,10 +3943,9 @@ components:
         contributionPaymentMethod:
           type: array
           description: Forma de pagamento da contribuição.
-          example:
-            - CARTAO_CREDITO
           items:
             type: string
+            example: CARTAO_CREDITO
             enum:
               - CARTAO_CREDITO
               - DEBITO_CONTA
@@ -2326,17 +3957,19 @@ components:
               - PONTOS_PROGRAMA_BENEFICIO
               - OUTROS
         contributionPeriodicity:
-          type: string
+          type: array
           description: Periodicidade de pagamento da contribuição.
-          example: MENSAL
-          enum:
-            - MENSAL
-            - UNICA
-            - ANUAL
-            - TRIMESTRAL
-            - SEMESTRAL
-            - BIMESTRAL
-            - OUTRAS
+          items:
+            type: string
+            example: MENSAL
+            enum:
+              - MENSAL
+              - UNICA
+              - ANUAL
+              - TRIMESTRAL
+              - SEMESTRAL
+              - BIMESTRAL
+              - OUTRAS
     PensionPlanMinimumRequirements:
       type: object
       description: Requisitos mínimos.
@@ -2399,1595 +4032,6 @@ components:
             URI da última página dessa lista de resultados. Restrição -
             Obrigatório quando não for a última página da resposta
           example: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
-    ResponseAutoInsuranceList:
-      description: ''
-      type: object
-      required:
-        - data
-        - links
-        - meta
-      properties:
-        data:
-          type: object
-          required:
-            - AutoInsuranceBrand
-          properties:
-            requestTime:
-              description: >-
-                Data e hora da consulta, conforme especificação RFC-3339,
-                formato UTC.
-              type: string
-              pattern: '[\w\W\s]*'
-              maxLength: 2048
-              format: date-time
-              example: '2021-08-20T08:30:00Z'
-            brand:
-              $ref: '#/components/schemas/AutoInsuranceBrand'
-        links:
-          $ref: '#/components/schemas/Links'
-        meta:
-          $ref: '#/components/schemas/Meta'
-    AutoInsuranceBrand:
-      type: object
-      required:
-        - name
-        - company
-      properties:
-        name:
-          type: string
-          description: >-
-            Nome da marca reportada pelo participante do Open Insurance. O
-            conceito a que se refere a marca é em essência uma promessa das
-            sociedades sob ela em fornecer uma série específica de atributos,
-            benefícios e serviços uniformes aos clientes.
-        company:
-          $ref: '#/components/schemas/AutoInsuranceCompany'
-    AutoInsuranceCompany:
-      type: object
-      description: Informações referente a sociedade a qual a marca pertence.
-      required:
-        - name
-        - cnpjNumber
-        - products
-      properties:
-        name:
-          type: string
-          description: Nome da sociedade pertencente à marca.
-        cnpjNumber:
-          type: string
-          description: CNPJ da sociedade pertencente à marca.
-        products:
-          $ref: '#/components/schemas/AutoInsuranceProduct'
-    AutoInsuranceProduct:
-      type: array
-      description: Produtos de Seguro de Automóveis.
-      items:
-        type: object
-        required:
-          - name
-          - code
-          - carParts
-          - carModels
-          - vehicleOvernightZipCode
-          - additional
-          - assistanceServices
-          - termsAndConditions
-          - terms
-          - customerService
-          - premiumPayments
-          - minimumRequirements
-          - targetAudiences
-        properties:
-          name:
-            type: string
-            description: >-
-              Nome comercial do produto, pelo qual é identificado nos canais de
-              distribuição e atendimento da sociedade.
-          code:
-            type: string
-            description: Código único a ser definido pela sociedade.
-          coverages:
-            $ref: '#/components/schemas/AutoInsuranceCoverage'
-          carParts:
-            $ref: '#/components/schemas/AutoInsuranceCarPart'
-          carModels:
-            $ref: '#/components/schemas/AutoInsuranceCarModel'
-          vehicleOvernightZipCode:
-            type: string
-            description: Área de comercialização do seguro do automóvel.
-            maxLength: 8
-            example: '1311000'
-          additional:
-            type: string
-            description: Adicionais
-            example: SORTEIO_GRATUITO
-            enum:
-              - SORTEIO_GRATUITO
-              - CLUBE_BENEFICIOS
-              - CASHBACK
-              - DESCONTOS
-              - OUTROS
-          additionalOthers:
-            type: string
-            description: >-
-              Campo aberto para descrição de cada participante ao selecionar o
-              domínio ‘Outros’ no campo acima ‘Adicionais’.
-          assistanceServices:
-            $ref: '#/components/schemas/AutoInsuranceAssistanceServices'
-          termAndCondition:
-            $ref: '#/components/schemas/AutoInsuranceTermsAndConditions'
-          terms:
-            type: array
-            description: Prazo.
-            items:
-              type: string
-              example: ANUAL
-              enum:
-                - ANUAL
-                - ANUAL_INTERMITENTE
-                - PLURIANUAL
-                - PLURIANUAL_INTERMITENTE
-                - SEMESTRAL
-                - SEMESTRAL_INTERMITENTE
-                - MENSAL
-                - MENSAL_INTERMITENTE
-                - DIARIO
-                - DIARIO_INTERMITENTE
-                - OUTROS
-          customerService:
-            type: array
-            description: Rede de atendimento do seguro contratado.
-            items:
-              type: string
-              example: REDE_REFERENCIADA
-              enum:
-                - REDE_REFERENCIADA
-                - LIVRE_ESCOLHA
-                - REDE_REFERENCIADA_LIVRE_ESCOLHA
-          premiumPayments:
-            $ref: '#/components/schemas/AutoInsurancePremiumPayment'
-          minimumRequirements:
-            $ref: '#/components/schemas/AutoInsuranceMinimumRequirements'
-          targetAudiences:
-            type: array
-            description: Público-alvo.
-            items:
-              type: string
-              maxLength: 30
-              example: PESSOA NATURAL
-              enum:
-                - PESSOA NATURAL
-                - PESSOA JURIDICA
-                - AMBAS
-    AutoInsuranceCoverage:
-      type: array
-      description: >-
-        Listagem de coberturas incluídas no produto que deve observar a relação
-        discriminada de coberturas, conforme Tabela II.5 do Anexo II
-      items:
-        type: object
-        required:
-          - coverage
-          - coverageDetail
-          - coverageAttribute
-        properties:
-          coverage:
-            type: string
-            description: Conjunto de riscos elencados na apólice.
-            example: ROUBO
-            enum:
-              - ROUBO
-              - FURTO
-              - INCENDIO
-              - ALAGAMENTO
-              - COLISAO_INDENIZACAO_PARCIAL
-              - COLIZA_INDENIZACAO_INTEGRAL
-              - DANOS_CORPORAIS_RCFV
-              - DANOS_MORAIS_RCFV
-              - DANOS_MATERIAIS_RCFV
-              - DANOS_ESTETICOS_RCFV
-              - DANOS_CORPORAIS_RCFC
-              - DANOS_MORAIS_RCFC
-              - ACIDENTES_PESSOAIS_PASSAGEIROS
-              - VIDROS
-              - FAROIS
-              - LANTERNAS
-              - RETROVISORES
-              - CARRO_RESERVA
-              - PEQUENOS_REPAROS
-              - PNEUS
-              - RESPONSABILIDADE_CIVIL
-          coverageDetail:
-            type: string
-            description: >-
-              Campo aberto para detalhamento de riscos possíveis dos produtos a
-              ser feito para cada participante.
-            maxLength: 1000
-            example: Roubo total
-          coveragePermissionSeparteAcquisition:
-            type: boolean
-            description: >-
-              Indicação se a cobertura permite contratação separada (por
-              cobertura selecionada).
-            example: true
-          coverageAttributes:
-            $ref: '#/components/schemas/AutoInsuranceCoverageAttributes'
-    AutoInsuranceCovaregeAttibutesDetailsUnit:
-      type: object
-      required:
-        - code
-        - description
-      properties:
-        code:
-          type: string
-        description:
-          type: string
-    AutoInsuranceCovaregeAttibutesDetails:
-      type: object
-      required:
-        - amount
-        - unit
-      properties:
-        amount:
-          type: number
-        unit:
-          $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetailsUnit'
-    AutoInsuranceContractBase:
-      type: array
-      description: Base de contratação.
-      items:
-        type: object
-        required:
-          - contractBaseType
-        properties:
-          contractBaseType:
-            type: string
-            description: Incidência ao capital segurado da cobertura de casco.
-            example: VALOR_DETERMINADO
-            enum:
-              - VALOR_DETERMINADO
-              - VALOR_MERCADO
-              - AMBOS
-          contractBaseMinValue:
-            description: Valor Base de Contratação Mínimo.
-          contractBaseMaxValue:
-            description: Valor Base de Contratação Máximo.
-    AutoInsuranceCoverageAttributes:
-      type: object
-      description: Atributos da cobertura.
-      required:
-        - minLMI
-        - maxLMI
-        - contractBase
-        - newCarMaximumCalculatingPeriod
-        - fullIndemnityPercentage
-        - deductibleType
-        - fullIndemnityDeductible
-        - minDeductibleAmount
-        - deductiblePercentage
-        - mandatoryParticipation
-        - geographicScopeCoverage
-      properties:
-        minLMI:
-          $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
-        maxLMI:
-          description: >-
-            Lista com valor máximo de LMI aceito pela sociedade para cada
-            cobertura.
-        contractBase:
-          $ref: '#/components/schemas/AutoInsuranceContractBase'
-        newCarMaximumCalculatingPeriod:
-          type: integer
-          description: >-
-            Prazo máximo para apuração do valor a ser indenizado para veículo
-            zero quilômetro. Em meses.
-          maxLength: 3
-          example: 12
-        fullIndemnityPercentage:
-          description: >-
-            Percentual do Limite Máximo de Indenização para caracterização de
-            indenização integral.
-          maxLength: 6
-          example: 10.2
-        deductibleType:
-          type: array
-          description: Listagem de tipo de franquia para cada tipo de cobertura do produto.
-          items:
-            type: string
-            example: NORMAL
-            enum:
-              - NORMAL
-              - REDUZIDA
-              - ISENTA
-              - MAJORADA
-              - FLEXIVEL
-        fullIndemnityDeductible:
-          type: boolean
-          description: Franquia para Indenização Integral.
-          example: true
-        deductiblePaymentByCoverage:
-          type: boolean
-          description: >-
-            Sinalização para cada cobertura se a seguradora exige pagamento de
-            franquia.
-        deductiblePercentage:
-          $ref: '#/components/schemas/AutoInsuranceCovaregeAttibutesDetails'
-        mandatoryParticipation:
-          type: string
-          description: Participação Obrigatória do Segurado.
-          maxLength: 300
-          example: Casco - RCF-V Danos
-        geographicScopeCoverage:
-          type: array
-          description: >-
-            Listagem de abrangência geográfica do produto para fins de cada
-            cobertura.
-          items:
-            type: string
-            example: NACIONAL
-            enum:
-              - NACIONAL
-              - REGIONAL
-              - OUTROS_PAISES
-        geographicScopeCoverageOthers:
-          type: string
-          description: Âmbito geográfico da cobertura - Outros
-          maxLength: 100
-    AutoInsuranceMinimumRequirements:
-      type: object
-      description: Produtos de Seguro de Automóvel.
-      required:
-        - contractingType
-        - contractingMinRequirement
-      properties:
-        contractingType:
-          type: array
-          description: Informações sobre todos os requisitos mínimos para contratação.
-          items:
-            type: string
-            example: COLETIVO
-            enum:
-              - COLETIVO
-              - INDIVIDUAL
-              - COLETIVO_INDIVIDUAL
-        contractingMinRequirement:
-          type: string
-          description: >-
-            Campo aberto contendo todos os requisitos mínimos para contratação
-            (possibilidade de incluir URL).
-          maxLength: 1024
-          example: 'https://example.com/mobile-banking'
-    AutoInsuranceTermsAndConditions:
-      type: array
-      items:
-        type: object
-        description: Informações dos termos e condições conforme número do processo SUSEP.
-        required:
-          - susepProcessNumber
-          - termAndCondition
-        properties:
-          susepProcessNumber:
-            type: string
-            description: Número do processo SUSEP.
-            maxLength: 20
-            example: 15414.622222/2222-22
-          definition:
-            type: string
-            description: Campo aberto (possibilidade de incluir uma url).
-            maxLength: 1024
-            example: >-
-              https://ey.exemplo/capitalizacao/tradicional/pdf/condicoes_gerais.pdf
-    AutoInsurancePremiumPayment:
-      type: object
-      description: Informações de pagamento de prêmio.
-      required:
-        - paymentMethod
-        - paymentTypee
-      properties:
-        paymentMethod:
-          type: array
-          description: Meio de pagamento escolhido pelo segurado.
-          items:
-            type: string
-            example: CARTAO_CREDITO
-            enum:
-              - CARTAO_CREDITO
-              - CARTAO_DEBITO
-              - DEBITO_CONTA_CORRENTE
-              - DEBITO_CONTA_POUPANCA
-              - BOLETO_BANCARIO
-              - PIX
-              - CONSIGINACAO_FOLHA_PAGAMENTO
-              - PAGAMENTO_COM_PONTOS
-              - OUTROS
-        paymentType:
-          type: array
-          description: Forma de pagamento.
-          items:
-            type: string
-            example: PAGAMENTO_UNICO
-            enum:
-              - PAGAMENTO_UNICO
-              - PARCELADO
-              - PAGAMENTO_UNICO_PARCELADO
-        paymentDetail:
-          type: string
-          description: >-
-            Campo aberto para detalhamento do campo ‘Outros’ por cada
-            participante.
-          maxLength: 100
-    AutoInsuranceAssistanceServices:
-      type: object
-      description: Serviços de Assistência.
-      required:
-        - assistanceServicesPackage
-        - assistanceServicesDetail
-      properties:
-        assistanceServicesPackage:
-          type: array
-          description: Pacotes de Assistência - Agrupamento.
-          items:
-            type: string
-            example: ATE_10_SERVICOS
-            enum:
-              - ATE_10_SERVICOS
-              - ATE_20_SERVICOS
-              - ACIMA_20_SERVICOS
-              - CUSTOMIZAVEL
-        assistanceServicesDetail:
-          type: string
-          description: Serviços de assistência - Detalhamento.
-          maxLength: 1000
-          example: Perda Parcial - Colisão
-        chargeTypeSignaling:
-          type: string
-          description: >-
-            Sinalização em campo exclusivo se o pacote de Assistência é gratuita
-            ou contratada/paga.
-          example: GRATUITA
-          enum:
-            - GRATUITA
-            - PAGA
-    AutoInsuranceCarPart:
-      type: array
-      description: Tipo de peça utilizada para reparação.
-      items:
-        required:
-          - carPartCondition
-          - carPartType
-        properties:
-          carPartCondition:
-            type: string
-            description: Nova ou usada
-            example: NOVAS
-            enum:
-              - NOVAS
-              - USADAS
-              - AMBAS
-          carPartType:
-            type: string
-            description: Originais e não originais
-            example: ORIGINAIS
-            enum:
-              - ORIGINAIS
-              - COMPATIVEIS
-              - AMBAS
-    AutoInsuranceCarModel:
-      type: array
-      description: >-
-        Listagem de modelos / ano de veículos. Deve ser padronizada na proposta
-        técnica submetida pela Estrutura Inicial de Governança para observância
-        comum por todas as sociedades participantes.
-      items:
-        required:
-          - manufacturer
-          - model
-          - year
-          - fipeCode
-        properties:
-          manufacturer:
-            type: string
-            description: Fabricante
-            maxLength: 20
-            example: FORD
-          model:
-            type: string
-            description: Modelo
-            maxLength: 20
-            example: KA
-          year:
-            type: integer
-            description: Ano de fabricação.
-            maxLength: 4
-            example: 2018
-          fipeCode:
-            type: string
-            description: Código FIPE do veículo.
-    Links:
-      type: object
-      properties:
-        self:
-          type: string
-          description: URL da página atualmente requisitada
-          example: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
-        first:
-          type: string
-          description: URL da primeira página de registros
-          example: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
-        prev:
-          type: string
-          description: URL da página anterior de registros
-        next:
-          type: string
-          description: URL da próxima página de registros
-        last:
-          type: string
-          description: URL da última página de registros
-          example: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
-    Meta:
-      type: object
-      properties:
-        totalRecords:
-          type: integer
-          description: Total de registros encontrados
-          example: 10
-        totalPages:
-          type: integer
-          description: Total de páginas para os registros encontrados
-          example: 1
-      required:
-        - totalRecords
-        - totalPages
-    ResponseError1:
-      type: object
-      required:
-        - errors
-      properties:
-        errors:
-          type: array
-          minItems: 1
-          maxItems: 13
-          items:
-            type: object
-            required:
-              - code
-              - title
-              - detail
-              - requestDateTime
-            properties:
-              code:
-                description: Código de erro específico do endpoint
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 255
-              title:
-                description: Título legível por humanos deste erro específico
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 255
-              detail:
-                description: Descrição legível por humanos deste erro específico
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 2048
-              requestDateTime:
-                description: >-
-                  Data e hora da consulta, conforme especificação RFC-3339,
-                  formato UTC.
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 2048
-                format: date-time
-                example: '2021-08-20T08:30:00Z'
-            additionalProperties: false
-        meta:
-          $ref: '#/components/schemas/Meta'
-      additionalProperties: false
-    ResponseHomeInsuranceList:
-      type: object
-      description: ''
-      required:
-        - data
-        - links
-        - meta
-      properties:
-        data:
-          type: object
-          required:
-            - HomeInsuranceBrand
-          properties:
-            brand:
-              $ref: '#/components/schemas/HomeInsuranceBrand'
-        links:
-          $ref: '#/components/schemas/Links'
-        meta:
-          $ref: '#/components/schemas/Meta'
-    HomeInsuranceBrand:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-          description: >-
-            Nome da marca reportada pelo participante do Open Insurance. O
-            conceito a que se refere a marca é em essência uma promessa das
-            sociedades sob ela em fornecer uma série específica de atributos,
-            benefícios e serviços uniformes aos clientes.
-          maxLength: 80
-          example: EMPRESA A seguros
-        company:
-          $ref: '#/components/schemas/HomeInsuranceCompany'
-    HomeInsuranceCompany:
-      type: object
-      description: Informações referente a sociedade a qual a marca pertence.
-      required:
-        - name
-        - cnpjNumber
-      properties:
-        name:
-          type: string
-          description: Nome da sociedade pertencente à marca.
-          maxLength: 80
-          example: ABCDE SEGUROS
-        cnpjNumber:
-          type: string
-          description: CNPJ da sociedade pertencente à marca.
-          maxLength: 14
-          example: '12345678901234'
-        products:
-          $ref: '#/components/schemas/HomeInsuranceProduct'
-    HomeInsuranceProduct:
-      type: array
-      description: Produtos de Seguro Residencial.
-      items:
-        type: object
-        required:
-          - name
-          - code
-          - coverages
-          - propertyCharacteristics
-          - propertyZipCode
-          - protective
-          - additional
-          - assistanceServices
-          - termsAndConditions
-          - validity
-          - customerService
-          - premiumPayments
-          - minimumRequirement
-          - targetAudiences
-        properties:
-          name:
-            type: string
-            description: >-
-              Nome comercial do produto, pelo qual é identificado nos canais de
-              distribuição e atendimento da sociedade.
-            maxLength: 80
-            example: RESIDENCIAL XPTO
-          code:
-            type: string
-            description: Código único a ser definido pela sociedade.
-            maxLength: 80
-            example: 0000-0
-          coverages:
-            $ref: '#/components/schemas/HomeInsuranceCoverages'
-          propertyCharacteristics:
-            $ref: '#/components/schemas/HomeInsurancePropertyCharacteristics'
-          propertyZipCode:
-            type: integer
-            description: Código de Endereçamento Postal do Imóvel
-            maxLength: 8
-            example: 1311000
-          protective:
-            type: boolean
-            description: Protecionais - Indicativo de exigência de itens protecionais.
-            example: true
-          additional:
-            type: string
-            description: Adicionais do Produto.
-            example: SORTEIO_GRATUITO
-            enum:
-              - SORTEIO_GRATUITO
-              - CLUBE_BENEFICIOS
-              - CASHBACK
-              - DESCONTOS
-              - OUTROS
-          additionalOthers:
-            type: string
-            description: >-
-              Campo aberto para descrição de cada participante ao selecionar o
-              domínio ‘Outros’ no campo acima ‘Adicionais’.
-            maxLength: 100
-          assistanceServices:
-            $ref: '#/components/schemas/HomeInsuranceAssistanceServices'
-          termsAndConditions:
-            $ref: '#/components/schemas/HomeInsuranceTermsAndConditions'
-          validity:
-            $ref: '#/components/schemas/HomeInsuranceValidity'
-          customerServices:
-            type: array
-            description: Informações de pagamento de prêmio.
-            items:
-              type: string
-              example: LIVRE_ESCOLHA
-              enum:
-                - REDE_REFERENCIADA
-                - LIVRE_ESCOLHA
-                - REDE_REFERENCIADA_LIVRE_ESCOLHA
-          premiumRates:
-            type: array
-            description: >-
-              Distribuição de frequência relativa aos valores referentes às
-              taxas cobradas.
-            items:
-              type: string
-          premiumPayments:
-            $ref: '#/components/schemas/HomeInsurancePremiumPayment'
-          minimumRequirements:
-            $ref: '#/components/schemas/HomeInsuranceMinimumRequirements'
-          targetAudiences:
-            type: array
-            description: Público a quem se destina o produto
-            maxLength: 30
-            example:
-              - PESSOA NATURAL
-            items:
-              enum:
-                - PESSOA NATURAL
-                - PESSOA JURIDICA
-                - AMBAS
-    HomeInsuranceMinimumRequirements:
-      type: object
-      description: Produtos de Seguro Residencial.
-      required:
-        - contractingMinRequirement
-        - contractingType
-      properties:
-        contractingType:
-          type: string
-          description: Tipo de contratação.
-          enum:
-            - COLETIVO
-            - INDIVIDUAL
-        contractingMinRequirement:
-          type: string
-          description: >-
-            Campo aberto contendo todos os requisitos mínimos para contratação
-            (possibilidade de incluir URL).
-          maxLength: 1024
-          example: 'https://openinsurance.com.br/aaa'
-    HomeInsuranceCoverageAttributes:
-      type: object
-      description: Informações de cobertura do Seguro Residencial.
-      required:
-        - minLMI
-        - maxLMI
-        - minDeductibleAmount
-        - insuredMandatoryParticipationPercentage
-      properties:
-        minLMI:
-          $ref: '#/components/schemas/HomeInsuranceCovaregeAttibutesDetails'
-        maxLMI:
-          $ref: '#/components/schemas/HomeInsuranceCovaregeAttibutesDetails'
-        minDeductibleAmount:
-          $ref: '#/components/schemas/HomeInsuranceCovaregeAttibutesDetails'
-        insuredMandatoryParticipationPercentage:
-          type: number
-          description: >-
-            Listagem percentual de franquia e/ou percentual de participação
-            obrigatória do segurado estabelecida pela sociedade para cada tipo
-            de cobertura de produto.
-          maxLength: 9
-    HomeInsuranceCovaregeAttibutesDetailsUnit:
-      type: object
-      required:
-        - code
-        - description
-      properties:
-        code:
-          type: string
-          example: R$
-        description:
-          type: string
-          example: REAL
-    HomeInsuranceCovaregeAttibutesDetails:
-      type: object
-      required:
-        - amount
-        - unit
-      properties:
-        amount:
-          type: number
-        unit:
-          $ref: '#/components/schemas/HomeInsuranceCovaregeAttibutesDetailsUnit'
-    HomeInsuranceTermsAndConditions:
-      type: array
-      description: Informações dos termos e condições conforme número do processo SUSEP.
-      items:
-        type: object
-        required:
-          - susepProcessNumber
-          - termAndCondition
-        properties:
-          susepProcessNumber:
-            type: number
-            description: Número do processo SUSEP.
-            maxLength: 20
-            example: 0
-          definition:
-            type: string
-            description: Campo aberto (possibilidade de incluir uma url).
-            maxLength: 1024
-            example: 'https://openinsurance.com.br/aaa'
-    HomeInsuranceValidity:
-      type: array
-      description: Vigência
-      items:
-        type: object
-        required:
-          - term
-        properties:
-          term:
-            type: string
-            description: >-
-              Prazo de vigência do seguro contratado Intervalo contínuo de tempo
-              durante o qual está em vigor o contrato de seguro. (RESOLUÇÃO CNSP
-              Nº 341/2016).
-            example: ANUAL
-            enum:
-              - ANUAL
-              - ANUAL_INTERMITENTE
-              - PLURIANUAL
-              - PLURIANUAL_INTERMITENTE
-              - MENSAL
-              - MENSAL_INTERMITENTE
-              - DIARIO
-              - DIARIO_INTERMITENTE
-              - OUTROS
-          termOthers:
-            type: string
-            description: >-
-              Campo livre para descrição por cada participante ao selecionar o
-              domínio “Outros” no campo Prazo (acima).
-            maxLength: 100
-    HomeInsurancePremiumPayment:
-      type: array
-      description: Informações de pagamento de prêmio.
-      items:
-        type: object
-        required:
-          - paymentMethod
-          - paymentType
-        properties:
-          paymentMethod:
-            type: string
-            description: Meio de pagamento escolhido pelo segurado.
-            example: CARTAO_CREDITO
-            enum:
-              - CARTAO_CREDITO
-              - CARTAO_DEBITO
-              - DEBITO_CONTA_CORRENTE
-              - DEBITO_CONTA_POUPANCA
-              - BOLETO_BANCARIO
-              - PIX
-              - CONSIGINACAO_FOLHA_PAGAMENTO
-              - PAGAMENTO_COM_PONTOS
-          paymentMethodDetail:
-            type: string
-            description: >-
-              Campo aberto para detalhamento do campo ‘Outros’ por cada
-              participante.
-            maxLength: 100
-          paymentType:
-            type: string
-            description: Forma de pagamento
-            example: PAGAMENTO_UNICO
-            enum:
-              - PAGAMENTO_UNICO
-              - PARCELADO
-              - AMBOS
-    HomeInsuranceAssistanceServices:
-      type: array
-      description: >-
-        Agrupamento dos serviços de assistências disponíveis vinculado ao
-        produto.
-      items:
-        type: object
-        required:
-          - assistanceServicesPackage
-          - assistanceServicesDetail
-          - chargeTypeSignaling
-        properties:
-          assistanceServicesPackage:
-            type: string
-            description: Pacotes de Assistência.
-            example: ATE_10_SERVICOS
-            enum:
-              - ATE_10_SERVICOS
-              - ATE_20_SERVICOS
-              - ACIMA_20_SERVICOS
-              - CUSTOMIZAVEL
-          assistanceServicesDetail:
-            type: string
-            description: >-
-              Campo livre para descrição dos serviços ofertados por cada
-              sociedade participante.
-            maxLength: 1000
-            example: reboque pane seca
-          chargeTypeSignaling:
-            type: string
-            description: >-
-              Sinalização em campo exclusivo se o pacote de Assistência é
-              gratuita ou contratada/paga.
-            example: GRATUITA
-            enum:
-              - GRATUITA
-              - PAGA
-    HomeInsuranceCoverages:
-      type: array
-      description: Listagem de coberturas incluídas no produto.
-      items:
-        type: object
-        required:
-          - coverageType
-          - coverageDetail
-          - coveragePermissionSeparteAcquisition
-          - coverageAttributes
-        properties:
-          coverageType:
-            type: string
-            enum:
-              - IMOVEL_BASICA
-              - IMOVEL_AMPLA
-              - DANOS_ELETRICOS
-              - DANOS_POR_AGUA
-              - ALAGAMENTO
-              - RESPONSABILIDADE_CIVIL_FAMILIAR
-              - RESPONSABILIDADE_CIVIL_DANOS_MORAIS
-              - ROUBO_SUBTRACAO_BENS
-              - ROUBO_SUBTRACAO_BENS_FORA_LOCAL_SEGURADO
-              - TACOS_GOLFE_HOLE_ONE
-              - PEQUENAS_REFORMAS_OBRA
-              - GREVES_TUMULTOS_LOCKOUT
-              - MICROEMPREENDEDOR
-              - ESCRITORIO_RESIDENCIA
-              - DANOS_EQUIPAMENTOS_ELETRONICOS
-              - QUEBRA_VIDROS
-              - IMPACTO_VEICULOS
-              - VENDAVAL
-              - PERDA_PAGAMENTO_ALUGUEL
-              - BICICLETA
-              - RESPONSABILIDADE_CIVIL_BICICLETA
-              - RC_EMPREGADOR
-              - DESMORONAMENTO
-              - DESPESAS
-              - JOIAS_OBRAS_ARTE
-              - TERREMOTO
-              - IMPACTO_AERONAVES
-              - PAISAGISMO
-              - INCENDIO
-              - QUEDA_RAIO
-              - EXPLOSAO
-              - OUTROS
-            description: Nome do tipo da cobertura.
-            maxLength: 1000
-            example: ESCRITORIO_RESIDENCIA
-          coverageDetail:
-            type: string
-            description: >-
-              Campo aberto para detalhamento por coberturas possíveis dos
-              produtos a ser feito por cada participante.
-            maxLength: 1000
-            example: Cobertura especial para escritório residenciais
-          coveragePermissionSeparteAcquisition:
-            type: boolean
-            description: >-
-              Indicação se a cobertura permite contratação separada (por
-              cobertura selecionada).
-            example: false
-          coverageAttributes:
-            $ref: '#/components/schemas/HomeInsuranceCoverageAttributes'
-    HomeInsurancePropertyCharacteristics:
-      type: array
-      description: Caracteristicas do imóvel.
-      items:
-        type: object
-        required:
-          - propertyType
-          - propertyUsageType
-          - propertyBuildType
-          - importanceInsured
-        properties:
-          propertyType:
-            description: Tipo de imóvel.
-            type: string
-            example: CASA
-            enum:
-              - CASA
-              - APARTAMENTO
-          propertyBuildType:
-            type: string
-            description: Descrição do tipo de construção da propriedade.
-            example: ALVENARIA
-            enum:
-              - ALVENARIA
-              - MADEIRA
-              - METALICA
-              - MISTA
-          propertyUsageType:
-            type: string
-            description: Descrição do tipo de uso da propriedade.
-            example: HABITUAL
-            enum:
-              - HABITUAL
-              - VERANEIO
-              - DESOCUPADO
-              - CASA_ESCRITORIO
-              - ALUGUEL_TEMPORADA
-          importanceInsured:
-            type: string
-            description: Destinação da Importância Segurada.
-            example: PREDIO
-            enum:
-              - PREDIO
-              - CONTEUDO
-              - AMBOS
-    ResponseError2:
-      type: object
-      required:
-        - errors
-      properties:
-        errors:
-          type: array
-          minItems: 1
-          maxItems: 13
-          items:
-            type: object
-            required:
-              - code
-              - title
-              - detail
-              - requestDateTime
-            properties:
-              code:
-                description: Código de erro específico do endpoint
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 255
-              title:
-                description: Título legível por humanos deste erro específico
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 255
-              detail:
-                description: Descrição legível por humanos deste erro específico
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 2048
-              requestDateTime:
-                description: >-
-                  Data e hora da consulta, conforme especificação RFC-3339,
-                  formato UTC.
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 2048
-                format: date-time
-                example: '2021-08-20T08:30:00Z'
-            additionalProperties: false
-        meta:
-          $ref: '#/components/schemas/Meta'
-      additionalProperties: false
-    ResponsePrizeLinkedBonds:
-      type: object
-      required:
-        - data
-        - links
-        - meta
-      properties:
-        data:
-          type: object
-          required:
-            - brand
-          properties:
-            brand:
-              $ref: '#/components/schemas/PrizeLinkedBondBrand'
-        links:
-          $ref: '#/components/schemas/Links1'
-        meta:
-          $ref: '#/components/schemas/Meta1'
-    PrizeLinkedBondBrand:
-      type: object
-      required:
-        - name
-        - companies
-      properties:
-        name:
-          type: string
-          maxLength: 80
-          pattern: \w*\W*
-          description: >-
-            Nome da Marca reportada pelo participante do Open Insurance. O
-            conceito a que se refere a 'marca' é em essência uma promessa da
-            empresa em fornecer uma série específica de atributos, benefícios e
-            serviços uniformes aos clientes
-          example: Organização A
-        companies:
-          type: array
-          description: Companies traz uma lista de todas as instituições da Marca
-          items:
-            $ref: '#/components/schemas/PrizeLinkedBondCompany'
-          minItems: 1
-    PrizeLinkedBondCompany:
-      type: object
-      required:
-        - name
-        - cnpjNumber
-        - prizeLinkedBonds
-      allOf:
-        - $ref: '#/components/schemas/Company'
-      properties:
-        prizeLinkedBonds:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrizeLinkedBond'
-          description: Lista de produtos de título de capitalização
-          minItems: 1
-          maxItems: 3
-    PrizeLinkedBond:
-      type: object
-      required:
-        - name
-        - code
-        - modality
-        - defrayal
-        - lifetimeMonths
-        - shares
-        - interestRate
-        - amount
-        - correctionIndex
-        - prizeDraw
-        - prizeWithdraw
-        - latePayment
-        - additionals
-        - premiumPayments
-        - minimumRequirements
-        - termsConditions
-      properties:
-        name:
-          type: string
-          maxLength: 250
-          pattern: \w*\W*
-          description: >-
-            Nome fantasia do produto, pelo qual é identificado nos canais de
-            distribuição e atendimento da sociedade (Campo Livre)
-          example: Minha Capitalização
-        code:
-          type: string
-          maxLength: 100
-          description: Código único a ser definido pela sociedade (Campo Livre)
-          example: MINHA_CAPITAZALICAO
-        modality:
-          type: string
-          enum:
-            - TRADICIONAL
-            - INSTRUMENTO_DE_GARANTIA
-            - COMPRA_PROGRAMADA
-            - POPULAR
-            - INCENTIVO
-            - FILANTROPIA_PREMIÁVEL
-          description: Modalidade
-          example: TRADICIONAL
-        defrayal:
-          type: string
-          enum:
-            - PAGAMENTO_UNICO
-            - PAGAMENTO_MENSAL
-            - PAGAMENTO_PERIODICO
-          description: Forma de custeio
-          example: PAGAMENTO_UNICO
-        lifetimeMonths:
-          type: integer
-          description: Prazo em meses de vigência
-          example: 12
-        shares:
-          $ref: '#/components/schemas/PrizeLinkedBondsShares'
-        interestRate:
-          type: number
-          format: double
-          description: Taxa de juros que remunera a provisão matemática para capitalização.
-          example: 6.82
-        amount:
-          type: string
-          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
-          maxLength: 12
-          x-cds-type: AmountString
-          description: >-
-            Valor de contribuição. Na modalidade Tradicional, informar a faixa
-            de valor mínimo e máximo em R$ de contribuição ao plano. Para as
-            demais modalidades, informar a lista com os valores permitidos de
-            contribuição ao plano. Em todas as situações indicar para qual
-            periodicidade de pagamento se aplicam os valores: pagamento mensal,
-            pagamento único ou periódico.
-          example: '89.90'
-        correctionIndex:
-          type: string
-          enum:
-            - IPCA
-            - IGP_M
-            - INPC
-            - TR
-          description: >-
-            Índice utilizado na correção que remunera a provisão matemática para
-            capitalização
-          example: IPCA
-        prizeDraw:
-          $ref: '#/components/schemas/PrizeLinkedBondsPrizeDraw'
-        prizeWithdraw:
-          $ref: '#/components/schemas/PrizeLinkedBondsPrizeWithdraw'
-        latePayment:
-          $ref: '#/components/schemas/PrizeLinkedBondsLatePayment'
-        additionals:
-          $ref: '#/components/schemas/PrizeLinkedBondsAdditionals'
-        premiumPayments:
-          $ref: '#/components/schemas/PrizeLinkedBondsPremiumPayments'
-        minimumRequirements:
-          $ref: '#/components/schemas/PrizeLinkedBondsMinimumRequirements'
-        targetAudience:
-          type: array
-          description: Lista de público-alvo
-          items:
-            $ref: '#/components/schemas/TargetAudience'
-          minItems: 1
-          maxItems: 2
-        termsConditions:
-          $ref: '#/components/schemas/PrizeLinkedBondsTermsConditions'
-    PrizeLinkedBondsPrizeDraw:
-      type: object
-      description: Objeto que reúne informações relativas a Sorteios
-      required:
-        - quantityInfo
-        - frequencyInfo
-        - valuesInfo
-        - probabilitiesInfo
-      properties:
-        quantityInfo:
-          type: string
-          maxLength: 2000
-          pattern: \w*\W*
-          description: >-
-            Informação sobre a quantidade de sorteios. Pode ser informada a URL
-            referente ao endereço onde constam informações.
-          example: 'https://example.com/prize-linked-bond'
-        frequencyInfo:
-          type: string
-          maxLength: 2000
-          pattern: \w*\W*
-          description: >-
-            Informação sobre a periodicidade de sorteios. Pode ser informada a
-            URL referente ao endereço onde constam informações.
-          example: 'https://example.com/prize-linked-bond'
-        valuesInfo:
-          type: string
-          maxLength: 2000
-          pattern: \w*\W*
-          description: >-
-            Informação sobre os valores dos sorteios. Pode ser informada a URL
-            referente ao endereço onde constam informações.
-          example: 'https://example.com/prize-linked-bond'
-        probabilitiesInfo:
-          type: string
-          maxLength: 2000
-          pattern: \w*\W*
-          description: >-
-            Informação sobre a probabilidade mínima de contemplação nos
-            sorteios. Pode ser informada a URL referente ao endereço onde
-            constam informações.
-          example: 'https://example.com/prize-linked-bond'
-        hasEarlySettlement:
-          type: boolean
-          description: Liquidação antecipada em Sorteio.
-          example: true
-        hasMandatoryContemplation:
-          type: boolean
-          description: Contemplação obrigatória.
-          example: false
-    PrizeLinkedBondsPrizeWithdraw:
-      type: object
-      description: Objeto que reúne informações relativas a Resgates
-      required:
-        - percentage
-        - gracePeriod
-        - lifetimeEndPercentage
-      properties:
-        percentage:
-          type: number
-          format: double
-          description: Valor percentual de resgate permitido.
-          example: 25
-        gracePeriod:
-          type: integer
-          description: Prazo de carência para resgate em dias.
-          example: 30
-        lifetimeEndPercentage:
-          type: number
-          format: double
-          description: >-
-            Percentual mínimo da soma das contribuições efetuadas que poderá ser
-            resgatado ao final da vigência
-          example: 100
-    PrizeLinkedBondsShares:
-      type: object
-      description: Objeto que reúne informações relativas a Quotas da capitalização
-      required:
-        - amount
-        - prizeDraw
-        - administrationTaxes
-      properties:
-        amount:
-          type: string
-          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
-          maxLength: 12
-          x-cds-type: AmountString
-          description: >-
-            Valor ou percentual do valor arrecadado destinado à entidade
-            beneficente (modalidade Filantropia Premiável) ou destinado a formar
-            o montante capitalizado (demais modalidades).
-          example: '2000.00'
-        prizeDraw:
-          type: string
-          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
-          maxLength: 12
-          x-cds-type: AmountString
-          description: >-
-            Valor ou percentual do valor arrecadado destinado a custear os
-            sorteios previstos no plano.
-          example: '40000.00'
-        administrationTaxes:
-          type: number
-          format: double
-          description: >-
-            Percentual do valor arrecadado destinado a cobrir as despesas gerais
-            com a colocação e administração do plano
-          example: 0.6865
-    PrizeLinkedBondsLatePayment:
-      type: object
-      description: Objeto que reúne informações relativas a Atrasos de Pagamentos
-      required:
-        - interest
-        - suspentionDays
-        - taxes
-      properties:
-        interest:
-          type: string
-          pattern: '(^[0-9](\.[0-9]{2})|NA)$'
-          description: Juros de mora em caso de atraso no pagamento do resgate ou sorteio.
-          example: '2.30'
-        suspentionDays:
-          type: integer
-          description: >-
-            Prazo máximo em dias que o título fica suspenso por atraso de
-            pagamento, antes de ser cancelado.
-          example: 90
-        hasLifetimeExtension:
-          type: boolean
-          description: 'Alteração do prazo de vigência original, pela suspensão'
-          example: true
-    PrizeLinkedBondsAdditionals:
-      type: array
-      items:
-        $ref: '#/components/schemas/ProductAdditional'
-      description: Lista de adicionais para título de capitalização
-    PrizeLinkedBondsPremiumPayments:
-      type: array
-      items:
-        $ref: '#/components/schemas/Payment'
-      minItems: 1
-      maxItems: 2
-      description: Lista opções de pagamento de prêmios para produtos e serviços
-    PrizeLinkedBondsMinimumRequirements:
-      type: object
-      description: >-
-        Objeto que reúne informações relativas a Requisitos Mínimos para as
-        contratações
-      properties:
-        minimumRequirementsInfo:
-          type: string
-          maxLength: 2000
-          pattern: \w*\W*
-          description: >-
-            Requisitos mínimos. Possibilidade de inscrição da URL. Endereço
-            eletrônico de acesso ao canal. p.ex.
-            'https://example.com/mobile-insurance'
-          example: 'https://example.com/prize-linked-bond'
-    PrizeLinkedBondsTermsConditions:
-      type: object
-      description: >-
-        Objeto que reúne informações relativas a Termos e Condições para as
-        contratações
-      required:
-        - susepNumber
-      properties:
-        susepNumber:
-          pattern: '^(\d{14})$|^NA$'
-          description: Processo Susep
-          maxLength: 14
-          example: '50685362000135'
-          type: string
-        termsAndConditionsInfo:
-          type: string
-          maxLength: 2000
-          pattern: \w*\W*
-          description: >-
-            Termos e condições contratuais. Possibilidade de inscrição da URL.
-            Endereço eletrônico de acesso ao canal. p.ex.
-            'https://example.com/mobile-insurance'
-          example: 'https://example.com/prize-linked-bond'
-    TargetAudience:
-      type: string
-      description: Público alvo de determinados produtos e serviços
-      enum:
-        - PESSOA_NATURAL
-        - PESSOA_JURIDICA
-      example: PESSOA_NATURAL
-    ProductAdditional:
-      type: object
-      description: Adicionais de produtos
-      required:
-        - name
-        - code
-      properties:
-        name:
-          type: string
-          maxLength: 250
-          pattern: \w*\W*
-          description: >-
-            Nome fantasia do adicional, pelo qual é identificado nos canais de
-            distribuição e atendimento da sociedade (Campo Livre)
-          example: Sorteio
-        code:
-          type: string
-          maxLength: 100
-          description: Código único a ser definido pela sociedade (Campo Livre)
-          example: SORTEIO
-        description:
-          type: string
-          maxLength: 2000
-          pattern: \w*\W*
-          description: >-
-            Descrição do adicional. Pode ser informada a URL referente ao
-            endereço onde constam as informações cabíveis.
-          example: 'https://example.com/mobile-insurance'
-    Payment:
-      type: object
-      required:
-        - type
-        - methods
-        - frequency
-      properties:
-        type:
-          $ref: '#/components/schemas/PaymentTypes'
-        methods:
-          type: array
-          description: Lista de meios de pagamentos disponíveis para o tipo
-          items:
-            $ref: '#/components/schemas/PaymentMethods'
-          minItems: 1
-        frequency:
-          type: array
-          description: Lista de periodicidade de pagamentos disponíveis para o tipo
-          items:
-            $ref: '#/components/schemas/PaymentFrequency'
-    PaymentMethods:
-      type: string
-      description: |
-        Meios de pagamentos dispíveis.
-      enum:
-        - CARTAO_DE_CREDITO
-        - DEBITO_EM_CONTA
-        - BOLETO_BANCARIO
-        - PIX
-      example: PIX
-    PaymentTypes:
-      type: string
-      description: |
-        Formas de pagamentos dispíveis.
-      enum:
-        - A_VISTA
-        - PARCELADO
-      example: A_VISTA
-    PaymentFrequency:
-      type: string
-      description: |
-        Periodicidade de pagamentos dispíveis.
-      enum:
-        - DIARIO
-        - MENESAL
-        - ÚNICO
-        - ANUAL
-        - TRIMESTRAL
-        - SEMESTRAL
-        - FRACIONADO
-      example: MENESAL
-    CNPJ:
-      type: object
-      required:
-        - cnpjNumber
-      properties:
-        cnpjNumber:
-          type: string
-          pattern: '^(\d{14})$|^NA$'
-          description: CNPJ
-          maxLength: 14
-          example: '50685362000135'
-    Company:
-      type: object
-      required:
-        - name
-        - cnpjNumber
-      allOf:
-        - $ref: '#/components/schemas/CNPJ'
-      properties:
-        name:
-          type: string
-          description: >-
-            Nome da Instituição, pertencente à marca. p.ex.'Empresa da
-            Organização A'
-          maxLength: 80
-          pattern: \w*\W*
-          example: Empresa A1
-        urlComplementaryList:
-          type: string
-          pattern: \w*\W*
-          maxLength: 1024
-          description: >
-            URL do link que conterá a lista complementar com os nomes e CNPJs
-            agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as
-            mesmas características para produtos e serviços. Endereço eletrônico
-            de acesso ao canal. Será obrigatoriamente preenchido se houver lista
-            complementar com os nomes e CNPJs a ser disponibilizada.
-
-            Restrição: Será obrigatorimente preenchido se houver lista
-            complementar com os nomes e CNPJs a ser disponibilizada
-          example: 'https://empresadaorganizacaoa.com/complementarylist'
-    Links1:
-      type: object
-      properties:
-        self:
-          type: string
-          description: URL da página atualmente requisitada
-          example: >-
-            https://api.sociedade.com.br/open-insurance/products-services/v1/<resource>
-        first:
-          type: string
-          description: URL da primeira página de registros
-          example: >-
-            https://api.sociedade.com.br/open-insurance/products-services/v1/<resource>
-        prev:
-          type: string
-          description: URL da página anterior de registros
-        next:
-          type: string
-          description: URL da próxima página de registros
-        last:
-          type: string
-          description: URL da última página de registros
-          example: >-
-            https://api.sociedade.com.br/open-insurance/products-services/v1/<resource>
-    Meta1:
-      type: object
-      properties:
-        totalRecords:
-          type: integer
-          description: Total de registros encontrados
-          example: 1
-        totalPages:
-          type: integer
-          description: Total de páginas para os registros encontrados
-          example: 1
-      required:
-        - totalRecords
-        - totalPages
   responses:
     BadRequest:
       description: >-
@@ -4014,7 +4058,7 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError2'
+            $ref: '#/components/schemas/ResponseError3'
     NotAcceptable:
       description: >-
         A solicitação continha um cabeçalho Accept diferente dos tipos de mídia
@@ -4022,13 +4066,13 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError2'
+            $ref: '#/components/schemas/ResponseError'
     NotFound:
       description: O recurso solicitado não existe ou não foi implementado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError2'
+            $ref: '#/components/schemas/ResponseError'
     TooManyRequests:
       description: >-
         A operação foi recusada, pois muitas solicitações foram feitas dentro de
@@ -4037,33 +4081,13 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError2'
+            $ref: '#/components/schemas/ResponseError'
     Unauthorized:
       description: Cabeçalho de autenticação ausente/inválido ou token inválido
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError2'
-    Created:
-      description: A operação resulta na criação de um novo recurso.
-    NoContent:
-      description: ''
-    NotModified:
-      description: ''
-    Gone:
-      description: ''
-    UnsupportedMediaType:
-      description: ''
-    UnprocessableEntity:
-      description: >-
-        Se aplicável ao endpoint, espera-se que esse erro resulte em um payload
-        de erro.
-    ServiceUnavailable:
-      description: ''
-    GatewayTimeout:
-      description: >-
-        Retornado se ocorreu um tempo limite, mas um reenvio da solicitação
-        original é viável (caso contrário, use 500 Internal Server Error).
+            $ref: '#/components/schemas/ResponseError'
     BadRequest1:
       description: >-
         A requisição foi malformada, omitindo atributos obrigatórios, seja no
@@ -4086,6 +4110,64 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError2'
+    BadRequest3:
+      description: >-
+        A requisição foi malformada, omitindo atributos obrigatórios, seja no
+        payload ou através de atributos na URL.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError3'
+    Forbidden2:
+      description: O token tem escopo incorreto ou uma política de segurança foi violada
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError3'
+    InternalServerError1:
+      description: Ocorreu um erro no gateway da API ou no microsserviço
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError3'
+    Created:
+      description: A operação resulta na criação de um novo recurso.
+    NoContent:
+      description: ''
+    NotModified:
+      description: ''
+    Forbidden3:
+      description: O token tem escopo incorreto ou uma política de segurança foi violada
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    InternalServerError2:
+      description: Ocorreu um erro no gateway da API ou no microsserviço
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    MethodNotAllowed1:
+      description: O consumidor tentou acessar o recurso com um método não suportado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Gone:
+      description: ''
+    UnsupportedMediaType:
+      description: ''
+    UnprocessableEntity:
+      description: >-
+        Se aplicável ao endpoint, espera-se que esse erro resulte em um payload
+        de erro.
+    ServiceUnavailable:
+      description: ''
+    GatewayTimeout:
+      description: >-
+        Retornado se ocorreu um tempo limite, mas um reenvio da solicitação
+        original é viável (caso contrário, use 500 Internal Server Error).
   parameters:
     page:
       name: page
@@ -4105,6 +4187,13 @@ components:
         type: integer
         default: 10
         minimum: 1
+    cnpjNumber:
+      name: cnpjNumber
+      in: path
+      description: Número de CNPJ.
+      required: true
+      schema:
+        type: string
     cache-Control:
       name: cache-control
       in: header
@@ -4154,6 +4243,13 @@ components:
       schema:
         type: string
         pattern: '[\w\W\s]*'
+    commercializationArea:
+      name: commercializationArea
+      in: path
+      description: Area de comercialização.
+      required: true
+      schema:
+        type: integer
     fipeCode:
       name: fipeCode
       in: path
@@ -4168,28 +4264,13 @@ components:
       required: true
       schema:
         type: string
-    commercializationArea:
-      name: commercializationArea
-      in: path
-      description: Area de comercialização.
-      required: true
-      schema:
-        type: string
     commercializationArea1:
       name: commercializationArea
       in: path
       description: Area de comercialização.
       required: true
       schema:
-        type: integer
-    pageSize1:
-      name: page-size
-      in: query
-      description: Quantidade total de registros por páginas.
-      schema:
-        type: integer
-        default: 25
-        minimum: 1
+        type: string
   securitySchemes:
     OpenId:
       type: openIdConnect

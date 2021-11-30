@@ -97,25 +97,26 @@ components:
         companies:
           $ref: '#/components/schemas/CapitalizationTitleCompany'
     CapitalizationTitleCompany:
-      type: object
-      description: Informações referente a sociedade a qual a marca pertence.
-      required:
-        - name
-        - cnpjNumber
-        - product
-      properties:
-        name:
-          type: string
-          description: Nome da sociedade pertencente à marca.
-          maxLength: 80
-          example: ACME cap da ACME seguros
-        cnpjNumber:
-          type: string
-          description: CNPJ da sociedade pertencente à marca.
-          maxLength: 14
-          example: "12345678901234"
-        product:
-          $ref: '#/components/schemas/CapitalizationTitleProduct'
+      type: array
+      items:
+        description: Informações referente a sociedade a qual a marca pertence.
+        required:
+          - name
+          - cnpjNumber
+          - product
+        properties:
+          name:
+            type: string
+            description: Nome da sociedade pertencente à marca.
+            maxLength: 80
+            example: ACME cap da ACME seguros
+          cnpjNumber:
+            type: string
+            description: CNPJ da sociedade pertencente à marca.
+            maxLength: 14
+            example: "12345678901234"
+          product:
+            $ref: '#/components/schemas/CapitalizationTitleProduct'
     CapitalizationTitleProduct:
       type: array
       description: Lista de produtos de uma empresa.
@@ -125,6 +126,7 @@ components:
           - name
           - code
           - modality
+          - quotas
           - coverages
           - costType
         properties:
@@ -149,11 +151,13 @@ components:
             description: Forma de custeio
             items:
                 type: string
-                enum: [PAGMENTO_UNICO, PAGAMENTO_MENSAL, PAGAMENTO_PERIODICO]
+                enum: [PAGAMENTO_UNICO, PAGAMENTO_MENSAL, PAGAMENTO_PERIODICO]
           termsAndConditions:
             $ref: '#/components/schemas/CapitalizationTitleTerms'
           quotas:
-            $ref: '#/components/schemas/CapitalizationTitleQuotas'
+            type: array
+            items:
+              $ref: '#/components/schemas/CapitalizationTitleQuotas'
           validity:
             $ref: '#/components/schemas/CapitalizationTitleValidity'
           serieSize:
@@ -193,25 +197,36 @@ components:
         type: object
         description: Quotas
         required:
+          - quota
           - capitalizationQuota
           - raffleQuota
           - chargingQuota
         properties:
+            quota:
+              type: integer
+              description: Número da parcela.
+              example: 10
             capitalizationQuota:
-              type: number
+              type: array
               description: Percentual da contribuição destinado à constituição de capital referente ao direito de resgate.
-              maxLength: 9
-              example: 10.000000
+              items:
+                type: number
+                maxLength: 9
+                example: 10.000000
             raffleQuota:
-              type: number
+              type: array
               description: Percentual da contribuição designado a custear os sorteios, se previstos no plano
-              maxLength: 9
-              example: 10.000000
+              items:
+                type: number
+                maxLength: 9
+                example: 10.000000
             chargingQuota:
-              type: number
+              type: array
               description: Percentual da contribuição destinado aos custos de despesas com corretagem, colocação e administração do título de capitalização, emissão, divulgação, lucro da sociedade de capitalização e eventuais despesas relavas ao custeio da contemplação obrigatória e da distribuição de bônus.
-              maxLength: 9
-              example: 10.000000
+              items:
+                type: number
+                maxLength: 9
+                example: 10.000000
     CapitalizationTitleValidity:
         type: integer
         description: Prazo de vigência do título de capitalização em meses.
@@ -255,9 +270,11 @@ components:
             $ref: '#/components/schemas/CapitalizationTitleContributionAmount'
           earlyRedemption:
             description: Possibilidade de o titular efetuar o resgate do capital constituído antes do fim do prazo de vigência do título, podendo ocorrer por solicitação expressa do titular ou por contemplação em sorteio com liquidação antecipada
-            type: number
-            maxLength: 9
-            example: 10.000000
+            type: array
+            items:
+                type: number
+                maxLength: 9
+                example: 10.000000
           redemptionPercentageEndTerm:
             description: Percentual mínimo da soma das contribuições efetuadas que poderá ser resgatado ao final da vigência,  tendo como condição os pagamentos das parcelas nos respectivos vencimentos.
             type: number
@@ -402,14 +419,14 @@ components:
       description: Requisitos mínimos.
       required:
         - minimumRequirementDetails
-        - targetAudience
+        - targetAudiences
       properties:
         minimumRequirementDetails:
           type: string
           description: Detalhamento do requisito mínimo para contratação - Campo aberto (possibilidade de incluir URL).
           maxLength: 1024
           example: https://ey.exemplo/capitalizacao/tradicional/PU/requisitos_min
-        targetAudience:
+        targetAudiences:
           description: Público Alvo
           type: array
           items:
