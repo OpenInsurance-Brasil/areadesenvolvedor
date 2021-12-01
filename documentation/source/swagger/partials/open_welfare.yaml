@@ -94,8 +94,11 @@ components:
           example: '2021-08-20T08:30:00Z'
         data:
           type: object
-        brand:
-          $ref: '#/components/schemas/PensionPlanBrand'
+          required:
+            - PensionPlanBrand
+          properties:
+            brand:
+              $ref: '#/components/schemas/PensionPlanBrand'
         linksPaginated:
           $ref: '#/components/schemas/LinksPaginated'
         metaPaginated:
