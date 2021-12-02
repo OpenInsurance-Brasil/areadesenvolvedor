@@ -5,19 +5,19 @@ info:
     API de informações de Título de Capitaliazação.
   version: 1.0.0
   contact:
-    url: 'https://http://novosite.susep.gov.br'
+    url: 'https://openinsurance.susep.gov.br'
 servers:
   - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
     description: Servidor de Produção
   - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
     description: Servidor de Homologação
 tags:
-- name: "capitalization-title"
+- name: "Títulos de Capitalização"
 paths:
   /capitalization-title:
     get:
       tags:
-        - capitalization-title
+        - "Títulos de Capitalização"
       summary: Obtém a lista dos produtos do tipo título de capitalização
       description: "Obtém a lista dos produtos do tipo título de capitalização"
       operationId: "capitalizationTitle"

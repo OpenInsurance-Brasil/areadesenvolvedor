@@ -11,17 +11,17 @@ servers:
   - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
     description: Servidor de Homologação
 tags:
-  - name: life-pension
-  - name: person
-  - name: capitalization-title
-  - name: home-insurance
-  - name: auto-insurance
-  - name: pension-plan
+  - name: "Vida e Previdência"
+  - name: "Seguros de Pessoas"
+  - name: "Títulos de Capitalização"
+  - name: "Seguros Residenciais"
+  - name: "Seguros de Automóveis"
+  - name: "Planos de Previdência com Cobertura de Risco"
 paths:
   /life-pension:
     get:
       tags:
-        - life-pension
+        - "Vida e Previdência"
       summary: Obtém a lista dos produtos do tipo vida e previdência.
       description: Obtém a lista dos produtos do tipo vida e previdência.
       operationId: getLifePension
@@ -66,7 +66,7 @@ paths:
   /person:
     get:
       tags:
-        - person
+        - "Seguros de Pessoas"
       summary: Obtém a lista dos produtos do tipo seguro de pessoas.
       description: Obtém a lista dos produtos do tipo seguro de pessoas.
       operationId: getPerson
@@ -111,7 +111,7 @@ paths:
   /capitalization-title:
     get:
       tags:
-        - capitalization-title
+        - "Títulos de Capitalização"
       summary: Obtém a lista dos produtos do tipo título de capitalização
       description: Obtém a lista dos produtos do tipo título de capitalização
       operationId: capitalizationTitle
@@ -156,7 +156,7 @@ paths:
   '/home-insurance/commercializationArea/{commercializationArea}':
     get:
       tags:
-        - home-insurance
+        - "Seguros Residenciais"
       summary: Obtém informações de seguros residenciais
       description: Obtém informações de seguros redidenciais
       operationId: getResidentialInsurance
@@ -202,7 +202,7 @@ paths:
   '/auto-insurance/{commercializationArea}/{fipeCode}/{year}':
     get:
       tags:
-        - auto-insurance
+        - "Seguros de Automóveis"
       summary: Obtém informações de seguros de automóveis
       description: Obtém informações de seguros de automóveis
       operationId: getAutoInsurance
@@ -250,7 +250,7 @@ paths:
   /pension-plan:
     get:
       tags:
-        - pension-plan
+        - "Planos de Previdência com Cobertura de Risco"
       summary: Obtém informações de plano de previdência com cobertura de risco
       description: Obtém informações de plano de previdência com cobertura de risco
       operationId: getPensionPlan

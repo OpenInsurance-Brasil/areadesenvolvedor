@@ -5,19 +5,19 @@ info:
     API de informações de Seguro Residencial. Os recursos que podem ser consumidos pelos participantes conforme a regra 3.2.2 do manual de escopo de dados.
   version: 1.0.0
   contact:
-    url: 'https://http://novosite.susep.gov.br'
+    url: 'https://openinsurance.susep.gov.br'
 servers:
   - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
     description: Servidor de Produção
   - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
     description: Servidor de Homologação
 tags:
-- name: "home-insurance"
+- name: "Seguros Residenciais"
 paths:
   /home-insurance/commercializationArea/{commercializationArea}:
     get:
       tags:
-        - home-insurance
+        - "Seguros Residenciais"
       summary: Obtém informações de seguros residenciais
       description: "Obtém informações de seguros redidenciais"
       operationId: "getResidentialInsurance"

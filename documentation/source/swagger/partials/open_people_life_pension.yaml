@@ -12,12 +12,12 @@ servers:
   - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
     description: Servidor de Homologação
 tags:
-- name: "life-pension"
+- name: "Vida e Previdência"
 paths:
   /life-pension:
     get:
       tags:
-        - life-pension
+        - "Vida e Previdência"
       summary: Obtém a lista dos produtos do tipo vida e previdência.
       description: "Obtém a lista dos produtos do tipo vida e previdência."
       operationId: "getLifePension"

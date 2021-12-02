@@ -5,19 +5,19 @@ info:
     Obtém a lista dos produtos Seguros de Pessoas – Coberturas de Risco (excluindo VGBL).
   version: 1.0.0
   contact:
-    url: 'https://http://novosite.susep.gov.br'
+    url: 'https://openinsurance.susep.gov.br'
 servers:
   - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
     description: Servidor de Produção
   - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
     description: Servidor de Homologação
 tags:
-- name: "person"
+- name: "Seguros de Pessoas"
 paths:
   /person:
     get:
       tags:
-        - person
+        - "Seguros de Pessoas"
       summary: Obtém a lista dos produtos do tipo seguro de pessoas.
       description: "Obtém a lista dos produtos do tipo seguro de pessoas."
       operationId: "getPerson"
