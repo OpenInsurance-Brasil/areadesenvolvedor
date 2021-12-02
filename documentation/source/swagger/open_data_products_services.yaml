@@ -62,7 +62,7 @@ paths:
     get:
       tags:
         - "API - Produtos e Serviços"
-      summary: "Seguro de Pessoas"
+      summary: "Seguros de Pessoas"
       description: Obtém a lista dos produtos do tipo seguro de pessoas.
       operationId: getPerson
       parameters:
