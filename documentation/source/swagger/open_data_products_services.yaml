@@ -11,18 +11,13 @@ servers:
   - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
     description: Servidor de Homologação
 tags:
-  - name: life-pension
-  - name: person
-  - name: capitalization-title
-  - name: home-insurance
-  - name: auto-insurance
-  - name: pension-plan
+  - name: "API - Produtos e Serviços"
 paths:
   /life-pension:
     get:
       tags:
-        - life-pension
-      summary: Obtém a lista dos produtos do tipo vida e previdência.
+        - "API - Produtos e Serviços"
+      summary: "Vida e Previdência"
       description: Obtém a lista dos produtos do tipo vida e previdência.
       operationId: getLifePension
       parameters:
@@ -66,8 +61,8 @@ paths:
   /person:
     get:
       tags:
-        - person
-      summary: Obtém a lista dos produtos do tipo seguro de pessoas.
+        - "API - Produtos e Serviços"
+      summary: "Seguros de Pessoas"
       description: Obtém a lista dos produtos do tipo seguro de pessoas.
       operationId: getPerson
       parameters:
@@ -111,8 +106,8 @@ paths:
   /capitalization-title:
     get:
       tags:
-        - capitalization-title
-      summary: Obtém a lista dos produtos do tipo título de capitalização
+        - "API - Produtos e Serviços"
+      summary: "Títulos de Capitalização"
       description: Obtém a lista dos produtos do tipo título de capitalização
       operationId: capitalizationTitle
       parameters:
@@ -156,8 +151,8 @@ paths:
   '/home-insurance/commercializationArea/{commercializationArea}':
     get:
       tags:
-        - home-insurance
-      summary: Obtém informações de seguros residenciais
+        - "API - Produtos e Serviços"
+      summary: "Seguros Residenciais"
       description: Obtém informações de seguros redidenciais
       operationId: getResidentialInsurance
       parameters:
@@ -202,8 +197,8 @@ paths:
   '/auto-insurance/{commercializationArea}/{fipeCode}/{year}':
     get:
       tags:
-        - auto-insurance
-      summary: Obtém informações de seguros de automóveis
+        - "API - Produtos e Serviços"
+      summary: "Seguros de Automóveis"
       description: Obtém informações de seguros de automóveis
       operationId: getAutoInsurance
       parameters:
@@ -250,8 +245,8 @@ paths:
   /pension-plan:
     get:
       tags:
-        - pension-plan
-      summary: Obtém informações de plano de previdência com cobertura de risco
+        - "API - Produtos e Serviços"
+      summary: "Planos de Previdência com Cobertura de Risco"
       description: Obtém informações de plano de previdência com cobertura de risco
       operationId: getPensionPlan
       parameters:

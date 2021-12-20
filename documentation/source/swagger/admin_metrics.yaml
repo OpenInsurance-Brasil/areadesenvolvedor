@@ -8,13 +8,13 @@ info:
 servers:
   - url: https://api.organizacao.com.br/open-insurance/admin/v1
 tags:
-  - name: "Métricas"
+  - name: "API - Admin"
 paths:
   /metrics:
     get:
       tags:
-        - "Métricas"
-      summary: Obtém as métricas de disponibilidade das APIs
+        - "API - Admin"
+      summary: "Métricas"
       description: "Obtém as métricas de disponibilidade das APIs"
       operationId: "getMetrics"
       parameters:

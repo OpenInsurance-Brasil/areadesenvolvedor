@@ -8,15 +8,13 @@ info:
 servers:
   - url: https://api.organizacao.com.br/open-insurance/channels/v1
 tags:
-  - name: "Dependências próprias"
-  - name: "Canais de atendimento eletrônico"
-  - name: "Canais de atendimento telefônico"
+  - name: "API - Canais de Atendimento"
 paths:
   /branches:
     get:
       tags:
-        - "Dependências próprias"
-      summary: Obtém a listagem de dependências próprias da instituição.
+        - "API - Canais de Atendimento"
+      summary: "Dependências Próprias"
       description: "Método para obter a listagem de dependências próprias da instituição."
       operationId: "getBranches"
       parameters:
@@ -54,8 +52,8 @@ paths:
   /electronic-channels:
     get:
       tags:
-        - "Canais de atendimento eletrônico"
-      summary: Obtém a listagem de canais eletrônicos de atendimento da instituição.
+        - "API - Canais de Atendimento"
+      summary: "Canais de Atendimento Eletrônico"
       description: "Método para obter a listagem de canais eletrônicos de atendimento da instituição."
       operationId: "getElectronicChannels"
       parameters:
@@ -93,8 +91,8 @@ paths:
   /phone-channels:
     get:
       tags:
-        - "Canais de atendimento telefônico"
-      summary: "Obtém a listagem de canais telefônicos de atendimento da instituição."
+        - "API - Canais de Atendimento"
+      summary: "Canais de Atendimento Telefônico"
       description: "Método para obter a listagem de canais telefônicos de atendimento da instituição."
       operationId: "getPhoneChannels"
       parameters:
