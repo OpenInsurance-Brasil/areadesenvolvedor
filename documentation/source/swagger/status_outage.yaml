@@ -8,15 +8,14 @@ info:
 servers:
   - url: https://api.organizacao.com.br/open-insurance/discovery/v1
 tags:
-  - name: "API de status"
-  - name: "API de outages"
+  - name: "API - Comuns"
 paths:
   /status:
     get:
       tags:
-        - API de status
-      summary: A descrição referente ao código de status retornado pelas APIs
-      description: " Descrição referente ao código de status retornado pelas APIs"
+        - "API - Comuns"
+      summary: "API de status"
+      description: Obtém a descrição referente ao código de status retornado pelas APIs.
       operationId: "getStatus"
       parameters:
         - $ref: "#/components/parameters/page"
@@ -31,9 +30,9 @@ paths:
   /outages:
     get:
       tags:
-        - API de outages
-      summary: a descrição referente a listagem de indisponibilidades agendadas para os serviços
-      description: "a descrição referente a listagem de indisponibilidades agendadas para os serviços"
+        - "API - Comuns"
+      summary: "API de outages"
+      description: Obtêm a lista de indisponibilidade agendada para os serviços.
       operationId: "getOutage"
       parameters:
         - $ref: "#/components/parameters/page"
