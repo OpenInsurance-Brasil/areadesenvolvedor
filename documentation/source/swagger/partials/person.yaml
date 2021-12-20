@@ -2,10 +2,10 @@ openapi: 3.0.0
 info:
   title: APIs Open Data do Open Insurance Brasil
   description:
-    API de informações de Plano de Previdência com cobertura de risco. Os recursos que podem ser consumidos pelos participantes conforme a regra 3.1.2 do manual de escopo de dados.
+    Obtém a lista dos produtos Seguros de Pessoas – Coberturas de Risco (excluindo VGBL).
   version: 1.0.0
   contact:
-    url: 'https://openinsurance.susep.gov.br'
+    url: 'https://http://novosite.susep.gov.br'
 servers:
   - url: 'https://api.organizacao.com.br/open-insurance/products-services/v1'
     description: Servidor de Produção
@@ -123,9 +123,9 @@ components:
           - insuranceModality
           - coverages
           - additional
-          - serviceDetail
           - termsAndConditions
           - globalCapital
+          - validity
           - contractType
           - otherGuaranteedValues
           - allowPortability
@@ -174,18 +174,18 @@ components:
                         DESPESAS_MEDICAS_HOSPITALARES_ODONTOLOGICAS_EXTERIOR,
                         DIARIA_INCAPACIDADE_TOTAL_TEMPORARIA,
                         DIARIA_INTERNACAO_HOSPITALAR,
+                        INTERNACAO_HOSPITALAR,
                         DIARIAS_INCAPACIDADE_PECUNIARIA_DIP,
-                        DOENCA_CONGENITA_FILHOS_DCF,
                         DOENCA_GRAVE,
+                        DOENCA_CONGENITA_FILHOS_DCF,
                         FRATURA_OSSEA,
                         DOENCAS_TROPICAIS,
                         INCAPACIDADE_TOTAL_OU_TEMPORARIA,
+                        INVALIDEZ_PERMANENTE_TOTAL_PARCIAL,
                         INVALIDEZ_TOTAL_ACIDENTE,
                         INVALIDEZ_PARCIAL_ACIDENTE,
-                        INTERNACAO_HOSPITALAR,
                         INVALIDEZ_FUNCIONAL_PERMANENTE_DOENCA,
                         INVALIDEZ_LABORATIVA_DOENCA,
-                        INVALIDEZ_PERMANENTE_TOTAL_PARCIAL.
                         MORTE,
                         MORTE_ACIDENTAL,
                         MORTE_CONJUGE,
@@ -202,6 +202,7 @@ components:
                         SERVICO_AUXILIO_FUNERAL,
                         SOBREVIVENCIA,
                         TRANSPLANTE_ORGAOS,
+                        TRANSLADO,
                         TRANSLADO_MEDICO,
                         TRANSLADO_CORPO,
                         VERBA_RESCISORIA,
@@ -254,7 +255,6 @@ ODONTOLOGICA,
 ORIENTACAO_FITNESS,
 ORIENTACAO_JURIDICA,
 ORIENTACAO_NUTRICIONAL,
-OUTROS,
 PERSONAL_FITNESS,
 ORIENTACAO_PSICOSSOCIAL_FAMILIAR,
 PERDA_ROUBO_CARTAO,
@@ -272,12 +272,13 @@ SENIOR,
 SUSTENTAVEL_DESCARTE_ECOLOGICO,
 TELEMEDICINA,
 VIAGEM,
-VITIMA]
+VITIMA,
+OUTROS]
           additional:
             type: array
             items:
               type: string
-              enum: [SORTEIO , SERVICO_ASSISTENCIAS_COMPLEMENTARES_PAGO , SERVICO_ASSISTENCIAS_COMPLEMENTARES_GRATUITO, OUTROS, NAO_HA]
+              enum: [SORTEIO , SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO , SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO, OUTROS, NAO_HA]
           assistanceTypeOthers:
             type: array
             items:
@@ -312,10 +313,10 @@ VITIMA]
             enum: [SALDAMENTO, BENEFICIO_PROLONGADO, NAO_SE_APLICA]
           allowPortability:
             type: boolean
-            description: Permite portabilidade
-            example: true
+            description: Permite Portabilidade
           portabilityGraceTime:
-            $ref: '#/components/schemas/PersonPortabilityGraceTime'
+            type: integer
+            description: Prazo de carência em dias para Portabilidade
           indemnityPaymentMethod:
             type: array
             items:
@@ -339,7 +340,7 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
           premiumPayment:
             $ref: '#/components/schemas/PersonPremiumPayment'
           minimunRequirements:
-            $ref: '#/components/schemas/PersonMinimunRequirements'
+            $ref: '#/components/schemas/PersonMinimumRequirements'
           targetAudience:
             type: string
             enum: [PESSOA_NATURAL, PESSOA_JURIDICA]
@@ -355,8 +356,7 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
         definition:
           type: string
           description: Campo aberto (possibilidade de incluir URL).
-    PersonCovaregeAttibutesDetailsUnit:
-      description: Listagem do valor mínimo ou máximo de cobertura (Capital Segurado), diária ou parcela aceito pela  sociedade para cada  combinação de modalidade/cobertura do produto. Em reais
+    PersonCoverageAttibutesDetailsUnit:
       type: object
       required:
         - code
@@ -370,7 +370,7 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
           type: string
           description: Descrição da unidade de medida
           example: description
-    PersonCovaregeAttibutesDetails:
+    PersonCoverageAttibutesDetails:
         type: object
         required:
           - amount
@@ -381,10 +381,23 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
             description: Valor.
             example: 60
           unit:
-            $ref: '#/components/schemas/PersonCovaregeAttibutesDetailsUnit'
+            $ref: '#/components/schemas/PersonCoverageAttibutesDetailsUnit'
     PersonGracePeriodUnit:
         type: object
         description: Período de carência
+        properties:
+          amount:
+            type: number
+            description: Prazo de Carência
+            example: 60
+          unit:
+            type: string
+            description: Unidade do prazo (dias ou meses).
+            example: DIAS
+            enum: [DIAS, MESES, NAO_SE_APLICA]
+    personPortabilityGraceTime:
+        type: object
+        description: Prazo de carência em dias para Portabilidade
         properties:
           amount:
             type: number
@@ -428,9 +441,15 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
            example: INDENIZACAO_UNICA
            enum: [INDENIZACAO_UNICA, DIARIA_OU_PARCELA]
         minValue:
-          $ref: '#/components/schemas/PersonCovaregeAttibutesDetails'
+          type: object
+          description: Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela  sociedade para cada  combinação de modalidade/cobertura do produto. Em reais
+          items:
+           $ref: '#/components/schemas/PersonCoverageAttibutesDetails'
         maxValue:
-          $ref: '#/components/schemas/PersonCovaregeAttibutesDetails'
+          type: object
+          description: Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito  pela sociedade para cada  combinação de modalidade/cobertura do produto. Em reais
+          items:
+           $ref: '#/components/schemas/PersonCoverageAttibutesDetails'
         indemnifiablePeriod:
           type: array
           description: Listagem de período indenizável para cada combinação de modalidade/cobertura do produto
@@ -456,7 +475,7 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
           type: number
           description: Detalhamento da franquia em dias diferentes para cada cobertura que exista alguma especificidade. Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.
         deductibleBRL:
-          type: string
+          type: number
           description: Listagem de franquia em reais para cada combinação de modalidade/cobertura do produto.
         differentiatedDeductibleBRL:
           type: string
@@ -477,7 +496,6 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
     PersonPmbacRemuneration:
       type: object
       required:
-        - interestRate
         - pmbacUpdateIndex
       properties:
         interestRate:
@@ -574,7 +592,7 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
         premiumTax:
           type: string
           description: Distribuição de frequência relativa aos valores referentes às taxas cobradas.
-    PersonMinimunRequirements:
+    PersonMinimumRequirements:
         type: object
         required:
             - contractingType
@@ -585,17 +603,6 @@ VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
              enum: [COLETIVO, INDIVIDUAL]
           contractingMinRequirement:
             type: string
-    PersonPortabilityGraceTime:
-      description: Prazo de carência em dias para Portabilidade
-      type: object
-      properties:
-        amount:
-          description: Prazo de carência
-          type: integer
-        unit:
-          description: Unidade do prazo (dias ou meses)
-          type: string
-          enum: [DIAS, MESES]
     LinksPaginated:
       type: object
       properties:

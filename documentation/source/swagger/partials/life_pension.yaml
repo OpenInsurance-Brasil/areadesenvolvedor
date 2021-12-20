@@ -66,25 +66,15 @@ components:
       items:
           type: object
           required:
-            - brand
-            - idenfication
+            - identification
             - products
-            - targetAudience
             - links
             - meta
           properties:
-            idenfication:
+            identification:
               $ref: '#/components/schemas/LifePensionIdentification'
             products:
               $ref: '#/components/schemas/LifePensionProduct'
-            minimumRequirements:
-                $ref: '#/components/schemas/LifePensionMinimumRequirements'
-            targetAudience:
-              type: string
-              description: Público-alvo.
-              example: PESSOA_NATURAL
-              maxLength: 15
-              enum: [PESSOA_NATURAL, PESSOA_JURIDICA]
             links:
               $ref: '#/components/schemas/LinksPaginated'
             meta:
@@ -122,6 +112,8 @@ components:
             - segment
             - modality
             - coverages
+            - minimumRequirements
+            - targetAudience
           properties:
             name:
               type: string
@@ -157,6 +149,14 @@ components:
               maxLength: 1024
             productDetails:
               $ref: '#/components/schemas/LifePensionProductDetails'
+            minimumRequirements:
+                $ref: '#/components/schemas/LifePensionMinimumRequirements'
+            targetAudience:
+              type: string
+              description: Público-alvo.
+              example: PESSOA_NATURAL
+              maxLength: 15
+              enum: [PESSOA_NATURAL, PESSOA_JURIDICA]
     LifePensionProductDetails:
       type: array
       items:

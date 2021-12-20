@@ -97,25 +97,26 @@ components:
         companies:
           $ref: '#/components/schemas/CapitalizationTitleCompany'
     CapitalizationTitleCompany:
-      type: object
-      description: Informações referente a sociedade a qual a marca pertence.
-      required:
-        - name
-        - cnpjNumber
-        - product
-      properties:
-        name:
-          type: string
-          description: Nome da sociedade pertencente à marca.
-          maxLength: 80
-          example: ACME cap da ACME seguros
-        cnpjNumber:
-          type: string
-          description: CNPJ da sociedade pertencente à marca.
-          maxLength: 14
-          example: "12345678901234"
-        product:
-          $ref: '#/components/schemas/CapitalizationTitleProduct'
+      type: array
+      items:
+        description: Informações referente a sociedade a qual a marca pertence.
+        required:
+          - name
+          - cnpjNumber
+          - product
+        properties:
+          name:
+            type: string
+            description: Nome da sociedade pertencente à marca.
+            maxLength: 80
+            example: ACME cap da ACME seguros
+          cnpjNumber:
+            type: string
+            description: CNPJ da sociedade pertencente à marca.
+            maxLength: 14
+            example: "12345678901234"
+          product:
+            $ref: '#/components/schemas/CapitalizationTitleProduct'
     CapitalizationTitleProduct:
       type: array
       description: Lista de produtos de uma empresa.
@@ -125,6 +126,7 @@ components:
           - name
           - code
           - modality
+          - quotas
           - coverages
           - costType
         properties:
@@ -153,7 +155,9 @@ components:
           termsAndConditions:
             $ref: '#/components/schemas/CapitalizationTitleTerms'
           quotas:
-            $ref: '#/components/schemas/CapitalizationTitleQuotas'
+            type: array
+            items:
+              $ref: '#/components/schemas/CapitalizationTitleQuotas'
           validity:
             $ref: '#/components/schemas/CapitalizationTitleValidity'
           serieSize:
@@ -193,10 +197,15 @@ components:
         type: object
         description: Quotas
         required:
+          - quota
           - capitalizationQuota
           - raffleQuota
           - chargingQuota
         properties:
+            quota:
+              type: integer
+              description: Número da parcela.
+              example: 10
             capitalizationQuota:
               type: array
               description: Percentual da contribuição destinado à constituição de capital referente ao direito de resgate.
@@ -410,14 +419,14 @@ components:
       description: Requisitos mínimos.
       required:
         - minimumRequirementDetails
-        - targetAudience
+        - targetAudiences
       properties:
         minimumRequirementDetails:
           type: string
           description: Detalhamento do requisito mínimo para contratação - Campo aberto (possibilidade de incluir URL).
           maxLength: 1024
           example: https://ey.exemplo/capitalizacao/tradicional/PU/requisitos_min
-        targetAudience:
+        targetAudiences:
           description: Público Alvo
           type: array
           items:
