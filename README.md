@@ -14,7 +14,7 @@ de sistemas, com privacidade e segurança.
 ### Especificação
 
 As APIs devem ser especificadas com a versão 3.0.0 da linguagem OpenAPI
-(https://github.com/OAI/OpenAPI- Specification/blob/3.0.0/versions/3.0.0.md).
+(https://github.com/OAI/OpenAPI-Specification/blob/3.0.0/versions/3.0.0.md).
 
 As especificações das APIs devem ser analisadas com a versão 5.9.0 do software livre e
 de código aberto Spectral (https://github.com/stoplightio/spectral/tree/v5.9.0). A análise
@@ -22,7 +22,7 @@ DEVE ser feita com o conjunto de regras (ruleset) padrão desta versão do Spect
 resultado da análise não deve conter erros ou alertas.
 
 É recomendado que a versão 3.0.25 do software livre e de código aberto Swagger
-Codegen (https://github.com/swagger-api/swagger- codegen/tree/v3.0.25) seja utilizado
+Codegen (https://github.com/swagger-api/swagger-codegen/tree/v3.0.25) seja utilizado
 para gerar o código de clientes e também o código inicial de implementações das APIs a
 partir de suas especificações. Recomenda-se que o código gerado seja analisado com o
 intuito de identificar possíveis recursos da linguagem OpenAPI que foram utilizados nas
